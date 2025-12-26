@@ -10,8 +10,8 @@ Undergraduate Mathematics student focused on applied computation and data analys
 
 ## Skills & Tools
 <p align="left">
-  <img src="https://img.shields.io/badge/PostgreSQL-316192?style=for-the-badge&logo=postgresql&logoColor=white" />
   <img src="https://img.shields.io/badge/Python-3776AB?style=for-the-badge&logo=python&logoColor=white" />
+  <img src="https://img.shields.io/badge/PostgreSQL-316192?style=for-the-badge&logo=postgresql&logoColor=white" />
   <img src="https://img.shields.io/badge/Wolfram_Mathematica-DD1100?style=for-the-badge&logo=wolfram-mathematica&logoColor=white" />
 
 ---
