@@ -1,19 +1,22 @@
-<h2 align="left">Ramadhan Imanur Rochim</h2>
+# Ramadhan Imanur
+**Mathematics Undergraduate | Computational Methods & Relational Databases**
 
-###
+---
 
-<p align="left">Undergraduate Mathematics student with an orientation toward applied mathematics and computation. Core competence lies in mathematical analysis and theoretical structures, applied to data processing and data analysis. Experienced in using Python for data science, Wolfram Mathematica for symbolic computation, visualization, and numerical methods, and SQL for relational database schema design and normalization.</p>
+## Profile Summary
+Undergraduate Mathematics student focused on applied computation and data analysis, with a strong foundation in mathematical analysis and theory, using Python for data science, Wolfram Mathematica for symbolic and numerical computation, and SQL for relational database design and normalization.
 
-###
+---
 
-<div align="left">
-  <img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/python/python-original.svg" height="40" alt="python logo"  />
-  <img width="12" />
-  <img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/numpy/numpy-original.svg" height="40" alt="numpy logo"  />
-  <img width="12" />
-  <img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/postgresql/postgresql-original.svg" height="40" alt="postgresql logo"  />
-  <img width="12" />
-  <img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/mysql/mysql-original.svg" height="40" alt="mysql logo"  />
-</div>
+## GitHub Stats
+![](https://nirzak-streak-stats.vercel.app/?user=ramadhan-imanur&theme=transparent&hide_border=false)<br/>
 
-###
+---
+
+## Skills & Tools
+<p align="left">
+  <img src="https://img.shields.io/badge/PostgreSQL-316192?style=for-the-badge&logo=postgresql&logoColor=white" />
+  <img src="https://img.shields.io/badge/Python-3776AB?style=for-the-badge&logo=python&logoColor=white" />
+  <img src="https://img.shields.io/badge/Wolfram_Mathematica-DD1100?style=for-the-badge&logo=wolfram-mathematica&logoColor=white" />
+
+---
