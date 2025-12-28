@@ -1,5 +1,7 @@
 # Ramadhan Imanur
+<p style="text-align: justify;">
 Undergraduate Mathematics student focused on applied computation and data analysis, with a strong foundation in mathematical analysis and theory, using Python for data science, Wolfram Mathematica for symbolic and numerical computation, and SQL for relational database design and normalization.
+</p>
 
 ---
 
