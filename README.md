@@ -5,8 +5,7 @@ Undergraduate Mathematics student focused on applied computation and data analys
 
 ---
 <p align="center">
-  <img width="45.8%" src="https://github-stats-extended.vercel.app/api?username=ramadhan-imanur&show_icons=true&theme=transparent&disable_animations=true" alt="GitHub Stats" />
-  <img width="50%" src="https://github-stats-extended.vercel.app/api/top-langs/?username=ramadhan-imanur&layout=compact&theme=transparent&disable_animations=true" alt="Top Languages" />
+  <img width="80%" src="https://github-stats-extended.vercel.app/api?username=ramadhan-imanur&show_icons=true&theme=transparent&disable_animations=true" alt="GitHub Stats" />
 </p>
 
 ---
