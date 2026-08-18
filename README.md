@@ -14,38 +14,6 @@ Undergraduate Mathematics student focused on applied computation and data analys
   <img class="stat-item" src="https://github-stats-extended.vercel.app/api/top-langs/?username=ramadhan-imanur&layout=compact&theme=transparent&disable_animations=true" alt="Top Languages" />
 </div>
 
-<style>
-  /* Tata letak bawaan (Mobile: Menumpuk vertikal) */
-  .github-stats-container {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
-    gap: 16px;
-    width: 100%;
-  }
-
-  .stat-item {
-    width: 100%;
-    max-width: 450px;
-    height: auto;
-  }
-
-  /* Media Query untuk Layar Tablet dan Desktop (≥ 768px) */
-  @media (min-width: 768px) {
-    .github-stats-container {
-      flex-direction: row;
-      align-items: stretch;
-    }
-
-    .stat-item {
-      width: auto;
-      max-width: 48%;
-    }
-  }
-</style>
-
-
 ---
 ## Skills & Tools
 <p align="left">
