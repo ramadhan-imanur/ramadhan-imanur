@@ -52,29 +52,22 @@ parser = CalParser()
 parser.feed(html_data)
 print(f"Parsed {len(parser.days)} days. Total: {parser.total_contrib}")
 
-# Group into weeks (columns of 7)
-weeks = []
-current_week = []
-for day in parser.days:
-  current_week.append(day)
-  if len(current_week) == 7:
-    weeks.append(current_week)
-    current_week = []
-if current_week:
-  weeks.append(current_week)
+# Parse grid rows directly from <tr> tags (rows 1..7 for Sun..Sat)
+import re
 
-# Take the last 52 weeks
-weeks = weeks[-52:]
+table_rows = re.findall(r"<tr[^>]*>(.*?)</tr>", html_data, re.DOTALL)
+grid_rows = []
+for r in table_rows[1:]:
+  days = re.findall(
+      r'<td[^>]*data-date=\"([^\"]+)\"[^>]*data-level=\"([^\"]+)\"', r
+  )
+  if days:
+    grid_rows.append(days)
 
-# Month labels
-month_labels = []
-last_month = None
-for col_idx, week in enumerate(weeks):
-  if week:
-    dt = datetime.datetime.strptime(week[0]["date"], "%Y-%m-%d")
-    if dt.month != last_month:
-      month_labels.append((dt.strftime("%b"), col_idx))
-      last_month = dt.month
+# We have 7 rows (row 0 = Sun, 1 = Mon, ..., 6 = Sat). Keep the last 52 weeks.
+max_cols = max(len(r) for r in grid_rows) if grid_rows else 0
+if max_cols > 52:
+  grid_rows = [r[-52:] for r in grid_rows]
 
 
 def build_contributions_svg(theme="dark"):
@@ -93,33 +86,25 @@ def build_contributions_svg(theme="dark"):
   }
 
   svg_width = 800
-  svg_height = 200
+  svg_height = 180
   cell_size = 10
   cell_gap = 3
   start_x = 42
-  start_y = 65
+  start_y = 56
 
   cells_svg = []
-  for col_idx, week in enumerate(weeks):
-    x = start_x + col_idx * (cell_size + cell_gap)
-    for row_idx, day in enumerate(week):
-      y = start_y + row_idx * (cell_size + cell_gap)
-      color = color_map.get(day["level"], color_map[0])
+  for row_idx, row_days in enumerate(grid_rows):
+    y = start_y + row_idx * (cell_size + cell_gap)
+    for col_idx, day_info in enumerate(row_days):
+      x = start_x + col_idx * (cell_size + cell_gap)
+      level = int(day_info[1])
+      color = color_map.get(level, color_map[0])
       cells_svg.append(
           f'<rect x="{x}" y="{y}" width="{cell_size}" height="{cell_size}"'
           f' rx="2" fill="{color}" />'
       )
 
-  months_svg = []
-  for m_label, col_idx in month_labels:
-    x = start_x + col_idx * (cell_size + cell_gap)
-    months_svg.append(
-        f'<text x="{x}" y="{start_y - 8}" fill="{text_color}" font-size="10"'
-        ' font-family="-apple-system,BlinkMacSystemFont,\'Segoe'
-        ' UI\',Helvetica,Arial,sans-serif">'
-        f"{m_label}</text>"
-    )
-
+  # Day labels on the left
   days_labels_svg = []
   days_map = {1: "Mon", 3: "Wed", 5: "Fri"}
   for r_idx, label in days_map.items():
@@ -149,9 +134,6 @@ def build_contributions_svg(theme="dark"):
     <text x="28" y="14" class="title">Contributions</text>
   </g>
   <text x="{svg_width - 24}" y="38" text-anchor="end" class="subtitle">{parser.total_contrib}</text>
-
-  <!-- Month Labels -->
-  {"".join(months_svg)}
 
   <!-- Day Labels -->
   {"".join(days_labels_svg)}
