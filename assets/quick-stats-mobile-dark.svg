@@ -1,0 +1,41 @@
+<svg width="500" height="196" viewBox="0 0 500 196" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <defs>
+    <style>
+      .card { fill: #161B22; stroke: #30363D; stroke-width: 1; rx: 8px; }
+      .num { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Ubuntu, sans-serif; font-size: 22px; font-weight: 700; fill: #F0F6FC; text-anchor: middle; }
+      .lbl { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Ubuntu, sans-serif; font-size: 11px; font-weight: 600; fill: #8B949E; text-anchor: middle; letter-spacing: 0.8px; }
+    </style>
+  </defs>
+
+  <!-- Top-Left: Repos -->
+  <g transform="translate(0, 0)">
+    <rect x="1" y="1" width="242" height="92" rx="8" class="card" />
+    <path d="M121 18h-8c-.9 0-1.6.7-1.6 1.6v11.2c0 .9.7 1.6 1.6 1.6h12.8c.9 0 1.6-.7 1.6-1.6v-8.8c0-.9-.7-1.6-1.6-1.6h-4l-1.2-1.2c-.3-.3-.7-.4-1.2-.4z" fill="#8B949E" />
+    <text x="122" y="56" class="num">11+</text>
+    <text x="122" y="75" class="lbl">TOTAL REPOS</text>
+  </g>
+
+  <!-- Top-Right: Commits -->
+  <g transform="translate(254, 0)">
+    <rect x="1" y="1" width="244" height="92" rx="8" class="card" />
+    <path d="M122 18l2 4 4.4.6-3.2 3.1.8 4.4-4-2.1-4 2.1.8-4.4-3.2-3.1 4.4-.6 2-4z" fill="#8B949E" />
+    <text x="123" y="56" class="num">101+</text>
+    <text x="123" y="75" class="lbl">ANNUAL COMMITS</text>
+  </g>
+
+  <!-- Bottom-Left: Followers -->
+  <g transform="translate(0, 102)">
+    <rect x="1" y="1" width="242" height="92" rx="8" class="card" />
+    <path d="M119 122a2.8 2.8 0 100-5.6 2.8 2.8 0 000 5.6zm6.4 0a2.4 2.4 0 100-4.8 2.4 2.4 0 000 4.8zm-6.4 2.4c-1.8 0-5.6 1-5.6 2.8V129h11.2v-1.8c0-1.8-3.8-2.8-5.6-2.8zm6.4 0c-.2 0-.6 0-.9.1 1 .7 1.7 1.7 1.7 2.7v1.8h4.8v-1.8c0-1.8-3.8-2.8-5.6-2.8z" fill="#8B949E" />
+    <text x="122" y="158" class="num">2+</text>
+    <text x="122" y="177" class="lbl">FOLLOWERS</text>
+  </g>
+
+  <!-- Bottom-Right: Years Active -->
+  <g transform="translate(254, 102)">
+    <rect x="1" y="1" width="244" height="92" rx="8" class="card" />
+    <path d="M122 118a6.4 6.4 0 100 12.8 6.4 6.4 0 000-12.8zm0 11.6a5.2 5.2 0 110-10.4 5.2 5.2 0 010 10.4zm.4-8.4h-1.2v3.6l3 1.8.6-1-2.4-1.4V121.2z" fill="#8B949E" />
+    <text x="123" y="158" class="num">5</text>
+    <text x="123" y="177" class="lbl">YEARS ACTIVE</text>
+  </g>
+</svg>

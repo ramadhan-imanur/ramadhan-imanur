@@ -19,7 +19,7 @@
   <g transform="translate(204, 0)">
     <rect x="1" y="1" width="188" height="108" rx="8" class="stat-card" />
     <path d="M95 24l2.5 5 5.5.8-4 3.9.9 5.5-4.9-2.6-4.9 2.6.9-5.5-4-3.9 5.5-.8 2.5-5z" fill="#8B949E" />
-    <text x="95" y="68" class="stat-num">98+</text>
+    <text x="95" y="68" class="stat-num">101+</text>
     <text x="95" y="88" class="stat-label">ANNUAL COMMITS</text>
   </g>
 
