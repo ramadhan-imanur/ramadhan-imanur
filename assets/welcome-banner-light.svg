@@ -1,23 +1,47 @@
-<svg width="600" height="110" viewBox="0 0 600 110" fill="none" xmlns="http://www.w3.org/2000/svg">
+<svg width="800" height="90" viewBox="0 0 800 90" fill="none" xmlns="http://www.w3.org/2000/svg">
   <defs>
     <style>
       .card-bg { fill: #FFFFFF; stroke: #D0D7DE; stroke-width: 1; rx: 8px; }
-      .greeting { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Ubuntu, sans-serif; font-size: 18px; font-weight: 700; fill: #1F2328; text-anchor: middle; }
-      .subtext { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Ubuntu, sans-serif; font-size: 13px; font-weight: 400; fill: #656D76; text-anchor: middle; }
+      .greeting { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Ubuntu, sans-serif; font-size: 19px; font-weight: 700; fill: #1F2328; }
+      .subtext { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Ubuntu, sans-serif; font-size: 13px; font-weight: 400; fill: #656D76; }
       .tag { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Ubuntu, sans-serif; font-size: 11px; font-weight: 600; fill: #0969DA; }
       .tag-bg { fill: #0969DA15; stroke: #0969DA40; stroke-width: 1; rx: 12px; }
+
+      .mobile-layout { display: none; }
+      .desktop-layout { display: inline; }
+
+      @media (max-width: 650px) {
+        .desktop-layout { display: none; }
+        .mobile-layout { display: inline; }
+      }
     </style>
   </defs>
 
-  <rect x="1" y="1" width="598" height="108" rx="8" class="card-bg" />
+  <rect x="1" y="1" width="798" height="88" rx="8" class="card-bg" />
 
-  <text x="300" y="34" class="greeting">Welcome to Ramadhan Imanur's Hub</text>
-  <text x="300" y="56" class="subtext">Applied Computation · Mathematical Modeling · Data Science</text>
+  <!-- Desktop Layout (>= 651px) -->
+  <g class="desktop-layout">
+    <g transform="translate(24, 34)">
+      <text x="0" y="0" class="greeting">Welcome to Ramadhan Imanur's Hub</text>
+      <text x="0" y="24" class="subtext">Explore open source contributions, mathematical modeling, and data science research</text>
+    </g>
 
-  <!-- Tag Centered -->
-  <g transform="translate(232, 68)">
-    <rect x="0" y="0" width="136" height="26" rx="13" class="tag-bg" />
-    <circle cx="14" cy="13" r="4" fill="#1A7F37" />
-    <text x="26" y="17" class="tag">Active Portfolio</text>
+    <g transform="translate(640, 32)">
+      <rect x="0" y="0" width="136" height="26" rx="13" class="tag-bg" />
+      <circle cx="14" cy="13" r="4" fill="#1A7F37" />
+      <text x="26" y="17" class="tag">Active Portfolio</text>
+    </g>
+  </g>
+
+  <!-- Mobile / Tablet Responsive Layout (<= 650px) -->
+  <g class="mobile-layout">
+    <text x="400" y="28" class="greeting" text-anchor="middle" font-size="19px">Welcome to Ramadhan Imanur's Hub</text>
+    <text x="400" y="48" class="subtext" text-anchor="middle" font-size="12px">Applied Computation · Mathematical Modeling · Data Science</text>
+
+    <g transform="translate(332, 56)">
+      <rect x="0" y="0" width="136" height="24" rx="12" class="tag-bg" />
+      <circle cx="14" cy="12" r="4" fill="#1A7F37" />
+      <text x="26" y="16" class="tag">Active Portfolio</text>
+    </g>
   </g>
 </svg>

@@ -156,7 +156,67 @@ def build_contributions_svg(theme="dark"):
 </svg>"""
 
 
-def build_welcome_banner_svg(theme="dark"):
+def build_welcome_banner_desktop_svg(theme="dark"):
+  is_dark = theme == "dark"
+  bg_card = "#0D1117" if is_dark else "#FFFFFF"
+  border_card = "#30363D" if is_dark else "#D0D7DE"
+  title_color = "#F0F6FC" if is_dark else "#1F2328"
+  text_color = "#8B949E" if is_dark else "#656D76"
+  tag_bg = "#388BFD15" if is_dark else "#0969DA15"
+  tag_border = "#388BFD40" if is_dark else "#0969DA40"
+  tag_text = "#388BFD" if is_dark else "#0969DA"
+  dot_color = "#2EA043" if is_dark else "#1A7F37"
+
+  return f"""<svg width="800" height="90" viewBox="0 0 800 90" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <defs>
+    <style>
+      .card-bg {{ fill: {bg_card}; stroke: {border_card}; stroke-width: 1; rx: 8px; }}
+      .greeting {{ font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Ubuntu, sans-serif; font-size: 19px; font-weight: 700; fill: {title_color}; }}
+      .subtext {{ font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Ubuntu, sans-serif; font-size: 13px; font-weight: 400; fill: {text_color}; }}
+      .tag {{ font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Ubuntu, sans-serif; font-size: 11px; font-weight: 600; fill: {tag_text}; }}
+      .tag-bg {{ fill: {tag_bg}; stroke: {tag_border}; stroke-width: 1; rx: 12px; }}
+
+      .mobile-layout {{ display: none; }}
+      .desktop-layout {{ display: inline; }}
+
+      @media (max-width: 650px) {{
+        .desktop-layout {{ display: none; }}
+        .mobile-layout {{ display: inline; }}
+      }}
+    </style>
+  </defs>
+
+  <rect x="1" y="1" width="798" height="88" rx="8" class="card-bg" />
+
+  <!-- Desktop Layout (>= 651px) -->
+  <g class="desktop-layout">
+    <g transform="translate(24, 34)">
+      <text x="0" y="0" class="greeting">Welcome to Ramadhan Imanur's Hub</text>
+      <text x="0" y="24" class="subtext">Explore open source contributions, mathematical modeling, and data science research</text>
+    </g>
+
+    <g transform="translate(640, 32)">
+      <rect x="0" y="0" width="136" height="26" rx="13" class="tag-bg" />
+      <circle cx="14" cy="13" r="4" fill="{dot_color}" />
+      <text x="26" y="17" class="tag">Active Portfolio</text>
+    </g>
+  </g>
+
+  <!-- Mobile / Tablet Responsive Layout (<= 650px) -->
+  <g class="mobile-layout">
+    <text x="400" y="28" class="greeting" text-anchor="middle" font-size="19px">Welcome to Ramadhan Imanur's Hub</text>
+    <text x="400" y="48" class="subtext" text-anchor="middle" font-size="12px">Applied Computation · Mathematical Modeling · Data Science</text>
+
+    <g transform="translate(332, 56)">
+      <rect x="0" y="0" width="136" height="24" rx="12" class="tag-bg" />
+      <circle cx="14" cy="12" r="4" fill="{dot_color}" />
+      <text x="26" y="16" class="tag">Active Portfolio</text>
+    </g>
+  </g>
+</svg>"""
+
+
+def build_welcome_banner_mobile_svg(theme="dark"):
   is_dark = theme == "dark"
   bg_card = "#0D1117" if is_dark else "#FFFFFF"
   border_card = "#30363D" if is_dark else "#D0D7DE"
@@ -189,6 +249,53 @@ def build_welcome_banner_svg(theme="dark"):
     <circle cx="14" cy="13" r="4" fill="{dot_color}" />
     <text x="26" y="17" class="tag">Active Portfolio</text>
   </g>
+</svg>"""
+
+
+def build_stat_card_svg(stat_type, theme="dark"):
+  is_dark = theme == "dark"
+  border_card = "#30363D" if is_dark else "#D0D7DE"
+  num_color = "#F0F6FC" if is_dark else "#1F2328"
+  text_color = "#8B949E" if is_dark else "#656D76"
+  card_fill = "#161B22" if is_dark else "#F6F8FA"
+  g_commits = parser.total_contrib.split()[0] if parser.total_contrib else "101"
+
+  width = 188
+  height = 104
+  cx = 94
+
+  if stat_type == "repos":
+    icon_svg = f'<path d="M96 22h-10c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h16c1.1 0 2-.9 2-2v-11c0-1.1-.9-2-2-2h-5l-1.5-1.5c-.4-.4-.9-.5-1.5-.5z" fill="{text_color}" />'
+    val = "11+"
+    lbl = "TOTAL REPOS"
+  elif stat_type == "commits":
+    icon_svg = f'<path d="M94 22l2.5 5 5.5.8-4 3.9.9 5.5-4.9-2.6-4.9 2.6.9-5.5-4-3.9 5.5-.8 2.5-5z" fill="{text_color}" />'
+    val = f"{g_commits}+"
+    lbl = "ANNUAL COMMITS"
+  elif stat_type == "followers":
+    icon_svg = f'<path d="M90.5 28.5a3.5 3.5 0 100-7 3.5 3.5 0 000 7zm8 0a3 3 0 100-6 3 3 0 000 6zm-8 3c-2.3 0-7 1.2-7 3.5v2.5h14v-2.5c0-2.3-4.7-3.5-7-3.5zm8 0c-.3 0-.7 0-1.1.1 1.3.9 2.1 2.1 2.1 3.4v2.5h6v-2.5c0-2.3-4.7-3.5-7-3.5z" fill="{text_color}" />'
+    val = "2+"
+    lbl = "FOLLOWERS"
+  elif stat_type == "years":
+    icon_svg = f'<path d="M94 22a8 8 0 100 16 8 8 0 000-16zm0 14.5a6.5 6.5 0 110-13 6.5 6.5 0 010 13zm.5-10.5H93v4.5l3.8 2.3.8-1.2-3.1-1.8V26z" fill="{text_color}" />'
+    val = "5"
+    lbl = "YEARS ACTIVE"
+  else:
+    raise ValueError(f"Unknown stat_type: {stat_type}")
+
+  return f"""<svg width="{width}" height="{height}" viewBox="0 0 {width} {height}" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <defs>
+    <style>
+      .card {{ fill: {card_fill}; stroke: {border_card}; stroke-width: 1; rx: 8px; }}
+      .num {{ font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Ubuntu, sans-serif; font-size: 24px; font-weight: 700; fill: {num_color}; text-anchor: middle; }}
+      .lbl {{ font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Ubuntu, sans-serif; font-size: 11px; font-weight: 600; fill: {text_color}; text-anchor: middle; letter-spacing: 0.8px; }}
+    </style>
+  </defs>
+
+  <rect x="1" y="1" width="{width - 2}" height="{height - 2}" rx="8" class="card" />
+  {icon_svg}
+  <text x="{cx}" y="64" class="num">{val}</text>
+  <text x="{cx}" y="84" class="lbl">{lbl}</text>
 </svg>"""
 
 
@@ -351,9 +458,14 @@ def build_core_tech_svg(theme="dark"):
 
 # Write Dark SVGs
 with open(ASSETS_DIR / "welcome-banner-dark.svg", "w", encoding="utf-8") as f:
-  f.write(build_welcome_banner_svg("dark"))
+  f.write(build_welcome_banner_desktop_svg("dark"))
+with open(ASSETS_DIR / "welcome-banner-mobile-dark.svg", "w", encoding="utf-8") as f:
+  f.write(build_welcome_banner_mobile_svg("dark"))
 with open(ASSETS_DIR / "quick-stats-dark.svg", "w", encoding="utf-8") as f:
   f.write(build_quick_stats_svg("dark"))
+for stat in ["repos", "commits", "followers", "years"]:
+  with open(ASSETS_DIR / f"stat-{stat}-dark.svg", "w", encoding="utf-8") as f:
+    f.write(build_stat_card_svg(stat, "dark"))
 with open(ASSETS_DIR / "contributions-dark.svg", "w", encoding="utf-8") as f:
   f.write(build_contributions_svg("dark"))
 with open(ASSETS_DIR / "core-tech-dark.svg", "w", encoding="utf-8") as f:
@@ -361,9 +473,14 @@ with open(ASSETS_DIR / "core-tech-dark.svg", "w", encoding="utf-8") as f:
 
 # Write Light SVGs
 with open(ASSETS_DIR / "welcome-banner-light.svg", "w", encoding="utf-8") as f:
-  f.write(build_welcome_banner_svg("light"))
+  f.write(build_welcome_banner_desktop_svg("light"))
+with open(ASSETS_DIR / "welcome-banner-mobile-light.svg", "w", encoding="utf-8") as f:
+  f.write(build_welcome_banner_mobile_svg("light"))
 with open(ASSETS_DIR / "quick-stats-light.svg", "w", encoding="utf-8") as f:
   f.write(build_quick_stats_svg("light"))
+for stat in ["repos", "commits", "followers", "years"]:
+  with open(ASSETS_DIR / f"stat-{stat}-light.svg", "w", encoding="utf-8") as f:
+    f.write(build_stat_card_svg(stat, "light"))
 with open(ASSETS_DIR / "contributions-light.svg", "w", encoding="utf-8") as f:
   f.write(build_contributions_svg("light"))
 with open(ASSETS_DIR / "core-tech-light.svg", "w", encoding="utf-8") as f:
@@ -374,8 +491,16 @@ shutil.copyfile(
     ASSETS_DIR / "welcome-banner-dark.svg", ASSETS_DIR / "welcome-banner.svg"
 )
 shutil.copyfile(
+    ASSETS_DIR / "welcome-banner-mobile-dark.svg",
+    ASSETS_DIR / "welcome-banner-mobile.svg",
+)
+shutil.copyfile(
     ASSETS_DIR / "quick-stats-dark.svg", ASSETS_DIR / "quick-stats.svg"
 )
+for stat in ["repos", "commits", "followers", "years"]:
+  shutil.copyfile(
+      ASSETS_DIR / f"stat-{stat}-dark.svg", ASSETS_DIR / f"stat-{stat}.svg"
+  )
 shutil.copyfile(
     ASSETS_DIR / "contributions-dark.svg", ASSETS_DIR / "contributions.svg"
 )
