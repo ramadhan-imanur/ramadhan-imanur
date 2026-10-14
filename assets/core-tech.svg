@@ -1,0 +1,90 @@
+<svg width="350" height="215" viewBox="0 0 350 215" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <defs>
+    <style>
+      .card-bg { fill: #0D1117; stroke: #30363D; stroke-width: 1; rx: 4.5px; }
+      .header { font: 600 13px -apple-system, BlinkMacSystemFont, 'Segoe UI', Ubuntu, Sans-Serif; fill: #8B949E; text-transform: uppercase; letter-spacing: 0.8px; }
+      .badge-bg { fill: #161B22; stroke: #30363D; stroke-width: 1; rx: 12px; }
+      .badge-text { font: 500 11px -apple-system, BlinkMacSystemFont, 'Segoe UI', Ubuntu, Sans-Serif; fill: #C9D1D9; }
+    </style>
+  </defs>
+
+  <rect x="0.5" y="0.5" width="349" height="214" rx="4.5" class="card-bg" />
+
+  <text x="20" y="32" class="header">CORE TECHNOLOGIES</text>
+
+  <!-- Row 1 -->
+  <g transform="translate(20, 52)">
+    <rect x="0" y="0" width="82" height="26" rx="13" class="badge-bg" />
+    <circle cx="12" cy="13" r="4" fill="#3572A5" />
+    <text x="24" y="17" class="badge-text">Python</text>
+  </g>
+
+  <g transform="translate(110, 52)">
+    <rect x="0" y="0" width="102" height="26" rx="13" class="badge-bg" />
+    <circle cx="12" cy="13" r="4" fill="#336791" />
+    <text x="24" y="17" class="badge-text">PostgreSQL</text>
+  </g>
+
+  <g transform="translate(220, 52)">
+    <rect x="0" y="0" width="108" height="26" rx="13" class="badge-bg" />
+    <circle cx="12" cy="13" r="4" fill="#DD1100" />
+    <text x="24" y="17" class="badge-text">Mathematica</text>
+  </g>
+
+  <!-- Row 2 -->
+  <g transform="translate(20, 88)">
+    <rect x="0" y="0" width="102" height="26" rx="13" class="badge-bg" />
+    <circle cx="12" cy="13" r="4" fill="#F7931E" />
+    <text x="24" y="17" class="badge-text">Scikit-Learn</text>
+  </g>
+
+  <g transform="translate(130, 88)">
+    <rect x="0" y="0" width="85" height="26" rx="13" class="badge-bg" />
+    <circle cx="12" cy="13" r="4" fill="#EE4C2C" />
+    <text x="24" y="17" class="badge-text">PyTorch</text>
+  </g>
+
+  <g transform="translate(223, 88)">
+    <rect x="0" y="0" width="105" height="26" rx="13" class="badge-bg" />
+    <circle cx="12" cy="13" r="4" fill="#4B8BBE" />
+    <text x="24" y="17" class="badge-text">NumPy/Pandas</text>
+  </g>
+
+  <!-- Row 3 -->
+  <g transform="translate(20, 124)">
+    <rect x="0" y="0" width="70" height="26" rx="13" class="badge-bg" />
+    <circle cx="12" cy="13" r="4" fill="#E34C26" />
+    <text x="24" y="17" class="badge-text">SQL</text>
+  </g>
+
+  <g transform="translate(98, 124)">
+    <rect x="0" y="0" width="76" height="26" rx="13" class="badge-bg" />
+    <circle cx="12" cy="13" r="4" fill="#008080" />
+    <text x="24" y="17" class="badge-text">LaTeX</text>
+  </g>
+
+  <g transform="translate(182, 124)">
+    <rect x="0" y="0" width="88" height="26" rx="13" class="badge-bg" />
+    <circle cx="12" cy="13" r="4" fill="#F05032" />
+    <text x="24" y="17" class="badge-text">Git &amp; Hub</text>
+  </g>
+
+  <!-- Row 4 -->
+  <g transform="translate(20, 160)">
+    <rect x="0" y="0" width="78" height="26" rx="13" class="badge-bg" />
+    <circle cx="12" cy="13" r="4" fill="#FCC624" />
+    <text x="24" y="17" class="badge-text">Linux</text>
+  </g>
+
+  <g transform="translate(106, 160)">
+    <rect x="0" y="0" width="98" height="26" rx="13" class="badge-bg" />
+    <circle cx="12" cy="13" r="4" fill="#F1E05A" />
+    <text x="24" y="17" class="badge-text">JavaScript</text>
+  </g>
+
+  <g transform="translate(212, 160)">
+    <rect x="0" y="0" width="116" height="26" rx="13" class="badge-bg" />
+    <circle cx="12" cy="13" r="4" fill="#2EA043" />
+    <text x="24" y="17" class="badge-text">SARIMA/Markov</text>
+  </g>
+</svg>
