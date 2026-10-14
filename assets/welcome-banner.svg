@@ -1,22 +1,21 @@
-<svg width="800" height="90" viewBox="0 0 800 90" fill="none" xmlns="http://www.w3.org/2000/svg">
+<svg width="600" height="110" viewBox="0 0 600 110" fill="none" xmlns="http://www.w3.org/2000/svg">
   <defs>
     <style>
       .card-bg { fill: #0D1117; stroke: #30363D; stroke-width: 1; rx: 8px; }
-      .greeting { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Helvetica, Arial, sans-serif; font-size: 19px; font-weight: 700; fill: #F0F6FC; }
-      .subtext { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Helvetica, Arial, sans-serif; font-size: 13px; font-weight: 400; fill: #8B949E; }
-      .tag { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Helvetica, Arial, sans-serif; font-size: 11px; font-weight: 600; fill: #388BFD; }
+      .greeting { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Ubuntu, sans-serif; font-size: 18px; font-weight: 700; fill: #F0F6FC; text-anchor: middle; }
+      .subtext { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Ubuntu, sans-serif; font-size: 13px; font-weight: 400; fill: #8B949E; text-anchor: middle; }
+      .tag { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Ubuntu, sans-serif; font-size: 11px; font-weight: 600; fill: #388BFD; }
       .tag-bg { fill: #388BFD15; stroke: #388BFD40; stroke-width: 1; rx: 12px; }
     </style>
   </defs>
 
-  <rect x="1" y="1" width="798" height="88" rx="8" class="card-bg" />
+  <rect x="1" y="1" width="598" height="108" rx="8" class="card-bg" />
 
-  <g transform="translate(24, 34)">
-    <text x="0" y="0" class="greeting">Welcome to Ramadhan Imanur's Hub</text>
-    <text x="0" y="24" class="subtext">Explore open source contributions, mathematical modeling, and data science research</text>
-  </g>
+  <text x="300" y="34" class="greeting">Welcome to Ramadhan Imanur's Hub</text>
+  <text x="300" y="56" class="subtext">Applied Computation · Mathematical Modeling · Data Science</text>
 
-  <g transform="translate(640, 32)">
+  <!-- Tag Centered -->
+  <g transform="translate(232, 68)">
     <rect x="0" y="0" width="136" height="26" rx="13" class="tag-bg" />
     <circle cx="14" cy="13" r="4" fill="#2EA043" />
     <text x="26" y="17" class="tag">Active Portfolio</text>

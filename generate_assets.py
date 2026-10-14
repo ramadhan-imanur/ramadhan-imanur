@@ -1,6 +1,7 @@
 import datetime
 from html.parser import HTMLParser
 from pathlib import Path
+import re
 import shutil
 import urllib.request
 
@@ -18,7 +19,7 @@ class CalParser(HTMLParser):
   def __init__(self):
     super().__init__()
     self.days = []
-    self.total_contrib = "98 in the last year"
+    self.total_contrib = "101 in the last year"
     self.in_h2 = False
     self.h2_text = ""
 
@@ -53,8 +54,6 @@ parser.feed(html_data)
 print(f"Parsed {len(parser.days)} days. Total: {parser.total_contrib}")
 
 # Parse grid rows directly from <tr> tags (rows 1..7 for Sun..Sat)
-import re
-
 table_rows = re.findall(r"<tr[^>]*>(.*?)</tr>", html_data, re.DOTALL)
 grid_rows = []
 for r in table_rows[1:]:
@@ -64,7 +63,7 @@ for r in table_rows[1:]:
   if days:
     grid_rows.append(days)
 
-# We have 7 rows (row 0 = Sun, 1 = Mon, ..., 6 = Sat). Keep the last 52 weeks.
+# Keep the last 52 weeks
 max_cols = max(len(r) for r in grid_rows) if grid_rows else 0
 if max_cols > 52:
   grid_rows = [r[-52:] for r in grid_rows]
@@ -168,25 +167,24 @@ def build_welcome_banner_svg(theme="dark"):
   tag_text = "#388BFD" if is_dark else "#0969DA"
   dot_color = "#2EA043" if is_dark else "#1A7F37"
 
-  return f"""<svg width="800" height="90" viewBox="0 0 800 90" fill="none" xmlns="http://www.w3.org/2000/svg">
+  return f"""<svg width="600" height="110" viewBox="0 0 600 110" fill="none" xmlns="http://www.w3.org/2000/svg">
   <defs>
     <style>
       .card-bg {{ fill: {bg_card}; stroke: {border_card}; stroke-width: 1; rx: 8px; }}
-      .greeting {{ font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Helvetica, Arial, sans-serif; font-size: 19px; font-weight: 700; fill: {title_color}; }}
-      .subtext {{ font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Helvetica, Arial, sans-serif; font-size: 13px; font-weight: 400; fill: {text_color}; }}
-      .tag {{ font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Helvetica, Arial, sans-serif; font-size: 11px; font-weight: 600; fill: {tag_text}; }}
+      .greeting {{ font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Ubuntu, sans-serif; font-size: 18px; font-weight: 700; fill: {title_color}; text-anchor: middle; }}
+      .subtext {{ font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Ubuntu, sans-serif; font-size: 13px; font-weight: 400; fill: {text_color}; text-anchor: middle; }}
+      .tag {{ font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Ubuntu, sans-serif; font-size: 11px; font-weight: 600; fill: {tag_text}; }}
       .tag-bg {{ fill: {tag_bg}; stroke: {tag_border}; stroke-width: 1; rx: 12px; }}
     </style>
   </defs>
 
-  <rect x="1" y="1" width="798" height="88" rx="8" class="card-bg" />
+  <rect x="1" y="1" width="598" height="108" rx="8" class="card-bg" />
 
-  <g transform="translate(24, 34)">
-    <text x="0" y="0" class="greeting">Welcome to Ramadhan Imanur's Hub</text>
-    <text x="0" y="24" class="subtext">Explore open source contributions, mathematical modeling, and data science research</text>
-  </g>
+  <text x="300" y="34" class="greeting">Welcome to Ramadhan Imanur's Hub</text>
+  <text x="300" y="56" class="subtext">Applied Computation · Mathematical Modeling · Data Science</text>
 
-  <g transform="translate(640, 32)">
+  <!-- Tag Centered -->
+  <g transform="translate(232, 68)">
     <rect x="0" y="0" width="136" height="26" rx="13" class="tag-bg" />
     <circle cx="14" cy="13" r="4" fill="{dot_color}" />
     <text x="26" y="17" class="tag">Active Portfolio</text>
@@ -199,138 +197,49 @@ def build_quick_stats_svg(theme="dark"):
   bg_card = "#0D1117" if is_dark else "#FFFFFF"
   border_card = "#30363D" if is_dark else "#D0D7DE"
   num_color = "#F0F6FC" if is_dark else "#1F2328"
-  label_color = "#8B949E" if is_dark else "#656D76"
-  icon_color = "#8B949E" if is_dark else "#656D76"
-
-  g_commits = parser.total_contrib.split()[0] if parser.total_contrib else "100"
-
-  return f"""<svg width="800" height="110" viewBox="0 0 800 110" fill="none" xmlns="http://www.w3.org/2000/svg">
-  <defs>
-    <style>
-      .stat-card {{ fill: {bg_card}; stroke: {border_card}; stroke-width: 1; rx: 8px; }}
-      .stat-num {{ font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Helvetica, Arial, sans-serif; font-size: 24px; font-weight: 700; fill: {num_color}; text-anchor: middle; }}
-      .stat-label {{ font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Helvetica, Arial, sans-serif; font-size: 11px; font-weight: 600; fill: {label_color}; text-anchor: middle; letter-spacing: 0.8px; }}
-    </style>
-  </defs>
-
-  <!-- Card 1: Total Repos -->
-  <g transform="translate(0, 0)">
-    <rect x="1" y="1" width="188" height="108" rx="8" class="stat-card" />
-    <path d="M94 24h-10c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h16c1.1 0 2-.9 2-2v-11c0-1.1-.9-2-2-2h-5l-1.5-1.5c-.4-.4-.9-.5-1.5-.5z" fill="{icon_color}" />
-    <text x="95" y="68" class="stat-num">11+</text>
-    <text x="95" y="88" class="stat-label">TOTAL REPOS</text>
-  </g>
-
-  <!-- Card 2: Contributions -->
-  <g transform="translate(204, 0)">
-    <rect x="1" y="1" width="188" height="108" rx="8" class="stat-card" />
-    <path d="M95 24l2.5 5 5.5.8-4 3.9.9 5.5-4.9-2.6-4.9 2.6.9-5.5-4-3.9 5.5-.8 2.5-5z" fill="{icon_color}" />
-    <text x="95" y="68" class="stat-num">{g_commits}+</text>
-    <text x="95" y="88" class="stat-label">ANNUAL COMMITS</text>
-  </g>
-
-  <!-- Card 3: Followers -->
-  <g transform="translate(408, 0)">
-    <rect x="1" y="1" width="188" height="108" rx="8" class="stat-card" />
-    <path d="M91 30a3.5 3.5 0 100-7 3.5 3.5 0 000 7zm8 0a3 3 0 100-6 3 3 0 000 6zm-8 3c-2.3 0-7 1.2-7 3.5V39h14v-2.5c0-2.3-4.7-3.5-7-3.5zm8 0c-.3 0-.7 0-1.1.1 1.3.9 2.1 2.1 2.1 3.4V39h6v-2.5c0-2.3-4.7-3.5-7-3.5z" fill="{icon_color}" />
-    <text x="95" y="68" class="stat-num">2+</text>
-    <text x="95" y="88" class="stat-label">FOLLOWERS</text>
-  </g>
-
-  <!-- Card 4: Years Active -->
-  <g transform="translate(612, 0)">
-    <rect x="1" y="1" width="187" height="108" rx="8" class="stat-card" />
-    <path d="M94 24a8 8 0 100 16 8 8 0 000-16zm0 14.5a6.5 6.5 0 110-13 6.5 6.5 0 010 13zm.5-10.5H93v4.5l3.8 2.3.8-1.2-3.1-1.8V28z" fill="{icon_color}" />
-    <text x="94" y="68" class="stat-num">5</text>
-    <text x="94" y="88" class="stat-label">YEARS ACTIVE</text>
-  </g>
-</svg>"""
-
-
-def build_welcome_banner_mobile_svg(theme="dark"):
-  is_dark = theme == "dark"
-  bg_card = "#0D1117" if is_dark else "#FFFFFF"
-  border_card = "#30363D" if is_dark else "#D0D7DE"
-  title_color = "#F0F6FC" if is_dark else "#1F2328"
-  text_color = "#8B949E" if is_dark else "#656D76"
-  tag_bg = "#388BFD15" if is_dark else "#0969DA15"
-  tag_border = "#388BFD40" if is_dark else "#0969DA40"
-  tag_text = "#388BFD" if is_dark else "#0969DA"
-  dot_color = "#2EA043" if is_dark else "#1A7F37"
-
-  return f"""<svg width="500" height="120" viewBox="0 0 500 120" fill="none" xmlns="http://www.w3.org/2000/svg">
-  <defs>
-    <style>
-      .card-bg {{ fill: {bg_card}; stroke: {border_card}; stroke-width: 1; rx: 8px; }}
-      .greeting {{ font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Ubuntu, sans-serif; font-size: 17px; font-weight: 700; fill: {title_color}; text-anchor: middle; }}
-      .subtext {{ font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Ubuntu, sans-serif; font-size: 12px; font-weight: 400; fill: {text_color}; text-anchor: middle; }}
-      .tag {{ font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Ubuntu, sans-serif; font-size: 11px; font-weight: 600; fill: {tag_text}; }}
-      .tag-bg {{ fill: {tag_bg}; stroke: {tag_border}; stroke-width: 1; rx: 12px; }}
-    </style>
-  </defs>
-
-  <rect x="1" y="1" width="498" height="118" rx="8" class="card-bg" />
-
-  <text x="250" y="36" class="greeting">Welcome to Ramadhan Imanur's Hub</text>
-  <text x="250" y="58" class="subtext">Applied Computation · Mathematical Modeling · Data Science</text>
-
-  <!-- Tag Centered -->
-  <g transform="translate(182, 74)">
-    <rect x="0" y="0" width="136" height="26" rx="13" class="tag-bg" />
-    <circle cx="14" cy="13" r="4" fill="{dot_color}" />
-    <text x="26" y="17" class="tag">Active Portfolio</text>
-  </g>
-</svg>"""
-
-
-def build_quick_stats_mobile_svg(theme="dark"):
-  is_dark = theme == "dark"
-  bg_card = "#0D1117" if is_dark else "#FFFFFF"
-  border_card = "#30363D" if is_dark else "#D0D7DE"
-  num_color = "#F0F6FC" if is_dark else "#1F2328"
   text_color = "#8B949E" if is_dark else "#656D76"
   card_fill = "#161B22" if is_dark else "#F6F8FA"
-  g_commits = parser.total_contrib.split()[0] if parser.total_contrib else "100"
+  g_commits = parser.total_contrib.split()[0] if parser.total_contrib else "101"
 
-  return f"""<svg width="500" height="196" viewBox="0 0 500 196" fill="none" xmlns="http://www.w3.org/2000/svg">
+  return f"""<svg width="600" height="204" viewBox="0 0 600 204" fill="none" xmlns="http://www.w3.org/2000/svg">
   <defs>
     <style>
       .card {{ fill: {card_fill}; stroke: {border_card}; stroke-width: 1; rx: 8px; }}
-      .num {{ font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Ubuntu, sans-serif; font-size: 22px; font-weight: 700; fill: {num_color}; text-anchor: middle; }}
+      .num {{ font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Ubuntu, sans-serif; font-size: 24px; font-weight: 700; fill: {num_color}; text-anchor: middle; }}
       .lbl {{ font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Ubuntu, sans-serif; font-size: 11px; font-weight: 600; fill: {text_color}; text-anchor: middle; letter-spacing: 0.8px; }}
     </style>
   </defs>
 
   <!-- Top-Left: Repos -->
   <g transform="translate(0, 0)">
-    <rect x="1" y="1" width="242" height="92" rx="8" class="card" />
-    <path d="M121 18h-8c-.9 0-1.6.7-1.6 1.6v11.2c0 .9.7 1.6 1.6 1.6h12.8c.9 0 1.6-.7 1.6-1.6v-8.8c0-.9-.7-1.6-1.6-1.6h-4l-1.2-1.2c-.3-.3-.7-.4-1.2-.4z" fill="{text_color}" />
-    <text x="122" y="56" class="num">11+</text>
-    <text x="122" y="75" class="lbl">TOTAL REPOS</text>
+    <rect x="1" y="1" width="292" height="94" rx="8" class="card" />
+    <path d="M146 18h-8c-.9 0-1.6.7-1.6 1.6v11.2c0 .9.7 1.6 1.6 1.6h12.8c.9 0 1.6-.7 1.6-1.6v-8.8c0-.9-.7-1.6-1.6-1.6h-4l-1.2-1.2c-.3-.3-.7-.4-1.2-.4z" fill="{text_color}" />
+    <text x="146" y="58" class="num">11+</text>
+    <text x="146" y="77" class="lbl">TOTAL REPOS</text>
   </g>
 
   <!-- Top-Right: Commits -->
-  <g transform="translate(254, 0)">
-    <rect x="1" y="1" width="244" height="92" rx="8" class="card" />
-    <path d="M122 18l2 4 4.4.6-3.2 3.1.8 4.4-4-2.1-4 2.1.8-4.4-3.2-3.1 4.4-.6 2-4z" fill="{text_color}" />
-    <text x="123" y="56" class="num">{g_commits}+</text>
-    <text x="123" y="75" class="lbl">ANNUAL COMMITS</text>
+  <g transform="translate(308, 0)">
+    <rect x="1" y="1" width="292" height="94" rx="8" class="card" />
+    <path d="M146 18l2.2 4.4 4.8.7-3.5 3.4.8 4.8-4.3-2.3-4.3 2.3.8-4.8-3.5-3.4 4.8-.7 2.2-4.4z" fill="{text_color}" />
+    <text x="146" y="58" class="num">{g_commits}+</text>
+    <text x="146" y="77" class="lbl">ANNUAL COMMITS</text>
   </g>
 
   <!-- Bottom-Left: Followers -->
-  <g transform="translate(0, 102)">
-    <rect x="1" y="1" width="242" height="92" rx="8" class="card" />
-    <path d="M119 122a2.8 2.8 0 100-5.6 2.8 2.8 0 000 5.6zm6.4 0a2.4 2.4 0 100-4.8 2.4 2.4 0 000 4.8zm-6.4 2.4c-1.8 0-5.6 1-5.6 2.8V129h11.2v-1.8c0-1.8-3.8-2.8-5.6-2.8zm6.4 0c-.2 0-.6 0-.9.1 1 .7 1.7 1.7 1.7 2.7v1.8h4.8v-1.8c0-1.8-3.8-2.8-5.6-2.8z" fill="{text_color}" />
-    <text x="122" y="158" class="num">2+</text>
-    <text x="122" y="177" class="lbl">FOLLOWERS</text>
+  <g transform="translate(0, 108)">
+    <rect x="1" y="1" width="292" height="94" rx="8" class="card" />
+    <path d="M143 18a3 3 0 100-6 3 3 0 000 6zm7 0a2.5 2.5 0 100-5 2.5 2.5 0 000 5zm-7 2.5c-2 0-6 1-6 3v2h12v-2c0-2-4-3-6-3zm7 0c-.3 0-.6 0-.9.1 1.1.8 1.9 1.8 1.9 2.9v2h5v-2c0-2-4-3-6-3z" fill="{text_color}" />
+    <text x="146" y="58" class="num">2+</text>
+    <text x="146" y="77" class="lbl">FOLLOWERS</text>
   </g>
 
   <!-- Bottom-Right: Years Active -->
-  <g transform="translate(254, 102)">
-    <rect x="1" y="1" width="244" height="92" rx="8" class="card" />
-    <path d="M122 118a6.4 6.4 0 100 12.8 6.4 6.4 0 000-12.8zm0 11.6a5.2 5.2 0 110-10.4 5.2 5.2 0 010 10.4zm.4-8.4h-1.2v3.6l3 1.8.6-1-2.4-1.4V121.2z" fill="{text_color}" />
-    <text x="123" y="158" class="num">5</text>
-    <text x="123" y="177" class="lbl">YEARS ACTIVE</text>
+  <g transform="translate(308, 108)">
+    <rect x="1" y="1" width="292" height="94" rx="8" class="card" />
+    <path d="M146 15a7 7 0 100 14 7 7 0 000-14zm0 12.6a5.6 5.6 0 110-11.2 5.6 5.6 0 010 11.2zm.4-9h-1.4v4l3.3 2 .7-1.1-2.6-1.6v-3.3z" fill="{text_color}" />
+    <text x="146" y="58" class="num">5</text>
+    <text x="146" y="77" class="lbl">YEARS ACTIVE</text>
   </g>
 </svg>"""
 
@@ -440,29 +349,21 @@ def build_core_tech_svg(theme="dark"):
 </svg>"""
 
 
-# Write Dark SVGs (Desktop & Mobile)
+# Write Dark SVGs
 with open(ASSETS_DIR / "welcome-banner-dark.svg", "w", encoding="utf-8") as f:
   f.write(build_welcome_banner_svg("dark"))
-with open(ASSETS_DIR / "welcome-banner-mobile-dark.svg", "w", encoding="utf-8") as f:
-  f.write(build_welcome_banner_mobile_svg("dark"))
 with open(ASSETS_DIR / "quick-stats-dark.svg", "w", encoding="utf-8") as f:
   f.write(build_quick_stats_svg("dark"))
-with open(ASSETS_DIR / "quick-stats-mobile-dark.svg", "w", encoding="utf-8") as f:
-  f.write(build_quick_stats_mobile_svg("dark"))
 with open(ASSETS_DIR / "contributions-dark.svg", "w", encoding="utf-8") as f:
   f.write(build_contributions_svg("dark"))
 with open(ASSETS_DIR / "core-tech-dark.svg", "w", encoding="utf-8") as f:
   f.write(build_core_tech_svg("dark"))
 
-# Write Light SVGs (Desktop & Mobile)
+# Write Light SVGs
 with open(ASSETS_DIR / "welcome-banner-light.svg", "w", encoding="utf-8") as f:
   f.write(build_welcome_banner_svg("light"))
-with open(ASSETS_DIR / "welcome-banner-mobile-light.svg", "w", encoding="utf-8") as f:
-  f.write(build_welcome_banner_mobile_svg("light"))
 with open(ASSETS_DIR / "quick-stats-light.svg", "w", encoding="utf-8") as f:
   f.write(build_quick_stats_svg("light"))
-with open(ASSETS_DIR / "quick-stats-mobile-light.svg", "w", encoding="utf-8") as f:
-  f.write(build_quick_stats_mobile_svg("light"))
 with open(ASSETS_DIR / "contributions-light.svg", "w", encoding="utf-8") as f:
   f.write(build_contributions_svg("light"))
 with open(ASSETS_DIR / "core-tech-light.svg", "w", encoding="utf-8") as f:
