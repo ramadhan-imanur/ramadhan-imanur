@@ -1,6 +1,7 @@
 import datetime
 from html.parser import HTMLParser
 from pathlib import Path
+import shutil
 import urllib.request
 
 ASSETS_DIR = Path(__file__).resolve().parent / "assets"
@@ -39,7 +40,6 @@ class CalParser(HTMLParser):
       self.in_h2 = False
       cleaned = " ".join(self.h2_text.split())
       if "contributions" in cleaned:
-        # e.g. "98 contributions in the last year" -> "98 in the last year"
         parts = cleaned.replace("contributions", "").split()
         self.total_contrib = f"{parts[0]} in the last year"
 
@@ -76,72 +76,76 @@ for col_idx, week in enumerate(weeks):
       month_labels.append((dt.strftime("%b"), col_idx))
       last_month = dt.month
 
-# Generate contributions.svg
-color_map = {
-    0: "#161B22",  # Dark empty cell
-    1: "#0E4429",  # Level 1
-    2: "#006D32",  # Level 2
-    3: "#26A641",  # Level 3
-    4: "#39D353",  # Level 4
-}
 
-svg_width = 800
-svg_height = 200
-cell_size = 10
-cell_gap = 3
-start_x = 42
-start_y = 65
+def build_contributions_svg(theme="dark"):
+  is_dark = theme == "dark"
+  bg_card = "#0D1117" if is_dark else "#FFFFFF"
+  border_card = "#30363D" if is_dark else "#D0D7DE"
+  title_color = "#F0F6FC" if is_dark else "#1F2328"
+  text_color = "#8B949E" if is_dark else "#656D76"
 
-cells_svg = []
-for col_idx, week in enumerate(weeks):
-  x = start_x + col_idx * (cell_size + cell_gap)
-  for row_idx, day in enumerate(week):
-    y = start_y + row_idx * (cell_size + cell_gap)
-    color = color_map.get(day["level"], "#161B22")
-    cells_svg.append(
-        f'<rect x="{x}" y="{y}" width="{cell_size}" height="{cell_size}"'
-        f' rx="2" fill="{color}" />'
+  color_map = {
+      0: "#161B22" if is_dark else "#EBEDF0",
+      1: "#0E4429" if is_dark else "#9BE9A8",
+      2: "#006D32" if is_dark else "#40C463",
+      3: "#26A641" if is_dark else "#30A14E",
+      4: "#39D353" if is_dark else "#216E39",
+  }
+
+  svg_width = 800
+  svg_height = 200
+  cell_size = 10
+  cell_gap = 3
+  start_x = 42
+  start_y = 65
+
+  cells_svg = []
+  for col_idx, week in enumerate(weeks):
+    x = start_x + col_idx * (cell_size + cell_gap)
+    for row_idx, day in enumerate(week):
+      y = start_y + row_idx * (cell_size + cell_gap)
+      color = color_map.get(day["level"], color_map[0])
+      cells_svg.append(
+          f'<rect x="{x}" y="{y}" width="{cell_size}" height="{cell_size}"'
+          f' rx="2" fill="{color}" />'
+      )
+
+  months_svg = []
+  for m_label, col_idx in month_labels:
+    x = start_x + col_idx * (cell_size + cell_gap)
+    months_svg.append(
+        f'<text x="{x}" y="{start_y - 8}" fill="{text_color}" font-size="10"'
+        ' font-family="-apple-system,BlinkMacSystemFont,\'Segoe'
+        ' UI\',Helvetica,Arial,sans-serif">'
+        f"{m_label}</text>"
     )
 
-months_svg = []
-for m_label, col_idx in month_labels:
-  x = start_x + col_idx * (cell_size + cell_gap)
-  months_svg.append(
-      f'<text x="{x}" y="{start_y - 8}" fill="#8B949E" font-size="10"'
-      ' font-family="-apple-system,BlinkMacSystemFont,\'Segoe'
-      ' UI\',Helvetica,Arial,sans-serif">'
-      f"{m_label}</text>"
-  )
+  days_labels_svg = []
+  days_map = {1: "Mon", 3: "Wed", 5: "Fri"}
+  for r_idx, label in days_map.items():
+    y = start_y + r_idx * (cell_size + cell_gap) + 8
+    days_labels_svg.append(
+        f'<text x="{start_x - 10}" y="{y}" text-anchor="end"'
+        f' fill="{text_color}" font-size="10"'
+        ' font-family="-apple-system,BlinkMacSystemFont,\'Segoe'
+        ' UI\',Helvetica,Arial,sans-serif">'
+        f"{label}</text>"
+    )
 
-days_labels_svg = []
-days_map = {1: "Mon", 3: "Wed", 5: "Fri"}
-for r_idx, label in days_map.items():
-  y = start_y + r_idx * (cell_size + cell_gap) + 8
-  days_labels_svg.append(
-      f'<text x="{start_x - 10}" y="{y}" text-anchor="end" fill="#8B949E"'
-      ' font-size="10"'
-      ' font-family="-apple-system,BlinkMacSystemFont,\'Segoe'
-      ' UI\',Helvetica,Arial,sans-serif">'
-      f"{label}</text>"
-  )
-
-contributions_svg = f"""<svg width="{svg_width}" height="{svg_height}" viewBox="0 0 {svg_width} {svg_height}" fill="none" xmlns="http://www.w3.org/2000/svg">
+  return f"""<svg width="{svg_width}" height="{svg_height}" viewBox="0 0 {svg_width} {svg_height}" fill="none" xmlns="http://www.w3.org/2000/svg">
   <defs>
     <style>
-      .card-bg {{ fill: #0D1117; stroke: #30363D; stroke-width: 1; rx: 8px; }}
-      .title {{ font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Helvetica, Arial, sans-serif; font-size: 16px; font-weight: 600; fill: #F0F6FC; }}
-      .subtitle {{ font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Helvetica, Arial, sans-serif; font-size: 13px; font-weight: 500; fill: #8B949E; }}
-      .footnote {{ font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Helvetica, Arial, sans-serif; font-size: 11px; fill: #8B949E; }}
+      .card-bg {{ fill: {bg_card}; stroke: {border_card}; stroke-width: 1; rx: 8px; }}
+      .title {{ font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Helvetica, Arial, sans-serif; font-size: 16px; font-weight: 600; fill: {title_color}; }}
+      .subtitle {{ font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Helvetica, Arial, sans-serif; font-size: 13px; font-weight: 500; fill: {text_color}; }}
+      .footnote {{ font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Helvetica, Arial, sans-serif; font-size: 11px; fill: {text_color}; }}
     </style>
   </defs>
 
-  <!-- Container Card -->
   <rect x="1" y="1" width="{svg_width - 2}" height="{svg_height - 2}" rx="8" class="card-bg" />
 
-  <!-- Header -->
   <g transform="translate(20, 26)">
-    <!-- Icon -->
-    <path d="M3 13V17C3 18.1046 3.89543 19 5 19H19C20.1046 19 21 18.1046 21 17V13M3 13V7C3 5.89543 3.89543 5 5 5H19C20.1046 5 21 5.89543 21 7V13M3 13H21M8 10V14M16 10V14" stroke="#8B949E" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" />
+    <path d="M3 13V17C3 18.1046 3.89543 19 5 19H19C20.1046 19 21 18.1046 21 17V13M3 13V7C3 5.89543 3.89543 5 5 5H19C20.1046 5 21 5.89543 21 7V13M3 13H21M8 10V14M16 10V14" stroke="{text_color}" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" />
     <text x="28" y="14" class="title">Contributions</text>
   </g>
   <text x="{svg_width - 24}" y="38" text-anchor="end" class="subtitle">{parser.total_contrib}</text>
@@ -161,79 +165,35 @@ contributions_svg = f"""<svg width="{svg_width}" height="{svg_height}" viewBox="
   <!-- Legend -->
   <g transform="translate({svg_width - 160}, {svg_height - 26})">
     <text x="-8" y="8" text-anchor="end" class="footnote">Less</text>
-    <rect x="0" y="0" width="10" height="10" rx="2" fill="#161B22" />
-    <rect x="14" y="0" width="10" height="10" rx="2" fill="#0E4429" />
-    <rect x="28" y="0" width="10" height="10" rx="2" fill="#006D32" />
-    <rect x="42" y="0" width="10" height="10" rx="2" fill="#26A641" />
-    <rect x="56" y="0" width="10" height="10" rx="2" fill="#39D353" />
+    <rect x="0" y="0" width="10" height="10" rx="2" fill="{color_map[0]}" />
+    <rect x="14" y="0" width="10" height="10" rx="2" fill="{color_map[1]}" />
+    <rect x="28" y="0" width="10" height="10" rx="2" fill="{color_map[2]}" />
+    <rect x="42" y="0" width="10" height="10" rx="2" fill="{color_map[3]}" />
+    <rect x="56" y="0" width="10" height="10" rx="2" fill="{color_map[4]}" />
     <text x="74" y="8" class="footnote">More</text>
   </g>
 </svg>"""
 
-with open(ASSETS_DIR / "contributions.svg", "w", encoding="utf-8") as f:
-  f.write(contributions_svg)
-print("Saved assets/contributions.svg")
 
-# Generate quick-stats.svg (4 Cards in a row)
-quick_stats_svg = """<svg width="800" height="110" viewBox="0 0 800 110" fill="none" xmlns="http://www.w3.org/2000/svg">
+def build_welcome_banner_svg(theme="dark"):
+  is_dark = theme == "dark"
+  bg_card = "#0D1117" if is_dark else "#FFFFFF"
+  border_card = "#30363D" if is_dark else "#D0D7DE"
+  title_color = "#F0F6FC" if is_dark else "#1F2328"
+  text_color = "#8B949E" if is_dark else "#656D76"
+  tag_bg = "#388BFD15" if is_dark else "#0969DA15"
+  tag_border = "#388BFD40" if is_dark else "#0969DA40"
+  tag_text = "#388BFD" if is_dark else "#0969DA"
+  dot_color = "#2EA043" if is_dark else "#1A7F37"
+
+  return f"""<svg width="800" height="90" viewBox="0 0 800 90" fill="none" xmlns="http://www.w3.org/2000/svg">
   <defs>
     <style>
-      .stat-card { fill: #0D1117; stroke: #30363D; stroke-width: 1; rx: 8px; }
-      .stat-num { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Helvetica, Arial, sans-serif; font-size: 24px; font-weight: 700; fill: #F0F6FC; text-anchor: middle; }
-      .stat-label { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Helvetica, Arial, sans-serif; font-size: 11px; font-weight: 600; fill: #8B949E; text-anchor: middle; letter-spacing: 0.8px; }
-    </style>
-  </defs>
-
-  <!-- Card 1: Total Repos -->
-  <g transform="translate(0, 0)">
-    <rect x="1" y="1" width="188" height="108" rx="8" class="stat-card" />
-    <!-- Folder Icon -->
-    <path d="M94 24h-10c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h16c1.1 0 2-.9 2-2v-11c0-1.1-.9-2-2-2h-5l-1.5-1.5c-.4-.4-.9-.5-1.5-.5z" fill="#8B949E" />
-    <text x="95" y="68" class="stat-num">11+</text>
-    <text x="95" y="88" class="stat-label">TOTAL REPOS</text>
-  </g>
-
-  <!-- Card 2: Contributions -->
-  <g transform="translate(204, 0)">
-    <rect x="1" y="1" width="188" height="108" rx="8" class="stat-card" />
-    <!-- Star Icon -->
-    <path d="M95 24l2.5 5 5.5.8-4 3.9.9 5.5-4.9-2.6-4.9 2.6.9-5.5-4-3.9 5.5-.8 2.5-5z" fill="#8B949E" />
-    <text x="95" y="68" class="stat-num">98+</text>
-    <text x="95" y="88" class="stat-label">ANNUAL COMMITS</text>
-  </g>
-
-  <!-- Card 3: Followers -->
-  <g transform="translate(408, 0)">
-    <rect x="1" y="1" width="188" height="108" rx="8" class="stat-card" />
-    <!-- Users Icon -->
-    <path d="M91 30a3.5 3.5 0 100-7 3.5 3.5 0 000 7zm8 0a3 3 0 100-6 3 3 0 000 6zm-8 3c-2.3 0-7 1.2-7 3.5V39h14v-2.5c0-2.3-4.7-3.5-7-3.5zm8 0c-.3 0-.7 0-1.1.1 1.3.9 2.1 2.1 2.1 3.4V39h6v-2.5c0-2.3-4.7-3.5-7-3.5z" fill="#8B949E" />
-    <text x="95" y="68" class="stat-num">2+</text>
-    <text x="95" y="88" class="stat-label">FOLLOWERS</text>
-  </g>
-
-  <!-- Card 4: Years Active -->
-  <g transform="translate(612, 0)">
-    <rect x="1" y="1" width="187" height="108" rx="8" class="stat-card" />
-    <!-- Clock Icon -->
-    <path d="M94 24a8 8 0 100 16 8 8 0 000-16zm0 14.5a6.5 6.5 0 110-13 6.5 6.5 0 010 13zm.5-10.5H93v4.5l3.8 2.3.8-1.2-3.1-1.8V28z" fill="#8B949E" />
-    <text x="94" y="68" class="stat-num">5</text>
-    <text x="94" y="88" class="stat-label">YEARS ACTIVE</text>
-  </g>
-</svg>"""
-
-with open(ASSETS_DIR / "quick-stats.svg", "w", encoding="utf-8") as f:
-  f.write(quick_stats_svg)
-print("Saved assets/quick-stats.svg")
-
-# Generate welcome-banner.svg
-welcome_banner_svg = """<svg width="800" height="90" viewBox="0 0 800 90" fill="none" xmlns="http://www.w3.org/2000/svg">
-  <defs>
-    <style>
-      .card-bg { fill: #0D1117; stroke: #30363D; stroke-width: 1; rx: 8px; }
-      .greeting { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Helvetica, Arial, sans-serif; font-size: 19px; font-weight: 700; fill: #F0F6FC; }
-      .subtext { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Helvetica, Arial, sans-serif; font-size: 13px; font-weight: 400; fill: #8B949E; }
-      .tag { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Helvetica, Arial, sans-serif; font-size: 11px; font-weight: 600; fill: #388BFD; }
-      .tag-bg { fill: #388BFD15; stroke: #388BFD40; stroke-width: 1; rx: 12px; }
+      .card-bg {{ fill: {bg_card}; stroke: {border_card}; stroke-width: 1; rx: 8px; }}
+      .greeting {{ font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Helvetica, Arial, sans-serif; font-size: 19px; font-weight: 700; fill: {title_color}; }}
+      .subtext {{ font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Helvetica, Arial, sans-serif; font-size: 13px; font-weight: 400; fill: {text_color}; }}
+      .tag {{ font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Helvetica, Arial, sans-serif; font-size: 11px; font-weight: 600; fill: {tag_text}; }}
+      .tag-bg {{ fill: {tag_bg}; stroke: {tag_border}; stroke-width: 1; rx: 12px; }}
     </style>
   </defs>
 
@@ -244,26 +204,85 @@ welcome_banner_svg = """<svg width="800" height="90" viewBox="0 0 800 90" fill="
     <text x="0" y="24" class="subtext">Explore open source contributions, mathematical modeling, and data science research</text>
   </g>
 
-  <!-- Tag / Badge Right -->
   <g transform="translate(640, 32)">
     <rect x="0" y="0" width="136" height="26" rx="13" class="tag-bg" />
-    <circle cx="14" cy="13" r="4" fill="#2EA043" />
+    <circle cx="14" cy="13" r="4" fill="{dot_color}" />
     <text x="26" y="17" class="tag">Active Portfolio</text>
   </g>
 </svg>"""
 
-with open(ASSETS_DIR / "welcome-banner.svg", "w", encoding="utf-8") as f:
-  f.write(welcome_banner_svg)
-print("Saved assets/welcome-banner.svg")
 
-# Generate core-tech.svg matching languages-donut.svg size (350x215)
-core_tech_svg = """<svg width="350" height="215" viewBox="0 0 350 215" fill="none" xmlns="http://www.w3.org/2000/svg">
+def build_quick_stats_svg(theme="dark"):
+  is_dark = theme == "dark"
+  bg_card = "#0D1117" if is_dark else "#FFFFFF"
+  border_card = "#30363D" if is_dark else "#D0D7DE"
+  num_color = "#F0F6FC" if is_dark else "#1F2328"
+  label_color = "#8B949E" if is_dark else "#656D76"
+  icon_color = "#8B949E" if is_dark else "#656D76"
+
+  return f"""<svg width="800" height="110" viewBox="0 0 800 110" fill="none" xmlns="http://www.w3.org/2000/svg">
   <defs>
     <style>
-      .card-bg { fill: #0D1117; stroke: #30363D; stroke-width: 1; rx: 4.5px; }
-      .header { font: 600 13px -apple-system, BlinkMacSystemFont, 'Segoe UI', Ubuntu, Sans-Serif; fill: #8B949E; text-transform: uppercase; letter-spacing: 0.8px; }
-      .badge-bg { fill: #161B22; stroke: #30363D; stroke-width: 1; rx: 12px; }
-      .badge-text { font: 500 11px -apple-system, BlinkMacSystemFont, 'Segoe UI', Ubuntu, Sans-Serif; fill: #C9D1D9; }
+      .stat-card {{ fill: {bg_card}; stroke: {border_card}; stroke-width: 1; rx: 8px; }}
+      .stat-num {{ font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Helvetica, Arial, sans-serif; font-size: 24px; font-weight: 700; fill: {num_color}; text-anchor: middle; }}
+      .stat-label {{ font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Helvetica, Arial, sans-serif; font-size: 11px; font-weight: 600; fill: {label_color}; text-anchor: middle; letter-spacing: 0.8px; }}
+    </style>
+  </defs>
+
+  <!-- Card 1: Total Repos -->
+  <g transform="translate(0, 0)">
+    <rect x="1" y="1" width="188" height="108" rx="8" class="stat-card" />
+    <path d="M94 24h-10c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h16c1.1 0 2-.9 2-2v-11c0-1.1-.9-2-2-2h-5l-1.5-1.5c-.4-.4-.9-.5-1.5-.5z" fill="{icon_color}" />
+    <text x="95" y="68" class="stat-num">11+</text>
+    <text x="95" y="88" class="stat-label">TOTAL REPOS</text>
+  </g>
+
+  <!-- Card 2: Contributions -->
+  <g transform="translate(204, 0)">
+    <rect x="1" y="1" width="188" height="108" rx="8" class="stat-card" />
+    <path d="M95 24l2.5 5 5.5.8-4 3.9.9 5.5-4.9-2.6-4.9 2.6.9-5.5-4-3.9 5.5-.8 2.5-5z" fill="{icon_color}" />
+    <text x="95" y="68" class="stat-num">98+</text>
+    <text x="95" y="88" class="stat-label">ANNUAL COMMITS</text>
+  </g>
+
+  <!-- Card 3: Followers -->
+  <g transform="translate(408, 0)">
+    <rect x="1" y="1" width="188" height="108" rx="8" class="stat-card" />
+    <path d="M91 30a3.5 3.5 0 100-7 3.5 3.5 0 000 7zm8 0a3 3 0 100-6 3 3 0 000 6zm-8 3c-2.3 0-7 1.2-7 3.5V39h14v-2.5c0-2.3-4.7-3.5-7-3.5zm8 0c-.3 0-.7 0-1.1.1 1.3.9 2.1 2.1 2.1 3.4V39h6v-2.5c0-2.3-4.7-3.5-7-3.5z" fill="{icon_color}" />
+    <text x="95" y="68" class="stat-num">2+</text>
+    <text x="95" y="88" class="stat-label">FOLLOWERS</text>
+  </g>
+
+  <!-- Card 4: Years Active -->
+  <g transform="translate(612, 0)">
+    <rect x="1" y="1" width="187" height="108" rx="8" class="stat-card" />
+    <path d="M94 24a8 8 0 100 16 8 8 0 000-16zm0 14.5a6.5 6.5 0 110-13 6.5 6.5 0 010 13zm.5-10.5H93v4.5l3.8 2.3.8-1.2-3.1-1.8V28z" fill="{icon_color}" />
+    <text x="94" y="68" class="stat-num">5</text>
+    <text x="94" y="88" class="stat-label">YEARS ACTIVE</text>
+  </g>
+</svg>"""
+
+
+def build_core_tech_svg(theme="dark"):
+  is_dark = theme == "dark"
+  bg_card = "#0D1117" if is_dark else "#FFFFFF"
+  border_card = "#30363D" if is_dark else "#D0D7DE"
+  header_color = "#8B949E" if is_dark else "#656D76"
+  badge_bg = "#161B22" if is_dark else "#F6F8FA"
+  badge_border = "#30363D" if is_dark else "#D0D7DE"
+  badge_text = "#C9D1D9" if is_dark else "#1F2328"
+
+  linux_dot = "#FCC624" if is_dark else "#D99B00"
+  js_dot = "#F1E05A" if is_dark else "#B89C00"
+  stoch_dot = "#2EA043" if is_dark else "#1A7F37"
+
+  return f"""<svg width="350" height="215" viewBox="0 0 350 215" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <defs>
+    <style>
+      .card-bg {{ fill: {bg_card}; stroke: {border_card}; stroke-width: 1; rx: 4.5px; }}
+      .header {{ font: 600 13px -apple-system, BlinkMacSystemFont, 'Segoe UI', Ubuntu, Sans-Serif; fill: {header_color}; text-transform: uppercase; letter-spacing: 0.8px; }}
+      .badge-bg {{ fill: {badge_bg}; stroke: {badge_border}; stroke-width: 1; rx: 12px; }}
+      .badge-text {{ font: 500 11px -apple-system, BlinkMacSystemFont, 'Segoe UI', Ubuntu, Sans-Serif; fill: {badge_text}; }}
     </style>
   </defs>
 
@@ -331,37 +350,83 @@ core_tech_svg = """<svg width="350" height="215" viewBox="0 0 350 215" fill="non
   <!-- Row 4 -->
   <g transform="translate(20, 160)">
     <rect x="0" y="0" width="78" height="26" rx="13" class="badge-bg" />
-    <circle cx="12" cy="13" r="4" fill="#FCC624" />
+    <circle cx="12" cy="13" r="4" fill="{linux_dot}" />
     <text x="24" y="17" class="badge-text">Linux</text>
   </g>
 
   <g transform="translate(106, 160)">
     <rect x="0" y="0" width="98" height="26" rx="13" class="badge-bg" />
-    <circle cx="12" cy="13" r="4" fill="#F1E05A" />
+    <circle cx="12" cy="13" r="4" fill="{js_dot}" />
     <text x="24" y="17" class="badge-text">JavaScript</text>
   </g>
 
   <g transform="translate(212, 160)">
     <rect x="0" y="0" width="116" height="26" rx="13" class="badge-bg" />
-    <circle cx="12" cy="13" r="4" fill="#2EA043" />
+    <circle cx="12" cy="13" r="4" fill="{stoch_dot}" />
     <text x="24" y="17" class="badge-text">SARIMA/Markov</text>
   </g>
 </svg>"""
 
-with open(ASSETS_DIR / "core-tech.svg", "w", encoding="utf-8") as f:
-  f.write(core_tech_svg)
-print("Saved assets/core-tech.svg")
 
-# Fetch and save languages donut
-print("Fetching donut chart...")
-donut_url = "https://github-readme-stats.vercel.app/api/top-langs/?username=ramadhan-imanur&layout=donut&theme=dark&bg_color=0D1117&border_color=30363D&title_color=E6EDF3&text_color=8B949E"
-req_donut = urllib.request.Request(donut_url, headers={"User-Agent": "Mozilla/5.0"})
+# Write Dark SVGs
+with open(ASSETS_DIR / "welcome-banner-dark.svg", "w", encoding="utf-8") as f:
+  f.write(build_welcome_banner_svg("dark"))
+with open(ASSETS_DIR / "quick-stats-dark.svg", "w", encoding="utf-8") as f:
+  f.write(build_quick_stats_svg("dark"))
+with open(ASSETS_DIR / "contributions-dark.svg", "w", encoding="utf-8") as f:
+  f.write(build_contributions_svg("dark"))
+with open(ASSETS_DIR / "core-tech-dark.svg", "w", encoding="utf-8") as f:
+  f.write(build_core_tech_svg("dark"))
+
+# Write Light SVGs
+with open(ASSETS_DIR / "welcome-banner-light.svg", "w", encoding="utf-8") as f:
+  f.write(build_welcome_banner_svg("light"))
+with open(ASSETS_DIR / "quick-stats-light.svg", "w", encoding="utf-8") as f:
+  f.write(build_quick_stats_svg("light"))
+with open(ASSETS_DIR / "contributions-light.svg", "w", encoding="utf-8") as f:
+  f.write(build_contributions_svg("light"))
+with open(ASSETS_DIR / "core-tech-light.svg", "w", encoding="utf-8") as f:
+  f.write(build_core_tech_svg("light"))
+
+# Fallbacks
+shutil.copyfile(
+    ASSETS_DIR / "welcome-banner-dark.svg", ASSETS_DIR / "welcome-banner.svg"
+)
+shutil.copyfile(
+    ASSETS_DIR / "quick-stats-dark.svg", ASSETS_DIR / "quick-stats.svg"
+)
+shutil.copyfile(
+    ASSETS_DIR / "contributions-dark.svg", ASSETS_DIR / "contributions.svg"
+)
+shutil.copyfile(ASSETS_DIR / "core-tech-dark.svg", ASSETS_DIR / "core-tech.svg")
+
+# Fetch Donut Charts (Dark & Light)
+print("Fetching Dark Donut chart...")
+dark_donut_url = "https://github-readme-stats.vercel.app/api/top-langs/?username=ramadhan-imanur&layout=donut&theme=dark&bg_color=0D1117&border_color=30363D&title_color=E6EDF3&text_color=8B949E"
+req_dark = urllib.request.Request(
+    dark_donut_url, headers={"User-Agent": "Mozilla/5.0"}
+)
 try:
-  donut_data = urllib.request.urlopen(req_donut, timeout=10).read()
+  donut_dark = urllib.request.urlopen(req_dark, timeout=10).read()
+  with open(ASSETS_DIR / "languages-donut-dark.svg", "wb") as f:
+    f.write(donut_dark)
   with open(ASSETS_DIR / "languages-donut.svg", "wb") as f:
-    f.write(donut_data)
-  print("Saved assets/languages-donut.svg")
+    f.write(donut_dark)
+  print("Saved assets/languages-donut-dark.svg")
 except Exception as e:
-  print("Error fetching donut chart:", e)
+  print("Error fetching dark donut:", e)
 
-print("All assets generated successfully!")
+print("Fetching Light Donut chart...")
+light_donut_url = "https://github-readme-stats.vercel.app/api/top-langs/?username=ramadhan-imanur&layout=donut&theme=default&bg_color=FFFFFF&border_color=D0D7DE&title_color=1F2328&text_color=656D76"
+req_light = urllib.request.Request(
+    light_donut_url, headers={"User-Agent": "Mozilla/5.0"}
+)
+try:
+  donut_light = urllib.request.urlopen(req_light, timeout=10).read()
+  with open(ASSETS_DIR / "languages-donut-light.svg", "wb") as f:
+    f.write(donut_light)
+  print("Saved assets/languages-donut-light.svg")
+except Exception as e:
+  print("Error fetching light donut:", e)
+
+print("All theme assets generated successfully!")

@@ -16,7 +16,6 @@
     <text x="0" y="24" class="subtext">Explore open source contributions, mathematical modeling, and data science research</text>
   </g>
 
-  <!-- Tag / Badge Right -->
   <g transform="translate(640, 32)">
     <rect x="0" y="0" width="136" height="26" rx="13" class="tag-bg" />
     <circle cx="14" cy="13" r="4" fill="#2EA043" />

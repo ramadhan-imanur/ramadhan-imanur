@@ -1,0 +1,41 @@
+<svg width="800" height="110" viewBox="0 0 800 110" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <defs>
+    <style>
+      .stat-card { fill: #0D1117; stroke: #30363D; stroke-width: 1; rx: 8px; }
+      .stat-num { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Helvetica, Arial, sans-serif; font-size: 24px; font-weight: 700; fill: #F0F6FC; text-anchor: middle; }
+      .stat-label { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Helvetica, Arial, sans-serif; font-size: 11px; font-weight: 600; fill: #8B949E; text-anchor: middle; letter-spacing: 0.8px; }
+    </style>
+  </defs>
+
+  <!-- Card 1: Total Repos -->
+  <g transform="translate(0, 0)">
+    <rect x="1" y="1" width="188" height="108" rx="8" class="stat-card" />
+    <path d="M94 24h-10c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h16c1.1 0 2-.9 2-2v-11c0-1.1-.9-2-2-2h-5l-1.5-1.5c-.4-.4-.9-.5-1.5-.5z" fill="#8B949E" />
+    <text x="95" y="68" class="stat-num">11+</text>
+    <text x="95" y="88" class="stat-label">TOTAL REPOS</text>
+  </g>
+
+  <!-- Card 2: Contributions -->
+  <g transform="translate(204, 0)">
+    <rect x="1" y="1" width="188" height="108" rx="8" class="stat-card" />
+    <path d="M95 24l2.5 5 5.5.8-4 3.9.9 5.5-4.9-2.6-4.9 2.6.9-5.5-4-3.9 5.5-.8 2.5-5z" fill="#8B949E" />
+    <text x="95" y="68" class="stat-num">98+</text>
+    <text x="95" y="88" class="stat-label">ANNUAL COMMITS</text>
+  </g>
+
+  <!-- Card 3: Followers -->
+  <g transform="translate(408, 0)">
+    <rect x="1" y="1" width="188" height="108" rx="8" class="stat-card" />
+    <path d="M91 30a3.5 3.5 0 100-7 3.5 3.5 0 000 7zm8 0a3 3 0 100-6 3 3 0 000 6zm-8 3c-2.3 0-7 1.2-7 3.5V39h14v-2.5c0-2.3-4.7-3.5-7-3.5zm8 0c-.3 0-.7 0-1.1.1 1.3.9 2.1 2.1 2.1 3.4V39h6v-2.5c0-2.3-4.7-3.5-7-3.5z" fill="#8B949E" />
+    <text x="95" y="68" class="stat-num">2+</text>
+    <text x="95" y="88" class="stat-label">FOLLOWERS</text>
+  </g>
+
+  <!-- Card 4: Years Active -->
+  <g transform="translate(612, 0)">
+    <rect x="1" y="1" width="187" height="108" rx="8" class="stat-card" />
+    <path d="M94 24a8 8 0 100 16 8 8 0 000-16zm0 14.5a6.5 6.5 0 110-13 6.5 6.5 0 010 13zm.5-10.5H93v4.5l3.8 2.3.8-1.2-3.1-1.8V28z" fill="#8B949E" />
+    <text x="94" y="68" class="stat-num">5</text>
+    <text x="94" y="88" class="stat-label">YEARS ACTIVE</text>
+  </g>
+</svg>
