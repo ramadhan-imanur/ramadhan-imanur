@@ -31,17 +31,6 @@
   </picture>
 </p>
 
-<!-- Contributions Activity Heatmap -->
-<p align="center">
-  <a href="https://github.com/ramadhan-imanur">
-    <picture>
-      <source media="(prefers-color-scheme: dark)" srcset="assets/contributions-dark.svg">
-      <source media="(prefers-color-scheme: light)" srcset="assets/contributions-light.svg">
-      <img src="assets/contributions-light.svg" alt="Contributions Activity Graph - Last 52 weeks" width="100%" />
-    </picture>
-  </a>
-</p>
-
 <!-- Tech Stack & Languages Section (Auto-Wrapping Responsively) -->
 ### Tech Stack & Languages
 
