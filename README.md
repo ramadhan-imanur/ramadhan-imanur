@@ -32,8 +32,6 @@
 </p>
 
 <!-- Tech Stack & Languages Section (Auto-Wrapping Responsively) -->
-### Tech Stack & Languages
-
 <p align="center">
   <picture>
     <source media="(prefers-color-scheme: dark)" srcset="assets/core-tech-dark.svg">
