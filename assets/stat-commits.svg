@@ -9,6 +9,6 @@
 
   <rect x="1" y="1" width="186" height="102" rx="8" class="card" />
   <path d="M94 22l2.5 5 5.5.8-4 3.9.9 5.5-4.9-2.6-4.9 2.6.9-5.5-4-3.9 5.5-.8 2.5-5z" fill="#8B949E" />
-  <text x="94" y="64" class="num">112+</text>
+  <text x="94" y="64" class="num">114+</text>
   <text x="94" y="84" class="lbl">ANNUAL COMMITS</text>
 </svg>

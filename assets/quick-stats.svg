@@ -19,7 +19,7 @@
   <g transform="translate(308, 0)">
     <rect x="1" y="1" width="292" height="94" rx="8" class="card" />
     <path d="M146 18l2.2 4.4 4.8.7-3.5 3.4.8 4.8-4.3-2.3-4.3 2.3.8-4.8-3.5-3.4 4.8-.7 2.2-4.4z" fill="#8B949E" />
-    <text x="146" y="58" class="num">112+</text>
+    <text x="146" y="58" class="num">114+</text>
     <text x="146" y="77" class="lbl">ANNUAL COMMITS</text>
   </g>
 
