@@ -13,11 +13,11 @@
   <g>
     <circle cx="24" cy="62" r="4.5" fill="#3572A5" />
     <text x="36" y="66" font-family="-apple-system, BlinkMacSystemFont, 'Segoe UI', Ubuntu, sans-serif" font-size="12" font-weight="500" fill="#C9D1D9">Python</text>
-    <text x="180" y="66" text-anchor="end" font-family="-apple-system, BlinkMacSystemFont, 'Segoe UI', Ubuntu, sans-serif" font-size="11" font-weight="500" fill="#8B949E">53.0%</text>
+    <text x="180" y="66" text-anchor="end" font-family="-apple-system, BlinkMacSystemFont, 'Segoe UI', Ubuntu, sans-serif" font-size="11" font-weight="500" fill="#8B949E">53.1%</text>
   </g>  <g>
     <circle cx="24" cy="90" r="4.5" fill="#563D7C" />
     <text x="36" y="94" font-family="-apple-system, BlinkMacSystemFont, 'Segoe UI', Ubuntu, sans-serif" font-size="12" font-weight="500" fill="#C9D1D9">CSS</text>
-    <text x="180" y="94" text-anchor="end" font-family="-apple-system, BlinkMacSystemFont, 'Segoe UI', Ubuntu, sans-serif" font-size="11" font-weight="500" fill="#8B949E">15.1%</text>
+    <text x="180" y="94" text-anchor="end" font-family="-apple-system, BlinkMacSystemFont, 'Segoe UI', Ubuntu, sans-serif" font-size="11" font-weight="500" fill="#8B949E">15.0%</text>
   </g>  <g>
     <circle cx="24" cy="118" r="4.5" fill="#F1E05A" />
     <text x="36" y="122" font-family="-apple-system, BlinkMacSystemFont, 'Segoe UI', Ubuntu, sans-serif" font-size="12" font-weight="500" fill="#C9D1D9">JavaScript</text>
@@ -35,6 +35,6 @@
   <!-- Donut Chart -->
   <g>
     <circle cx="260" cy="120" r="46" fill="none" stroke="#21262D" stroke-width="16" />
-    <circle cx="260" cy="120" r="46" fill="none" stroke="#3572A5" stroke-width="16" stroke-dasharray="153.04 135.99" stroke-dashoffset="-0.00" transform="rotate(-90 260 120)" /><circle cx="260" cy="120" r="46" fill="none" stroke="#563D7C" stroke-width="16" stroke-dasharray="43.50 245.52" stroke-dashoffset="-153.04" transform="rotate(-90 260 120)" /><circle cx="260" cy="120" r="46" fill="none" stroke="#F1E05A" stroke-width="16" stroke-dasharray="43.40 245.62" stroke-dashoffset="-196.54" transform="rotate(-90 260 120)" /><circle cx="260" cy="120" r="46" fill="none" stroke="#E34C26" stroke-width="16" stroke-dasharray="27.30 261.73" stroke-dashoffset="-239.94" transform="rotate(-90 260 120)" /><circle cx="260" cy="120" r="46" fill="none" stroke="#3D6117" stroke-width="16" stroke-dasharray="10.94 278.09" stroke-dashoffset="-267.25" transform="rotate(-90 260 120)" />
+    <circle cx="260" cy="120" r="46" fill="none" stroke="#3572A5" stroke-width="16" stroke-dasharray="153.36 135.67" stroke-dashoffset="-0.00" transform="rotate(-90 260 120)" /><circle cx="260" cy="120" r="46" fill="none" stroke="#563D7C" stroke-width="16" stroke-dasharray="43.40 245.63" stroke-dashoffset="-153.36" transform="rotate(-90 260 120)" /><circle cx="260" cy="120" r="46" fill="none" stroke="#F1E05A" stroke-width="16" stroke-dasharray="43.30 245.73" stroke-dashoffset="-196.76" transform="rotate(-90 260 120)" /><circle cx="260" cy="120" r="46" fill="none" stroke="#E34C26" stroke-width="16" stroke-dasharray="27.24 261.79" stroke-dashoffset="-240.06" transform="rotate(-90 260 120)" /><circle cx="260" cy="120" r="46" fill="none" stroke="#3D6117" stroke-width="16" stroke-dasharray="10.92 278.11" stroke-dashoffset="-267.30" transform="rotate(-90 260 120)" />
   </g>
 </svg>

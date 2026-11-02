@@ -7,7 +7,9 @@ import os
 from pathlib import Path
 import re
 import shutil
+import subprocess
 import sys
+import tempfile
 import urllib.request
 from concurrent.futures import ThreadPoolExecutor
 
@@ -169,18 +171,51 @@ def scan_directory(dir_path):
     return counts
 
 
+DEFAULT_REPOS = [
+    "absorbing-markov-chain-covid19-indonesia",
+    "analisis-makroekonomi-m2-ihsg",
+    "california-housing-ale-xai",
+    "HospitalDB-ManagementSystem",
+    "markov-chain-ihsg",
+    "naive-bayes-probabilistic-classification",
+    "ramadhan-imanur",
+    "rice-quality-sni",
+    "sarima-sampah-randukuning",
+    "seattle-911-poisson-process",
+    "time-series-wisman-soetta",
+    "Titanic_Survival_Prediction",
+    "tree-search-demo",
+]
+
+# Discover all public non-fork repos dynamically
+repos_data = fetch_json(f"https://api.github.com/users/{USERNAME}/repos?per_page=100&type=owner") or []
+repo_names = [r["name"] for r in repos_data if not r.get("fork")]
+if not repo_names:
+    repo_names = DEFAULT_REPOS
+
+
+def clone_repo(name, dest_dir):
+    url = f"https://github.com/{USERNAME}/{name}.git"
+    target = Path(dest_dir) / name
+    subprocess.run(["git", "clone", "--depth", "1", "--quiet", url, str(target)], check=False)
+
+
 lang_totals = {}
-# Try to scan temporary test directory if present
-if Path("/tmp/repos_sloc_test").exists():
-    try:
-        lang_totals = scan_directory("/tmp/repos_sloc_test")
+# 1. Live scan all repositories concurrently
+try:
+    print(f"  -> Scanning {len(repo_names)} repositories for real code changes...")
+    with tempfile.TemporaryDirectory() as tmp_dir:
+        with ThreadPoolExecutor(max_workers=5) as ex:
+            ex.map(lambda r: clone_repo(r, tmp_dir), repo_names)
+
+        lang_totals = scan_directory(tmp_dir)
         if lang_totals:
             with open(SLOC_CACHE_FILE, "w", encoding="utf-8") as f:
                 json.dump(lang_totals, f, indent=2)
-    except Exception as e:
-        print(f"Note: Error scanning /tmp/repos_sloc_test: {e}")
+except Exception as e:
+    print(f"Note: Error during live repo scan: {e}")
 
-# Fallback to SLOC cache
+# 2. Fallback to SLOC cache if live scan yielded nothing
 if not lang_totals and SLOC_CACHE_FILE.exists():
     try:
         with open(SLOC_CACHE_FILE, "r", encoding="utf-8") as f:
@@ -188,10 +223,10 @@ if not lang_totals and SLOC_CACHE_FILE.exists():
     except Exception:
         pass
 
-# Baseline default if no cache
+# 3. Baseline default if no cache
 if not lang_totals:
     lang_totals = {
-        "Python": 10589,
+        "Python": 10636,
         "CSS": 3010,
         "JavaScript": 3003,
         "HTML": 1889,
@@ -206,15 +241,20 @@ top_5 = sorted_langs[:5]
 
 LANGUAGE_COLORS = {
     "Python": "#3572A5",
+    "SQL": "#336791",       # PostgreSQL Blue (matches Core Technologies badge)
     "CSS": "#563D7C",
     "JavaScript": "#F1E05A",
     "HTML": "#E34C26",
     "LaTeX": "#3D6117",
-    "SQL": "#E38C00",
     "Shell": "#89E051",
+    "TypeScript": "#3178C6",
     "C": "#555555",
     "C++": "#F34B7D",
+    "R": "#198CE7",
     "Mathematica": "#DD1100",
+    "Rust": "#DEA584",
+    "Go": "#00ADD8",
+    "Java": "#B07219",
 }
 
 formatted_langs = []
