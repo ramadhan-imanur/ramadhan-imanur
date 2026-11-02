@@ -1,227 +1,40 @@
+<svg width="350" height="215" viewBox="0 0 350 215" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <defs>
+    <style>
+      .card-bg { fill: #FFFFFF; stroke: #D0D7DE; stroke-width: 1; rx: 4.5px; }
+      .header { font: 600 13px -apple-system, BlinkMacSystemFont, 'Segoe UI', Ubuntu, Sans-Serif; fill: #656D76; text-transform: uppercase; letter-spacing: 0.8px; }
+    </style>
+  </defs>
 
-      <svg
-        width="350"
-        height="215"
-        viewBox="0 0 350 215"
-        fill="none"
-        xmlns="http://www.w3.org/2000/svg"
-        role="img"
-        aria-labelledby="descId"
-      >
-        <title id="titleId"></title>
-        <desc id="descId"></desc>
-        <style>
-          .header {
-            font: 600 18px 'Segoe UI', Ubuntu, Sans-Serif;
-            fill: #1F2328;
-            animation: fadeInAnimation 0.8s ease-in-out forwards;
-          }
-          @supports(-moz-appearance: auto) {
-            /* Selector detects Firefox */
-            .header { font-size: 15.5px; }
-          }
-          
-    @keyframes slideInAnimation {
-      from {
-        width: 0;
-      }
-      to {
-        width: calc(100%-100px);
-      }
-    }
-    @keyframes growWidthAnimation {
-      from {
-        width: 0;
-      }
-      to {
-        width: 100%;
-      }
-    }
-    .stat {
-      font: 600 14px 'Segoe UI', Ubuntu, "Helvetica Neue", Sans-Serif; fill: #656D76;
-    }
-    @supports(-moz-appearance: auto) {
-      /* Selector detects Firefox */
-      .stat { font-size:12px; }
-    }
-    .bold { font-weight: 700 }
-    .lang-name {
-      font: 400 11px "Segoe UI", Ubuntu, Sans-Serif;
-      fill: #656D76;
-    }
-    .stagger {
-      opacity: 0;
-      animation: fadeInAnimation 0.3s ease-in-out forwards;
-    }
-    #rect-mask rect{
-      animation: slideInAnimation 1s ease-in-out forwards;
-    }
-    .lang-progress{
-      animation: growWidthAnimation 0.6s ease-in-out forwards;
-    }
-    
+  <rect x="0.5" y="0.5" width="349" height="214" rx="4.5" class="card-bg" />
+  <text x="20" y="32" class="header">MOST USED LANGUAGES</text>
 
-          
-      /* Animations */
-      @keyframes scaleInAnimation {
-        from {
-          transform: translate(-5px, 5px) scale(0);
-        }
-        to {
-          transform: translate(-5px, 5px) scale(1);
-        }
-      }
-      @keyframes fadeInAnimation {
-        from {
-          opacity: 0;
-        }
-        to {
-          opacity: 1;
-        }
-      }
-    
-          
-        </style>
-
-        
-
-        <rect
-          data-testid="card-bg"
-          x="0.5"
-          y="0.5"
-          rx="4.5"
-          height="99%"
-          stroke="#D0D7DE"
-          width="349"
-          fill="#FFFFFF"
-          stroke-opacity="1"
-        />
-
-        
-      <g
-        data-testid="card-title"
-        transform="translate(25, 35)"
-      >
-        <g transform="translate(0, 0)">
-      <text
-        x="0"
-        y="0"
-        class="header"
-        data-testid="header"
-      >Most Used Languages</text>
-    </g>
-      </g>
-    
-
-        <g
-          data-testid="main-card-body"
-          transform="translate(0, 55)"
-        >
-          
-    <svg data-testid="lang-items" x="25">
-      
-    <g transform="translate(0, 0)">
-      <g transform="translate(0, 0)">
-        <g transform="translate(0, 0)">
-    <g class="stagger" style="animation-delay: 450ms">
-      <circle cx="5" cy="6" r="5" fill="#DA5B0B" />
-      <text data-testid="lang-name" x="15" y="10" class='lang-name'>
-        Jupyter Notebook 85.85%
-      </text>
-    </g>
-  </g><g transform="translate(0, 32)">
-    <g class="stagger" style="animation-delay: 600ms">
-      <circle cx="5" cy="6" r="5" fill="#3572A5" />
-      <text data-testid="lang-name" x="15" y="10" class='lang-name'>
-        Python 7.54%
-      </text>
-    </g>
-  </g><g transform="translate(0, 64)">
-    <g class="stagger" style="animation-delay: 750ms">
-      <circle cx="5" cy="6" r="5" fill="#f1e05a" />
-      <text data-testid="lang-name" x="15" y="10" class='lang-name'>
-        JavaScript 2.86%
-      </text>
-    </g>
-  </g><g transform="translate(0, 96)">
-    <g class="stagger" style="animation-delay: 900ms">
-      <circle cx="5" cy="6" r="5" fill="#e34c26" />
-      <text data-testid="lang-name" x="15" y="10" class='lang-name'>
-        HTML 2.20%
-      </text>
-    </g>
-  </g><g transform="translate(0, 128)">
-    <g class="stagger" style="animation-delay: 1050ms">
-      <circle cx="5" cy="6" r="5" fill="#663399" />
-      <text data-testid="lang-name" x="15" y="10" class='lang-name'>
-        CSS 1.55%
-      </text>
-    </g>
+  <!-- Legend -->
+  <g>
+    <circle cx="24" cy="62" r="4.5" fill="#DA5B0B" />
+    <text x="36" y="66" font-family="-apple-system, BlinkMacSystemFont, 'Segoe UI', Ubuntu, sans-serif" font-size="12" font-weight="500" fill="#1F2328">Jupyter Notebook</text>
+    <text x="180" y="66" text-anchor="end" font-family="-apple-system, BlinkMacSystemFont, 'Segoe UI', Ubuntu, sans-serif" font-size="11" font-weight="500" fill="#656D76">82.8%</text>
+  </g>  <g>
+    <circle cx="24" cy="90" r="4.5" fill="#3572A5" />
+    <text x="36" y="94" font-family="-apple-system, BlinkMacSystemFont, 'Segoe UI', Ubuntu, sans-serif" font-size="12" font-weight="500" fill="#1F2328">Python</text>
+    <text x="180" y="94" text-anchor="end" font-family="-apple-system, BlinkMacSystemFont, 'Segoe UI', Ubuntu, sans-serif" font-size="11" font-weight="500" fill="#656D76">8.6%</text>
+  </g>  <g>
+    <circle cx="24" cy="118" r="4.5" fill="#F1E05A" />
+    <text x="36" y="122" font-family="-apple-system, BlinkMacSystemFont, 'Segoe UI', Ubuntu, sans-serif" font-size="12" font-weight="500" fill="#1F2328">JavaScript</text>
+    <text x="180" y="122" text-anchor="end" font-family="-apple-system, BlinkMacSystemFont, 'Segoe UI', Ubuntu, sans-serif" font-size="11" font-weight="500" fill="#656D76">2.9%</text>
+  </g>  <g>
+    <circle cx="24" cy="146" r="4.5" fill="#E34C26" />
+    <text x="36" y="150" font-family="-apple-system, BlinkMacSystemFont, 'Segoe UI', Ubuntu, sans-serif" font-size="12" font-weight="500" fill="#1F2328">HTML</text>
+    <text x="180" y="150" text-anchor="end" font-family="-apple-system, BlinkMacSystemFont, 'Segoe UI', Ubuntu, sans-serif" font-size="11" font-weight="500" fill="#656D76">2.5%</text>
+  </g>  <g>
+    <circle cx="24" cy="174" r="4.5" fill="#563D7C" />
+    <text x="36" y="178" font-family="-apple-system, BlinkMacSystemFont, 'Segoe UI', Ubuntu, sans-serif" font-size="12" font-weight="500" fill="#1F2328">CSS</text>
+    <text x="180" y="178" text-anchor="end" font-family="-apple-system, BlinkMacSystemFont, 'Segoe UI', Ubuntu, sans-serif" font-size="11" font-weight="500" fill="#656D76">2.1%</text>
   </g>
-      </g>
 
-      <g transform="translate(125, -45)">
-        <svg width="350" height="350">
-       <g class="stagger" style="animation-delay: 600ms">
-        <path
-          data-testid="lang-donut"
-          size="85.85"
-          d="M 72.66576428106555 80.95908063282909 A 56.66666666666667 56.66666666666667 0 1 0 116.66666666666667 60"
-          stroke="#DA5B0B"
-          fill="none"
-          stroke-width="12">
-        </path>
-      </g>
-      
-       <g class="stagger" style="animation-delay: 700ms">
-        <path
-          data-testid="lang-donut"
-          size="7.54"
-          d="M 93.80271958239993 64.81735582419779 A 56.66666666666667 56.66666666666667 0 0 0 72.66576428106555 80.95908063282909"
-          stroke="#3572A5"
-          fill="none"
-          stroke-width="12">
-        </path>
-      </g>
-      
-       <g class="stagger" style="animation-delay: 800ms">
-        <path
-          data-testid="lang-donut"
-          size="2.86"
-          d="M 103.43809604816538 61.56570451079832 A 56.66666666666667 56.66666666666667 0 0 0 93.80271958239993 64.81735582419779"
-          stroke="#f1e05a"
-          fill="none"
-          stroke-width="12">
-        </path>
-      </g>
-      
-       <g class="stagger" style="animation-delay: 900ms">
-        <path
-          data-testid="lang-donut"
-          size="2.2"
-          d="M 111.15665534439741 60.26852054164252 A 56.66666666666667 56.66666666666667 0 0 0 103.43809604816538 61.56570451079832"
-          stroke="#e34c26"
-          fill="none"
-          stroke-width="12">
-        </path>
-      </g>
-      
-       <g class="stagger" style="animation-delay: 1000ms">
-        <path
-          data-testid="lang-donut"
-          size="1.55"
-          d="M 116.66666666666666 60 A 56.66666666666667 56.66666666666667 0 0 0 111.15665534439741 60.26852054164252"
-          stroke="#663399"
-          fill="none"
-          stroke-width="12">
-        </path>
-      </g>
-      </svg>
-      </g>
-    </g>
-  
-    </svg>
-  
-        </g>
-      </svg>
-    
+  <!-- Donut Chart -->
+  <g>
+    <circle cx="260" cy="120" r="46" fill="none" stroke="#E1E4E8" stroke-width="16" />
+    <circle cx="260" cy="120" r="46" fill="none" stroke="#DA5B0B" stroke-width="16" stroke-dasharray="239.17 49.85" stroke-dashoffset="-0.00" transform="rotate(-90 260 120)" /><circle cx="260" cy="120" r="46" fill="none" stroke="#3572A5" stroke-width="16" stroke-dasharray="24.74 264.28" stroke-dashoffset="-239.17" transform="rotate(-90 260 120)" /><circle cx="260" cy="120" r="46" fill="none" stroke="#F1E05A" stroke-width="16" stroke-dasharray="8.28 280.75" stroke-dashoffset="-263.91" transform="rotate(-90 260 120)" /><circle cx="260" cy="120" r="46" fill="none" stroke="#E34C26" stroke-width="16" stroke-dasharray="7.32 281.71" stroke-dashoffset="-272.19" transform="rotate(-90 260 120)" /><circle cx="260" cy="120" r="46" fill="none" stroke="#563D7C" stroke-width="16" stroke-dasharray="5.98 283.05" stroke-dashoffset="-279.51" transform="rotate(-90 260 120)" />
+  </g>
+</svg>

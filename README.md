@@ -12,22 +12,22 @@
   <picture>
     <source media="(prefers-color-scheme: dark)" srcset="assets/stat-repos-dark.svg">
     <source media="(prefers-color-scheme: light)" srcset="assets/stat-repos-light.svg">
-    <img src="assets/stat-repos-light.svg" alt="Total Repos: 11+" width="185" />
+    <img src="assets/stat-repos-light.svg" alt="Total Repositories" width="185" />
   </picture>
   <picture>
     <source media="(prefers-color-scheme: dark)" srcset="assets/stat-commits-dark.svg">
     <source media="(prefers-color-scheme: light)" srcset="assets/stat-commits-light.svg">
-    <img src="assets/stat-commits-light.svg" alt="Annual Commits: 189+" width="185" />
+    <img src="assets/stat-commits-light.svg" alt="Annual Commits" width="185" />
   </picture>
   <picture>
     <source media="(prefers-color-scheme: dark)" srcset="assets/stat-followers-dark.svg">
     <source media="(prefers-color-scheme: light)" srcset="assets/stat-followers-light.svg">
-    <img src="assets/stat-followers-light.svg" alt="Followers: 2+" width="185" />
+    <img src="assets/stat-followers-light.svg" alt="Followers" width="185" />
   </picture>
   <picture>
     <source media="(prefers-color-scheme: dark)" srcset="assets/stat-years-dark.svg">
     <source media="(prefers-color-scheme: light)" srcset="assets/stat-years-light.svg">
-    <img src="assets/stat-years-light.svg" alt="Years Active: 5" width="185" />
+    <img src="assets/stat-years-light.svg" alt="Years Active" width="185" />
   </picture>
 </p>
 

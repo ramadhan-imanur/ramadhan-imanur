@@ -9,6 +9,6 @@
 
   <rect x="1" y="1" width="186" height="102" rx="8" class="card" />
   <path d="M96 22h-10c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h16c1.1 0 2-.9 2-2v-11c0-1.1-.9-2-2-2h-5l-1.5-1.5c-.4-.4-.9-.5-1.5-.5z" fill="#656D76" />
-  <text x="94" y="64" class="num">11+</text>
+  <text x="94" y="64" class="num">13+</text>
   <text x="94" y="84" class="lbl">TOTAL REPOS</text>
 </svg>

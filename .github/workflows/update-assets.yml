@@ -20,6 +20,8 @@ jobs:
           python-version: '3.12'
 
       - name: Generate Fresh SVG Assets
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         run: python generate_assets.py
 
       - name: Commit and Push if Changed
