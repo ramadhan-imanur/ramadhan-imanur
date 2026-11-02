@@ -97,84 +97,137 @@ except Exception as e:
 
 print(f"  -> Annual Commits: {total_commits}+")
 
-# 3. Fetch Languages Data from GitHub API (Concurrent)
-print("Fetching repository languages from GitHub API...")
-repos_data = fetch_json(f"https://api.github.com/users/{USERNAME}/repos?per_page=100&type=owner") or []
+# 3. Calculate Source Lines of Code (SLOC)
+print("Calculating Source Lines of Code (SLOC)...")
+SLOC_CACHE_FILE = ASSETS_DIR / ".sloc_cache.json"
+
+IGNORE_DIRS = {"build", "dist", "public", "out", "vendor", "node_modules", ".git", ".github"}
+
+EXT_MAP = {
+    ".py": "Python",
+    ".js": "JavaScript",
+    ".mjs": "JavaScript",
+    ".ts": "TypeScript",
+    ".html": "HTML",
+    ".css": "CSS",
+    ".sql": "SQL",
+    ".tex": "LaTeX",
+    ".sh": "Shell",
+    ".bash": "Shell",
+}
 
 
-def get_repo_langs(repo):
-    if repo.get("fork"):
-        return {}
-    l_url = repo.get("languages_url")
-    if l_url:
-        res = fetch_json(l_url, timeout=5)
-        if res and isinstance(res, dict):
-            return res
-    if repo.get("language"):
-        return {repo["language"]: repo.get("size", 100) * 1024}
-    return {}
-
-
-CACHE_FILE = ASSETS_DIR / ".lang_cache.json"
-lang_totals = {}
-with ThreadPoolExecutor(max_workers=5) as executor:
-    results = executor.map(get_repo_langs, repos_data)
-    for res in results:
-        for l_name, b_count in res.items():
-            lang_totals[l_name] = lang_totals.get(l_name, 0) + b_count
-
-if lang_totals:
+def count_lines(filepath):
+    cnt = 0
     try:
-        with open(CACHE_FILE, "w", encoding="utf-8") as f:
-            json.dump(lang_totals, f, indent=2)
+        with open(filepath, "r", encoding="utf-8", errors="ignore") as f:
+            for line in f:
+                if line.strip():
+                    cnt += 1
     except Exception:
         pass
-elif CACHE_FILE.exists():
+    return cnt
+
+
+def count_ipynb(filepath):
+    cnt = 0
     try:
-        with open(CACHE_FILE, "r", encoding="utf-8") as f:
+        with open(filepath, "r", encoding="utf-8", errors="ignore") as f:
+            nb = json.load(f)
+            for cell in nb.get("cells", []):
+                if cell.get("cell_type") == "code":
+                    source = cell.get("source", [])
+                    if isinstance(source, str):
+                        lines = [l for l in source.split("\n") if l.strip()]
+                    else:
+                        lines = [l.strip() for l in source if l.strip()]
+                    cnt += len(lines)
+    except Exception:
+        pass
+    return cnt
+
+
+def scan_directory(dir_path):
+    counts = {}
+    for path in Path(dir_path).rglob("*"):
+        if not path.is_file():
+            continue
+        if any(ignored in path.parts for ignored in IGNORE_DIRS):
+            continue
+        if path.name.endswith(".min.js") or path.name.endswith(".min.css"):
+            continue
+        ext = path.suffix.lower()
+        if ext == ".ipynb":
+            c = count_ipynb(path)
+            if c > 0:
+                counts["Python"] = counts.get("Python", 0) + c
+        elif ext in EXT_MAP:
+            lang = EXT_MAP[ext]
+            c = count_lines(path)
+            if c > 0:
+                counts[lang] = counts.get(lang, 0) + c
+    return counts
+
+
+lang_totals = {}
+# Try to scan temporary test directory if present
+if Path("/tmp/repos_sloc_test").exists():
+    try:
+        lang_totals = scan_directory("/tmp/repos_sloc_test")
+        if lang_totals:
+            with open(SLOC_CACHE_FILE, "w", encoding="utf-8") as f:
+                json.dump(lang_totals, f, indent=2)
+    except Exception as e:
+        print(f"Note: Error scanning /tmp/repos_sloc_test: {e}")
+
+# Fallback to SLOC cache
+if not lang_totals and SLOC_CACHE_FILE.exists():
+    try:
+        with open(SLOC_CACHE_FILE, "r", encoding="utf-8") as f:
             lang_totals = json.load(f)
     except Exception:
         pass
 
+# Baseline default if no cache
 if not lang_totals:
     lang_totals = {
-        "Jupyter Notebook": 4305433,
-        "Python": 445389,
-        "JavaScript": 148977,
-        "HTML": 131686,
-        "CSS": 107632,
+        "Python": 10589,
+        "CSS": 3010,
+        "JavaScript": 3003,
+        "HTML": 1889,
+        "LaTeX": 757,
+        "SQL": 687,
+        "Shell": 63,
     }
 
-total_bytes = sum(lang_totals.values())
+total_lines = sum(lang_totals.values())
 sorted_langs = sorted(lang_totals.items(), key=lambda x: x[1], reverse=True)
 top_5 = sorted_langs[:5]
 
 LANGUAGE_COLORS = {
-    "Jupyter Notebook": "#DA5B0B",
     "Python": "#3572A5",
+    "CSS": "#563D7C",
     "JavaScript": "#F1E05A",
     "HTML": "#E34C26",
-    "CSS": "#563D7C",
-    "TeX": "#3D6117",
+    "LaTeX": "#3D6117",
     "SQL": "#E38C00",
-    "PLpgSQL": "#336791",
+    "Shell": "#89E051",
     "C": "#555555",
     "C++": "#F34B7D",
-    "Shell": "#89E051",
-    "Makefile": "#427819",
     "Mathematica": "#DD1100",
-    "R": "#198CE7",
 }
 
 formatted_langs = []
-for name, b_count in top_5:
-    pct = (b_count / total_bytes) * 100.0 if total_bytes > 0 else 0
+for name, line_count in top_5:
+    pct = (line_count / total_lines) * 100.0 if total_lines > 0 else 0
     color = LANGUAGE_COLORS.get(name, "#8B949E")
     formatted_langs.append((name, pct, color))
 
-print("  -> Top 5 Languages:")
+print(f"  -> Total Source Lines of Code: {total_lines:,} lines")
+print("  -> Top 5 Languages (by Source Lines of Code):")
 for name, pct, _ in formatted_langs:
-    print(f"     - {name}: {pct:.2f}%")
+    cnt = lang_totals.get(name, 0)
+    print(f"     - {name:12}: {pct:5.2f}% ({cnt:,} lines)")
 
 
 # SVG Generators
