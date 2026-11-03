@@ -14,6 +14,6 @@
 
   <rect x="1" y="1" width="186" height="102" rx="8" class="card" />
   <circle cx="168" cy="20" r="3" fill="#39D353" class="status-dot-pulse" style="transform-origin: 168px 20px;" />
-  <text x="94" y="56" class="num">134+</text>
+  <text x="94" y="56" class="num">135+</text>
   <text x="94" y="80" class="lbl">ANNUAL COMMITS</text>
 </svg>

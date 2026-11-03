@@ -190,7 +190,6 @@ DEFAULT_REPOS = [
     "tree-search-demo",
 ]
 
-# Discover all public non-fork repos dynamically
 repos_data = fetch_json(f"https://api.github.com/users/{USERNAME}/repos?per_page=100&type=owner") or []
 repo_names = [r["name"] for r in repos_data if not r.get("fork")]
 if not repo_names:
@@ -204,7 +203,6 @@ def clone_repo(name, dest_dir):
 
 
 lang_totals = {}
-# 1. Live scan all repositories concurrently if needed
 try:
     print(f"  -> Scanning {len(repo_names)} repositories for real code changes...")
     with tempfile.TemporaryDirectory() as tmp_dir:
@@ -218,7 +216,6 @@ try:
 except Exception as e:
     print(f"Note: Error during live repo scan: {e}")
 
-# 2. Fallback to SLOC cache if live scan yielded nothing
 if not lang_totals and SLOC_CACHE_FILE.exists():
     try:
         with open(SLOC_CACHE_FILE, "r", encoding="utf-8") as f:
@@ -226,7 +223,6 @@ if not lang_totals and SLOC_CACHE_FILE.exists():
     except Exception:
         pass
 
-# 3. Default distribution aligned with Stitch design and mathematics profile
 if not lang_totals:
     lang_totals = {
         "Python": 10636,
@@ -273,7 +269,7 @@ user_stats = {
 
 
 # ==========================================
-# 1. Cosmic Math Welcome Banner (Stitch Design)
+# 1. Cosmic Math Welcome Banner (Stitch Design Update)
 # ==========================================
 def build_welcome_banner_svg(theme="dark"):
     is_dark = theme == "dark"
@@ -282,12 +278,13 @@ def build_welcome_banner_svg(theme="dark"):
     title_color = "#F0F6FC" if is_dark else "#1F2328"
     accent_green = "#39D353" if is_dark else "#1A7F37"
     accent_blue = "#58A6FF" if is_dark else "#0969DA"
+    accent_purple = "#BC8CFF" if is_dark else "#8250DF"
     subtext_color = "#8B949E" if is_dark else "#656D76"
     badge_bg = "#21262D" if is_dark else "#F6F8FA"
     badge_border = "#30363D" if is_dark else "#D0D7DE"
     badge_text = "#C9D1D9" if is_dark else "#24292F"
 
-    return f"""<svg width="800" height="210" viewBox="0 0 800 210" fill="none" xmlns="http://www.w3.org/2000/svg">
+    return f"""<svg width="800" height="215" viewBox="0 0 800 215" fill="none" xmlns="http://www.w3.org/2000/svg">
   <defs>
     <style>
       .card-bg {{ fill: {bg_card}; stroke: {border_card}; stroke-width: 1; rx: 12px; }}
@@ -297,7 +294,7 @@ def build_welcome_banner_svg(theme="dark"):
       }}
       @keyframes subtle-twinkle {{
         0%, 100% {{ opacity: 0.25; transform: scale(0.85); }}
-        50% {{ opacity: 0.95; transform: scale(1.2); }}
+        50% {{ transform: scale(0.95); opacity: 1.2; }}
       }}
       @keyframes soft-pulse-star {{
         0%, 100% {{ opacity: 0.3; transform: rotate(0deg) scale(0.9); }}
@@ -337,15 +334,27 @@ def build_welcome_banner_svg(theme="dark"):
       <stop offset="0%" stop-color="{accent_blue}" stop-opacity="0.8" />
       <stop offset="100%" stop-color="{accent_blue}" stop-opacity="0" />
     </radialGradient>
-    <radialGradient id="ambient-green-corner" cx="90%" cy="10%" r="60%">
-      <stop offset="0%" stop-color="{accent_green}" stop-opacity="{'0.12' if is_dark else '0.06'}" />
+
+    <!-- 3 Nebula Ambient Glows -->
+    <radialGradient id="ambient-green-corner" cx="75%" cy="20%" r="60%">
+      <stop offset="0%" stop-color="{accent_green}" stop-opacity="{'0.13' if is_dark else '0.06'}" />
       <stop offset="100%" stop-color="{accent_green}" stop-opacity="0" />
+    </radialGradient>
+    <radialGradient id="ambient-cyan-center" cx="45%" cy="80%" r="55%">
+      <stop offset="0%" stop-color="{accent_blue}" stop-opacity="{'0.10' if is_dark else '0.05'}" />
+      <stop offset="100%" stop-color="{accent_blue}" stop-opacity="0" />
+    </radialGradient>
+    <radialGradient id="ambient-purple-edge" cx="95%" cy="90%" r="50%">
+      <stop offset="0%" stop-color="{accent_purple}" stop-opacity="{'0.09' if is_dark else '0.04'}" />
+      <stop offset="100%" stop-color="{accent_purple}" stop-opacity="0" />
     </radialGradient>
   </defs>
 
-  <!-- Outer Card Background -->
-  <rect x="1" y="1" width="798" height="208" rx="12" class="card-bg" />
-  <rect x="1" y="1" width="798" height="208" rx="12" fill="url(#ambient-green-corner)" />
+  <!-- Outer Card Background & Nebulas -->
+  <rect x="1" y="1" width="798" height="213" rx="12" class="card-bg" />
+  <rect x="1" y="1" width="798" height="213" rx="12" fill="url(#ambient-green-corner)" />
+  <rect x="1" y="1" width="798" height="213" rx="12" fill="url(#ambient-cyan-center)" />
+  <rect x="1" y="1" width="798" height="213" rx="12" fill="url(#ambient-purple-edge)" />
 
   <!-- Twinkling Starfield -->
   <circle cx="34" cy="48" r="1.2" fill="{title_color}" class="star-twinkle-slow" />
@@ -373,8 +382,8 @@ def build_welcome_banner_svg(theme="dark"):
 
   <!-- Mathematical Geometry & Parametric Curves -->
   <g opacity="{'0.22' if is_dark else '0.15'}" stroke="{accent_green}" stroke-width="0.9" fill="none">
-    <path d="M 450 170 Q 550 130 630 170 T 790 170" stroke-dasharray="3 3" />
-    <path d="M 480 70 C 560 20, 640 120, 720 60" stroke="{accent_blue}" stroke-dasharray="2 4" />
+    <path d="M 420 180 Q 540 130 630 180 T 790 180" stroke-dasharray="3 3" />
+    <path d="M 460 70 C 550 20, 640 120, 740 60" stroke="{accent_blue}" stroke-dasharray="2 4" />
   </g>
 
   <!-- Coordinate Axis Crosshairs -->
@@ -384,30 +393,36 @@ def build_welcome_banner_svg(theme="dark"):
     <circle cx="755" cy="95" r="2.5" fill="none" stroke="{accent_green}" />
   </g>
 
-  <!-- Floating Mathematical Symbols -->
-  <g class="math-symbol" font-size="20" fill="{accent_green}" opacity="{'0.25' if is_dark else '0.18'}">
-    <text x="680" y="115">∫</text>
+  <!-- Advanced Mathematical & LaTeX Formulas from Stitch Desktop -->
+  <g class="math-symbol" font-size="15" fill="{accent_green}" opacity="{'0.25' if is_dark else '0.18'}">
+    <text x="680" y="115">∫ ℝⁿ</text>
   </g>
-  <g class="math-symbol" font-size="16" fill="{accent_blue}" opacity="{'0.22' if is_dark else '0.16'}">
-    <text x="765" y="150">∇</text>
+  <g class="math-symbol" font-size="13" fill="{accent_blue}" opacity="{'0.22' if is_dark else '0.16'}">
+    <text x="650" y="145">∮_C E·dr = 0</text>
   </g>
-  <g class="math-symbol" font-size="16" fill="{accent_green}" opacity="{'0.25' if is_dark else '0.18'}">
-    <text x="590" y="60">∑</text>
+  <g class="math-symbol" font-size="14" fill="{accent_green}" opacity="{'0.25' if is_dark else '0.18'}">
+    <text x="735" y="42">∇ f(x)</text>
   </g>
-  <g class="math-symbol" font-size="14" fill="{subtext_color}" opacity="{'0.25' if is_dark else '0.18'}">
-    <text x="620" y="185">∂x</text>
+  <g class="math-symbol" font-size="12" fill="{subtext_color}" opacity="{'0.25' if is_dark else '0.18'}">
+    <text x="440" y="45">∂f/∂x</text>
   </g>
-  <g class="math-symbol" font-size="18" fill="{accent_blue}" opacity="{'0.22' if is_dark else '0.16'}">
-    <text x="520" y="48">∞</text>
+  <g class="math-symbol" font-size="12" fill="{accent_purple}" opacity="{'0.22' if is_dark else '0.16'}">
+    <text x="590" y="52">det(A - λᵢI) = 0</text>
   </g>
-  <g class="math-symbol" font-size="12" fill="{accent_green}" opacity="{'0.22' if is_dark else '0.16'}" font-family="'JetBrains Mono', monospace">
-    <text x="460" y="195">f(x)∈ℝ</text>
+  <g class="math-symbol" font-size="12" fill="{accent_blue}" opacity="{'0.22' if is_dark else '0.16'}">
+    <text x="500" y="180">𝔼[X] = μ · Var(X) = σ²</text>
+  </g>
+  <g class="math-symbol" font-size="11" fill="{accent_green}" opacity="{'0.22' if is_dark else '0.16'}">
+    <text x="450" y="200">ℋ ≅ L²(ℝⁿ) · ⟨ψ|Ĥ|ψ⟩</text>
+  </g>
+  <g class="math-symbol" font-size="11" fill="{subtext_color}" opacity="{'0.22' if is_dark else '0.16'}">
+    <text x="750" y="185">λᵢ ≥ 0</text>
   </g>
 
   <!-- Desktop Layout -->
   <g class="desktop-layout">
     <!-- Top Pill Badge -->
-    <g transform="translate(28, 22)">
+    <g transform="translate(28, 24)">
       <rect x="0" y="0" width="112" height="26" rx="13" fill="{badge_bg}" stroke="{badge_border}" stroke-width="1" />
       <circle cx="13" cy="13" r="3.5" fill="{accent_green}" class="status-dot-pulse" style="transform-origin: 13px 13px;" />
       <text x="24" y="17" class="mono-pill">imanur.dev</text>
@@ -415,15 +430,14 @@ def build_welcome_banner_svg(theme="dark"):
     </g>
 
     <!-- Top Right Active Portfolio Indicator -->
-    <g transform="translate(634, 22)">
+    <g transform="translate(634, 24)">
       <rect x="0" y="0" width="138" height="26" rx="13" fill="{badge_bg}" stroke="{badge_border}" stroke-width="1" />
-      <!-- Terminal Vector Icon -->
       <path d="M12 9l3 3-3 3M17 15h3" stroke="{subtext_color}" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" />
       <text x="28" y="17" class="mono-pill" font-size="10">ACTIVE PORTFOLIO</text>
     </g>
 
     <!-- Headline -->
-    <g transform="translate(28, 88)">
+    <g transform="translate(28, 92)">
       <text x="0" y="0" class="headline">Where applied mathematics meets <tspan class="headline-italic">predictive computation.</tspan></text>
       <text x="0" y="32" class="mono-sub">@ramadhan-imanur <tspan fill="{border_card}">/</tspan> <tspan fill="{badge_text}">Imanur.dev</tspan></text>
       <text x="0" y="62" font-family="-apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif" font-size="12" fill="{subtext_color}">Applied Computation · Mathematical Modeling · Data Science Research</text>
@@ -448,9 +462,9 @@ def build_welcome_banner_svg(theme="dark"):
 
 
 # ==========================================
-# 2. Flagship Telemetry Card (Stitch Design)
+# 2. Standalone Donut Card (Stitch Design Update)
 # ==========================================
-def build_telemetry_card_svg(user_stats, langs, theme="dark"):
+def build_donut_card_svg(theme="dark"):
     is_dark = theme == "dark"
     bg_card = "#161B22" if is_dark else "#FFFFFF"
     border_card = "#30363D" if is_dark else "#D0D7DE"
@@ -460,17 +474,10 @@ def build_telemetry_card_svg(user_stats, langs, theme="dark"):
     accent_blue = "#58A6FF" if is_dark else "#0969DA"
     accent_purple = "#BC8CFF" if is_dark else "#8250DF"
     subtext_color = "#8B949E" if is_dark else "#656D76"
-    card_sub_bg = "#21262D" if is_dark else "#F6F8FA"
     ring_bg = "#21262D" if is_dark else "#E1E4E8"
-
-    total_repos = user_stats.get("total_repos", 13)
-    total_commits = user_stats.get("total_commits", "248")
-    total_followers = user_stats.get("total_followers", 3)
-    years_active = user_stats.get("years_active", 5)
 
     circ = 2 * math.pi * 58  # ~364.424
 
-    # Curated distribution aligned exactly with Stitch screen
     display_langs = [
         ("Python", 50.0, accent_green, "CORE"),
         ("Mathematica", 25.0, accent_green_dark, "SYMBOLIC"),
@@ -485,7 +492,7 @@ def build_telemetry_card_svg(user_stats, langs, theme="dark"):
         dash_gap = circ - dash_len
         offset = -(accum / 100.0) * circ
         donut_segments.append(
-            f'<circle cx="195" cy="225" r="58" fill="none" stroke="{col}" '
+            f'<circle cx="400" cy="190" r="58" fill="none" stroke="{col}" '
             f'stroke-width="13" stroke-dasharray="{dash_len:.2f} {dash_gap:.2f}" '
             f'stroke-dashoffset="{offset:.2f}" />'
         )
@@ -493,12 +500,10 @@ def build_telemetry_card_svg(user_stats, langs, theme="dark"):
 
     l1, l2, l3, l4 = display_langs[0], display_langs[1], display_langs[2], display_langs[3]
 
-    return f"""<svg width="800" height="410" viewBox="0 0 800 410" fill="none" xmlns="http://www.w3.org/2000/svg">
+    return f"""<svg width="800" height="350" viewBox="0 0 800 350" fill="none" xmlns="http://www.w3.org/2000/svg">
   <defs>
     <style>
       .card-bg {{ fill: {bg_card}; stroke: {border_card}; stroke-width: 1; rx: 12px; }}
-      .sub-card {{ fill: {card_sub_bg}; stroke: {border_card}; stroke-width: 1; rx: 8px; }}
-
       @keyframes subtle-dot-pulse {{
         0%, 100% {{ transform: scale(1); opacity: 0.85; }}
         50% {{ transform: scale(1.3); opacity: 1; }}
@@ -508,20 +513,12 @@ def build_telemetry_card_svg(user_stats, langs, theme="dark"):
         50% {{ filter: drop-shadow(0 0 10px {accent_green}ff); opacity: 1; transform: scale(1.04); }}
       }}
       .status-dot-pulse {{ animation: subtle-dot-pulse 2.2s cubic-bezier(0.4, 0, 0.6, 1) infinite; transform-origin: center; }}
-      .github-logo-pulse {{ animation: github-neon-glow 3s ease-in-out infinite; transform-origin: 195px 225px; }}
+      .github-logo-pulse {{ animation: github-neon-glow 3s ease-in-out infinite; transform-origin: 400px 190px; }}
 
       .sec-title {{ font-family: 'JetBrains Mono', 'SF Mono', Consolas, monospace; font-size: 11px; font-weight: 700; letter-spacing: 0.12em; fill: {accent_green}; }}
       .sec-meta {{ font-family: 'JetBrains Mono', 'SF Mono', Consolas, monospace; font-size: 10px; font-weight: 500; fill: {subtext_color}; }}
       .callout-val {{ font-family: 'JetBrains Mono', 'SF Mono', Consolas, monospace; font-size: 9px; font-weight: 600; letter-spacing: 0.05em; }}
       .callout-name {{ font-family: 'JetBrains Mono', 'SF Mono', Consolas, monospace; font-size: 12px; font-weight: 600; fill: {title_color}; }}
-
-      .telemetry-name {{ font-family: 'JetBrains Mono', 'SF Mono', Consolas, monospace; font-size: 18px; font-weight: 700; fill: {title_color}; letter-spacing: -0.01em; }}
-      .telemetry-sub {{ font-family: 'JetBrains Mono', 'SF Mono', Consolas, monospace; font-size: 10px; font-weight: 600; fill: {accent_green}; letter-spacing: 0.1em; }}
-
-      .metric-num {{ font-family: 'JetBrains Mono', 'SF Mono', Consolas, monospace; font-size: 22px; font-weight: 700; fill: {title_color}; letter-spacing: -0.02em; }}
-      .metric-lbl {{ font-family: 'JetBrains Mono', 'SF Mono', Consolas, monospace; font-size: 9px; font-weight: 600; fill: {subtext_color}; letter-spacing: 0.08em; text-transform: uppercase; }}
-      .metric-desc {{ font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif; font-size: 10px; fill: {subtext_color}; }}
-
       .watermark {{ font-family: 'JetBrains Mono', monospace; font-size: 9px; fill: {subtext_color}; opacity: 0.25; letter-spacing: 0.08em; user-select: none; pointer-events: none; }}
 
       @media (prefers-reduced-motion: reduce) {{
@@ -529,15 +526,14 @@ def build_telemetry_card_svg(user_stats, langs, theme="dark"):
       }}
     </style>
 
-    <radialGradient id="phosphor-glow" cx="80%" cy="15%" r="50%">
+    <radialGradient id="donut-phosphor-glow" cx="80%" cy="15%" r="50%">
       <stop offset="0%" stop-color="{accent_green}" stop-opacity="{'0.12' if is_dark else '0.06'}" />
       <stop offset="100%" stop-color="{accent_green}" stop-opacity="0" />
     </radialGradient>
   </defs>
 
-  <!-- Container -->
-  <rect x="1" y="1" width="798" height="408" rx="12" class="card-bg" />
-  <circle cx="720" cy="50" r="140" fill="url(#phosphor-glow)" />
+  <rect x="1" y="1" width="798" height="348" rx="12" class="card-bg" />
+  <circle cx="720" cy="50" r="140" fill="url(#donut-phosphor-glow)" />
 
   <!-- Top Header Bar -->
   <g transform="translate(24, 26)">
@@ -548,103 +544,148 @@ def build_telemetry_card_svg(user_stats, langs, theme="dark"):
   </g>
   <line x1="24" y1="46" x2="776" y2="46" stroke="{border_card}" stroke-width="0.8" />
 
-  <!-- Left: Donut Chart Visualizer -->
+  <!-- Donut Visualizer -->
   <g>
-    <!-- Concentric Background Grid Rings -->
-    <circle cx="195" cy="225" r="82" fill="none" stroke="{ring_bg}" stroke-width="1" />
-    <circle cx="195" cy="225" r="74" fill="none" stroke="{border_card}" stroke-dasharray="2 4" stroke-width="0.8" />
-    <circle cx="195" cy="225" r="44" fill="none" stroke="{border_card}" stroke-dasharray="2 6" stroke-width="0.8" />
+    <circle cx="400" cy="190" r="82" fill="none" stroke="{ring_bg}" stroke-width="1" />
+    <circle cx="400" cy="190" r="74" fill="none" stroke="{border_card}" stroke-dasharray="2 4" stroke-width="0.8" />
+    <circle cx="400" cy="190" r="44" fill="none" stroke="{border_card}" stroke-dasharray="2 6" stroke-width="0.8" />
 
-    <!-- Donut Segments (Rotated -90 deg around cx=195, cy=225) -->
-    <g transform="rotate(-90 195 225)">
+    <g transform="rotate(-90 400 190)">
       {"".join(donut_segments)}
     </g>
 
-    <!-- Center GitHub Pulsing Logo -->
-    <g class="github-logo-pulse" transform="translate(183, 213)">
+    <!-- Center Pulsing GitHub Logo -->
+    <g class="github-logo-pulse" transform="translate(388, 178)">
       <svg width="24" height="24" viewBox="0 0 24 24" fill="{accent_green}">
         <path fill-rule="evenodd" clip-rule="evenodd" d="M12 2C6.477 2 2 6.484 2 12.017c0 4.425 2.865 8.18 6.839 9.504.5.092.682-.217.682-.483 0-.237-.008-.868-.013-1.703-2.782.605-3.369-1.343-3.369-1.343-.454-1.158-1.11-1.466-1.11-1.466-.908-.62.069-.608.069-.608 1.003.07 1.53 1.032 1.53 1.032.892 1.53 2.341 1.088 2.91.832.092-.647.35-1.088.636-1.338-2.22-.253-4.555-1.113-4.555-4.951 0-1.093.39-1.988 1.029-2.688-.103-.253-.446-1.272.098-2.65 0 0 .84-.27 2.75 1.026A9.564 9.564 0 0112 6.844c.85.004 1.705.115 2.504.337 1.909-1.296 2.747-1.027 2.747-1.027.546 1.379.202 2.398.1 2.651.64.7 1.028 1.595 1.028 2.688 0 3.848-2.339 4.695-4.566 4.943.359.309.678.92.678 1.855 0 1.338-.012 2.419-.012 2.747 0 .268.18.58.688.482A10.019 10.019 0 0022 12.017C22 6.484 17.522 2 12 2z" />
       </svg>
     </g>
 
     <!-- Callout 1 (Top Right) -->
-    <polyline points="240,184 267,141 350,141" fill="none" stroke="{l1[2]}" stroke-width="1" opacity="0.85" />
-    <circle cx="240" cy="184" r="2.5" fill="{l1[2]}" />
-    <text x="350" y="125" text-anchor="end" class="callout-val" fill="{l1[2]}">{l1[1]:.0f}% // {l1[3]}</text>
-    <text x="350" y="138" text-anchor="end" class="callout-name">{l1[0]}</text>
+    <polyline points="445,149 472,106 580,106" fill="none" stroke="{l1[2]}" stroke-width="1" opacity="0.85" />
+    <circle cx="445" cy="149" r="2.5" fill="{l1[2]}" />
+    <text x="580" y="90" text-anchor="end" class="callout-val" fill="{l1[2]}">{l1[1]:.0f}% // {l1[3]}</text>
+    <text x="580" y="103" text-anchor="end" class="callout-name">{l1[0]}</text>
 
     <!-- Callout 2 (Bottom Right) -->
-    <polyline points="233,266 263,309 350,309" fill="none" stroke="{l2[2]}" stroke-width="1" opacity="0.85" />
-    <circle cx="233" cy="266" r="2.5" fill="{l2[2]}" />
-    <text x="350" y="323" text-anchor="end" class="callout-name">{l2[0]}</text>
-    <text x="350" y="335" text-anchor="end" class="callout-val" fill="{l2[2]}">{l2[1]:.0f}% // {l2[3]}</text>
+    <polyline points="438,231 468,274 580,274" fill="none" stroke="{l2[2]}" stroke-width="1" opacity="0.85" />
+    <circle cx="438" cy="231" r="2.5" fill="{l2[2]}" />
+    <text x="580" y="288" text-anchor="end" class="callout-name">{l2[0]}</text>
+    <text x="580" y="300" text-anchor="end" class="callout-val" fill="{l2[2]}">{l2[1]:.0f}% // {l2[3]}</text>
 
     <!-- Callout 3 (Bottom Left) -->
-    <polyline points="155,266 127,309 42,309" fill="none" stroke="{l3[2]}" stroke-width="1" opacity="0.85" />
-    <circle cx="155" cy="266" r="2.5" fill="{l3[2]}" />
-    <text x="42" y="323" text-anchor="start" class="callout-name">{l3[0]}</text>
-    <text x="42" y="335" text-anchor="start" class="callout-val" fill="{l3[2]}">{l3[1]:.0f}% // {l3[3]}</text>
+    <polyline points="360,231 332,274 220,274" fill="none" stroke="{l3[2]}" stroke-width="1" opacity="0.85" />
+    <circle cx="360" cy="231" r="2.5" fill="{l3[2]}" />
+    <text x="220" y="288" text-anchor="start" class="callout-name">{l3[0]}</text>
+    <text x="220" y="300" text-anchor="start" class="callout-val" fill="{l3[2]}">{l3[1]:.0f}% // {l3[3]}</text>
 
     <!-- Callout 4 (Top Left) -->
-    <polyline points="150,184 123,141 42,141" fill="none" stroke="{l4[2]}" stroke-width="1" opacity="0.85" />
-    <circle cx="150" cy="184" r="2.5" fill="{l4[2]}" />
-    <text x="42" y="125" text-anchor="start" class="callout-val" fill="{l4[2]}">{l4[1]:.0f}% // {l4[3]}</text>
-    <text x="42" y="138" text-anchor="start" class="callout-name">{l4[0]}</text>
-  </g>
-
-  <!-- Vertical Divider -->
-  <line x1="395" y1="65" x2="395" y2="385" stroke="{border_card}" stroke-width="0.8" stroke-dasharray="3 3" />
-
-  <!-- Right: Telemetry Overview & Stats Grid -->
-  <g transform="translate(420, 68)">
-    <text x="0" y="18" class="telemetry-name">Ramadhan Imanur</text>
-    <text x="0" y="34" class="telemetry-sub">GITHUB TELEMETRY // STATS OVERVIEW</text>
-
-    <!-- 2x2 Telemetry Metric Cards -->
-    <!-- Card 1: Total Repos -->
-    <g transform="translate(0, 52)">
-      <rect x="0" y="0" width="168" height="116" class="sub-card" />
-      <text x="14" y="24" class="metric-lbl">TOTAL REPOS</text>
-      <circle cx="152" cy="20" r="3" fill="{accent_green}" class="status-dot-pulse" style="transform-origin: 152px 20px;" />
-      <text x="14" y="66" class="metric-num">{total_repos}+</text>
-      <text x="14" y="94" class="metric-desc">Curated Repositories</text>
-    </g>
-
-    <!-- Card 2: Annual Commits -->
-    <g transform="translate(182, 52)">
-      <rect x="0" y="0" width="168" height="116" class="sub-card" />
-      <text x="14" y="24" class="metric-lbl">ANNUAL COMMITS</text>
-      <circle cx="152" cy="20" r="3" fill="{accent_green}" class="status-dot-pulse" style="transform-origin: 152px 20px;" />
-      <text x="14" y="66" class="metric-num">{total_commits}+</text>
-      <text x="14" y="94" class="metric-desc">Contributions Past Year</text>
-    </g>
-
-    <!-- Card 3: Followers -->
-    <g transform="translate(0, 180)">
-      <rect x="0" y="0" width="168" height="116" class="sub-card" />
-      <text x="14" y="24" class="metric-lbl">FOLLOWERS</text>
-      <circle cx="152" cy="20" r="3" fill="{accent_green}" class="status-dot-pulse" style="transform-origin: 152px 20px;" />
-      <text x="14" y="66" class="metric-num">{total_followers}+</text>
-      <text x="14" y="94" class="metric-desc">Developer Network</text>
-    </g>
-
-    <!-- Card 4: Years Active -->
-    <g transform="translate(182, 180)">
-      <rect x="0" y="0" width="168" height="116" class="sub-card" />
-      <text x="14" y="24" class="metric-lbl">YEARS ACTIVE</text>
-      <circle cx="152" cy="20" r="3" fill="{accent_green}" class="status-dot-pulse" style="transform-origin: 152px 20px;" />
-      <text x="14" y="66" class="metric-num">{years_active}+</text>
-      <text x="14" y="94" class="metric-desc">Since 2021 Joined</text>
-    </g>
+    <polyline points="355,149 328,106 220,106" fill="none" stroke="{l4[2]}" stroke-width="1" opacity="0.85" />
+    <circle cx="355" cy="149" r="2.5" fill="{l4[2]}" />
+    <text x="220" y="90" text-anchor="start" class="callout-val" fill="{l4[2]}">{l4[1]:.0f}% // {l4[3]}</text>
+    <text x="220" y="103" text-anchor="start" class="callout-name">{l4[0]}</text>
   </g>
 
   <!-- Watermarks -->
-  <text x="774" y="398" text-anchor="end" class="watermark">⟨ψ|Ĥ|ψ⟩ · dim(V)=4</text>
+  <text x="24" y="335" text-anchor="start" class="watermark">⟨ψ|Ĥ|ψ⟩ · dim(V)=4</text>
+  <text x="774" y="335" text-anchor="end" class="watermark">[∀x ∈ ℝⁿ]</text>
 </svg>"""
 
 
 # ==========================================
-# 3. Statement of Craft Card (Stitch Design)
+# 3. Dedicated Telemetry Stats Card (Stitch Design Update)
+# ==========================================
+def build_stats_card_svg(user_stats, theme="dark"):
+    is_dark = theme == "dark"
+    bg_card = "#161B22" if is_dark else "#FFFFFF"
+    border_card = "#30363D" if is_dark else "#D0D7DE"
+    title_color = "#F0F6FC" if is_dark else "#1F2328"
+    accent_green = "#39D353" if is_dark else "#1A7F37"
+    subtext_color = "#8B949E" if is_dark else "#656D76"
+    card_sub_bg = "#21262D" if is_dark else "#F6F8FA"
+
+    total_repos = user_stats.get("total_repos", 13)
+    total_commits = user_stats.get("total_commits", "248")
+    total_followers = user_stats.get("total_followers", 3)
+    years_active = user_stats.get("years_active", 5)
+
+    return f"""<svg width="800" height="195" viewBox="0 0 800 195" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <defs>
+    <style>
+      .card-bg {{ fill: {bg_card}; stroke: {border_card}; stroke-width: 1; rx: 12px; }}
+      .sub-card {{ fill: {card_sub_bg}; stroke: {border_card}; stroke-width: 1; rx: 8px; }}
+
+      @keyframes subtle-dot-pulse {{
+        0%, 100% {{ transform: scale(1); opacity: 0.85; }}
+        50% {{ transform: scale(1.3); opacity: 1; }}
+      }}
+      .status-dot-pulse {{ animation: subtle-dot-pulse 2.2s cubic-bezier(0.4, 0, 0.6, 1) infinite; transform-origin: center; }}
+
+      .telemetry-name {{ font-family: 'JetBrains Mono', 'SF Mono', Consolas, monospace; font-size: 15px; font-weight: 700; fill: {title_color}; letter-spacing: -0.01em; }}
+      .telemetry-sub {{ font-family: 'JetBrains Mono', 'SF Mono', Consolas, monospace; font-size: 10px; font-weight: 600; fill: {accent_green}; letter-spacing: 0.12em; }}
+
+      .metric-num {{ font-family: 'JetBrains Mono', 'SF Mono', Consolas, monospace; font-size: 22px; font-weight: 700; fill: {title_color}; letter-spacing: -0.02em; }}
+      .metric-lbl {{ font-family: 'JetBrains Mono', 'SF Mono', Consolas, monospace; font-size: 9px; font-weight: 600; fill: {subtext_color}; letter-spacing: 0.08em; text-transform: uppercase; }}
+      .metric-desc {{ font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif; font-size: 10px; fill: {subtext_color}; }}
+      .watermark {{ font-family: 'JetBrains Mono', monospace; font-size: 10px; fill: {subtext_color}; opacity: 0.4; letter-spacing: 0.08em; }}
+
+      @media (prefers-reduced-motion: reduce) {{
+        .status-dot-pulse {{ animation: none !important; }}
+      }}
+    </style>
+  </defs>
+
+  <rect x="1" y="1" width="798" height="193" rx="12" class="card-bg" />
+
+  <!-- Header -->
+  <g transform="translate(24, 22)">
+    <text x="0" y="14" class="telemetry-name">Ramadhan Imanur</text>
+    <text x="0" y="30" class="telemetry-sub">GITHUB TELEMETRY // STATS OVERVIEW</text>
+    <text x="752" y="18" text-anchor="end" class="watermark">[∀x ∈ ℝⁿ]</text>
+  </g>
+  <line x1="24" y1="62" x2="776" y2="62" stroke="{border_card}" stroke-width="0.8" />
+
+  <!-- 4 Metrics Horizontal Grid across 800px -->
+  <!-- Card 1: Repos -->
+  <g transform="translate(24, 76)">
+    <rect x="0" y="0" width="174" height="102" class="sub-card" />
+    <text x="14" y="24" class="metric-lbl">TOTAL REPOS</text>
+    <circle cx="158" cy="20" r="3" fill="{accent_green}" class="status-dot-pulse" style="transform-origin: 158px 20px;" />
+    <text x="14" y="62" class="metric-num">{total_repos}+</text>
+    <text x="14" y="86" class="metric-desc">Curated Repositories</text>
+  </g>
+
+  <!-- Card 2: Commits -->
+  <g transform="translate(216, 76)">
+    <rect x="0" y="0" width="174" height="102" class="sub-card" />
+    <text x="14" y="24" class="metric-lbl">ANNUAL COMMITS</text>
+    <circle cx="158" cy="20" r="3" fill="{accent_green}" class="status-dot-pulse" style="transform-origin: 158px 20px;" />
+    <text x="14" y="62" class="metric-num">{total_commits}+</text>
+    <text x="14" y="86" class="metric-desc">Contributions Past Year</text>
+  </g>
+
+  <!-- Card 3: Followers -->
+  <g transform="translate(408, 76)">
+    <rect x="0" y="0" width="174" height="102" class="sub-card" />
+    <text x="14" y="24" class="metric-lbl">FOLLOWERS</text>
+    <circle cx="158" cy="20" r="3" fill="{accent_green}" class="status-dot-pulse" style="transform-origin: 158px 20px;" />
+    <text x="14" y="62" class="metric-num">{total_followers}+</text>
+    <text x="14" y="86" class="metric-desc">Developer Network</text>
+  </g>
+
+  <!-- Card 4: Years Active -->
+  <g transform="translate(600, 76)">
+    <rect x="0" y="0" width="174" height="102" class="sub-card" />
+    <text x="14" y="24" class="metric-lbl">YEARS ACTIVE</text>
+    <circle cx="158" cy="20" r="3" fill="{accent_green}" class="status-dot-pulse" style="transform-origin: 158px 20px;" />
+    <text x="14" y="62" class="metric-num">{years_active}+</text>
+    <text x="14" y="86" class="metric-desc">Since 2021 Joined</text>
+  </g>
+</svg>"""
+
+
+# ==========================================
+# 4. Statement of Craft Card
 # ==========================================
 def build_statement_craft_svg(theme="dark"):
     is_dark = theme == "dark"
@@ -668,7 +709,6 @@ def build_statement_craft_svg(theme="dark"):
 
   <!-- Header -->
   <g transform="translate(24, 22)">
-    <!-- Book Vector Icon -->
     <path d="M4 19.5v-15A2.5 2.5 0 016.5 2H19a1 1 0 011 1v18a1 1 0 01-1 1H6.5a2.5 2.5 0 01-2.5-2.5zM6.5 20H18V4H6.5A1.5 1.5 0 005 5.5v13A1.5 1.5 0 006.5 20z" fill="{accent_green}" />
     <path d="M8 7h8v1.5H8zm0 3.5h8v1.5H8zm0 3.5h5v1.5H8z" fill="{accent_green}" />
     <text x="24" y="13" class="craft-hdr">STATEMENT OF CRAFT</text>
@@ -684,7 +724,7 @@ def build_statement_craft_svg(theme="dark"):
 
 
 # ==========================================
-# 4. Channels Connect Section (Stitch Design)
+# 5. Channels Connect Section
 # ==========================================
 def build_connect_header_svg(theme="dark"):
     is_dark = theme == "dark"
@@ -772,7 +812,7 @@ def build_connect_card_svg(platform, theme="dark"):
 
 
 # ==========================================
-# 5. Standalone Stat Cards (Legacy & Fallback)
+# 6. Legacy & Fallback Generators
 # ==========================================
 def build_stat_card_svg(stat_type, theme="dark"):
     is_dark = theme == "dark"
@@ -823,170 +863,12 @@ def build_stat_card_svg(stat_type, theme="dark"):
 
 
 # ==========================================
-# 6. Core Tech & Donut (Legacy Fallbacks)
-# ==========================================
-def build_core_tech_svg(theme="dark"):
-    is_dark = theme == "dark"
-    bg_card = "#161B22" if is_dark else "#FFFFFF"
-    border_card = "#30363D" if is_dark else "#D0D7DE"
-    header_color = "#39D353" if is_dark else "#1A7F37"
-    badge_bg = "#21262D" if is_dark else "#F6F8FA"
-    badge_border = "#30363D" if is_dark else "#D0D7DE"
-    badge_text = "#C9D1D9" if is_dark else "#1F2328"
-
-    return f"""<svg width="350" height="215" viewBox="0 0 350 215" fill="none" xmlns="http://www.w3.org/2000/svg">
-  <defs>
-    <style>
-      .card-bg {{ fill: {bg_card}; stroke: {border_card}; stroke-width: 1; rx: 8px; }}
-      .header {{ font: 700 11px 'JetBrains Mono', monospace; fill: {header_color}; text-transform: uppercase; letter-spacing: 0.1em; }}
-      .badge-bg {{ fill: {badge_bg}; stroke: {badge_border}; stroke-width: 1; rx: 12px; }}
-      .badge-text {{ font: 500 11px 'JetBrains Mono', monospace; fill: {badge_text}; }}
-    </style>
-  </defs>
-
-  <rect x="0.5" y="0.5" width="349" height="214" rx="8" class="card-bg" />
-  <text x="20" y="32" class="header">CORE TECHNOLOGIES</text>
-
-  <!-- Row 1 -->
-  <g transform="translate(20, 52)">
-    <rect x="0" y="0" width="82" height="26" rx="13" class="badge-bg" />
-    <circle cx="12" cy="13" r="4" fill="#39D353" />
-    <text x="24" y="17" class="badge-text">Python</text>
-  </g>
-  <g transform="translate(110, 52)">
-    <rect x="0" y="0" width="102" height="26" rx="13" class="badge-bg" />
-    <circle cx="12" cy="13" r="4" fill="#58A6FF" />
-    <text x="24" y="17" class="badge-text">PostgreSQL</text>
-  </g>
-  <g transform="translate(220, 52)">
-    <rect x="0" y="0" width="108" height="26" rx="13" class="badge-bg" />
-    <circle cx="12" cy="13" r="4" fill="#238636" />
-    <text x="24" y="17" class="badge-text">Mathematica</text>
-  </g>
-
-  <!-- Row 2 -->
-  <g transform="translate(20, 88)">
-    <rect x="0" y="0" width="102" height="26" rx="13" class="badge-bg" />
-    <circle cx="12" cy="13" r="4" fill="#F7931E" />
-    <text x="24" y="17" class="badge-text">Scikit-Learn</text>
-  </g>
-  <g transform="translate(130, 88)">
-    <rect x="0" y="0" width="85" height="26" rx="13" class="badge-bg" />
-    <circle cx="12" cy="13" r="4" fill="#EE4C2C" />
-    <text x="24" y="17" class="badge-text">PyTorch</text>
-  </g>
-  <g transform="translate(223, 88)">
-    <rect x="0" y="0" width="105" height="26" rx="13" class="badge-bg" />
-    <circle cx="12" cy="13" r="4" fill="#4B8BBE" />
-    <text x="24" y="17" class="badge-text">NumPy/Pandas</text>
-  </g>
-
-  <!-- Row 3 -->
-  <g transform="translate(20, 124)">
-    <rect x="0" y="0" width="70" height="26" rx="13" class="badge-bg" />
-    <circle cx="12" cy="13" r="4" fill="#58A6FF" />
-    <text x="24" y="17" class="badge-text">SQL</text>
-  </g>
-  <g transform="translate(98, 124)">
-    <rect x="0" y="0" width="76" height="26" rx="13" class="badge-bg" />
-    <circle cx="12" cy="13" r="4" fill="#008080" />
-    <text x="24" y="17" class="badge-text">LaTeX</text>
-  </g>
-  <g transform="translate(182, 124)">
-    <rect x="0" y="0" width="88" height="26" rx="13" class="badge-bg" />
-    <circle cx="12" cy="13" r="4" fill="#BC8CFF" />
-    <text x="24" y="17" class="badge-text">Git &amp; Hub</text>
-  </g>
-
-  <!-- Row 4 -->
-  <g transform="translate(20, 160)">
-    <rect x="0" y="0" width="78" height="26" rx="13" class="badge-bg" />
-    <circle cx="12" cy="13" r="4" fill="#FCC624" />
-    <text x="24" y="17" class="badge-text">Linux</text>
-  </g>
-  <g transform="translate(106, 160)">
-    <rect x="0" y="0" width="98" height="26" rx="13" class="badge-bg" />
-    <circle cx="12" cy="13" r="4" fill="#F1E05A" />
-    <text x="24" y="17" class="badge-text">JavaScript</text>
-  </g>
-  <g transform="translate(212, 160)">
-    <rect x="0" y="0" width="116" height="26" rx="13" class="badge-bg" />
-    <circle cx="12" cy="13" r="4" fill="#39D353" />
-    <text x="24" y="17" class="badge-text">SARIMA/Markov</text>
-  </g>
-</svg>"""
-
-
-def build_languages_donut_svg(langs, theme="dark"):
-    is_dark = theme == "dark"
-    bg_card = "#161B22" if is_dark else "#FFFFFF"
-    border_card = "#30363D" if is_dark else "#D0D7DE"
-    header_color = "#39D353" if is_dark else "#1A7F37"
-    text_color = "#C9D1D9" if is_dark else "#1F2328"
-    pct_color = "#8B949E" if is_dark else "#656D76"
-    track_color = "#21262D" if is_dark else "#E1E4E8"
-
-    cx = 260
-    cy = 120
-    r = 46
-    circ = 2 * math.pi * r
-    stroke_w = 16
-
-    donut_circles = []
-    accum_pct = 0.0
-    for name, pct, color in langs:
-        dash_len = (pct / 100.0) * circ
-        dash_gap = circ - dash_len
-        offset = -(accum_pct / 100.0) * circ
-        donut_circles.append(
-            f'<circle cx="{cx}" cy="{cy}" r="{r}" fill="none" stroke="{color}"'
-            f' stroke-width="{stroke_w}" stroke-dasharray="{dash_len:.2f} {dash_gap:.2f}"'
-            f' stroke-dashoffset="{offset:.2f}" transform="rotate(-90 {cx} {cy})" />'
-        )
-        accum_pct += pct
-
-    legend_items = []
-    start_y = 66
-    spacing = 28
-    for i, (name, pct, color) in enumerate(langs):
-        y = start_y + i * spacing
-        escaped_name = html.escape(name)
-        legend_items.append(f"""  <g>
-    <circle cx="24" cy="{y - 4}" r="4.5" fill="{color}" />
-    <text x="36" y="{y}" font-family="'JetBrains Mono', monospace" font-size="12" font-weight="500" fill="{text_color}">{escaped_name}</text>
-    <text x="180" y="{y}" text-anchor="end" font-family="'JetBrains Mono', monospace" font-size="11" font-weight="500" fill="{pct_color}">{pct:.1f}%</text>
-  </g>""")
-
-    return f"""<svg width="350" height="215" viewBox="0 0 350 215" fill="none" xmlns="http://www.w3.org/2000/svg">
-  <defs>
-    <style>
-      .card-bg {{ fill: {bg_card}; stroke: {border_card}; stroke-width: 1; rx: 8px; }}
-      .header {{ font: 700 11px 'JetBrains Mono', monospace; fill: {header_color}; text-transform: uppercase; letter-spacing: 0.1em; }}
-    </style>
-  </defs>
-
-  <rect x="0.5" y="0.5" width="349" height="214" rx="8" class="card-bg" />
-  <text x="20" y="32" class="header">MOST USED LANGUAGES</text>
-
-  <!-- Legend -->
-{"".join(legend_items)}
-
-  <!-- Donut Chart -->
-  <g>
-    <circle cx="{cx}" cy="{cy}" r="{r}" fill="none" stroke="{track_color}" stroke-width="{stroke_w}" />
-    {"".join(donut_circles)}
-  </g>
-</svg>"""
-
-
-# ==========================================
 # Write All Assets (Dark, Light, Fallbacks)
 # ==========================================
 def write_svg_asset(filename, content):
     filepath = ASSETS_DIR / filename
     with open(filepath, "w", encoding="utf-8") as f:
         f.write(content)
-    # XML verification
     try:
         ET.fromstring(content)
     except Exception as e:
@@ -994,36 +876,39 @@ def write_svg_asset(filename, content):
         raise
 
 
-print("Writing Dark Theme assets...")
+print("Writing Dark Theme assets (Updated Stitch Design)...")
 write_svg_asset("welcome-banner-dark.svg", build_welcome_banner_svg("dark"))
-write_svg_asset("telemetry-card-dark.svg", build_telemetry_card_svg(user_stats, formatted_langs, "dark"))
+write_svg_asset("donut-card-dark.svg", build_donut_card_svg("dark"))
+write_svg_asset("stats-card-dark.svg", build_stats_card_svg(user_stats, "dark"))
 write_svg_asset("statement-craft-dark.svg", build_statement_craft_svg("dark"))
 write_svg_asset("connect-header-dark.svg", build_connect_header_svg("dark"))
 write_svg_asset("connect-github-dark.svg", build_connect_card_svg("github", "dark"))
 write_svg_asset("connect-email-dark.svg", build_connect_card_svg("email", "dark"))
 
+# Legacy telemetry-card alias to stats-card
+write_svg_asset("telemetry-card-dark.svg", build_stats_card_svg(user_stats, "dark"))
+
 for stat in ["repos", "commits", "followers", "years"]:
     write_svg_asset(f"stat-{stat}-dark.svg", build_stat_card_svg(stat, "dark"))
 
-write_svg_asset("core-tech-dark.svg", build_core_tech_svg("dark"))
-write_svg_asset("languages-donut-dark.svg", build_languages_donut_svg(formatted_langs, "dark"))
-
-print("Writing Light Theme assets...")
+print("Writing Light Theme assets (Updated Stitch Design)...")
 write_svg_asset("welcome-banner-light.svg", build_welcome_banner_svg("light"))
-write_svg_asset("telemetry-card-light.svg", build_telemetry_card_svg(user_stats, formatted_langs, "light"))
+write_svg_asset("donut-card-light.svg", build_donut_card_svg("light"))
+write_svg_asset("stats-card-light.svg", build_stats_card_svg(user_stats, "light"))
 write_svg_asset("statement-craft-light.svg", build_statement_craft_svg("light"))
 write_svg_asset("connect-header-light.svg", build_connect_header_svg("light"))
 write_svg_asset("connect-github-light.svg", build_connect_card_svg("github", "light"))
 write_svg_asset("connect-email-light.svg", build_connect_card_svg("email", "light"))
 
+write_svg_asset("telemetry-card-light.svg", build_stats_card_svg(user_stats, "light"))
+
 for stat in ["repos", "commits", "followers", "years"]:
     write_svg_asset(f"stat-{stat}-light.svg", build_stat_card_svg(stat, "light"))
 
-write_svg_asset("core-tech-light.svg", build_core_tech_svg("light"))
-write_svg_asset("languages-donut-light.svg", build_languages_donut_svg(formatted_langs, "light"))
-
 print("Updating default fallback assets...")
 shutil.copyfile(ASSETS_DIR / "welcome-banner-dark.svg", ASSETS_DIR / "welcome-banner.svg")
+shutil.copyfile(ASSETS_DIR / "donut-card-dark.svg", ASSETS_DIR / "donut-card.svg")
+shutil.copyfile(ASSETS_DIR / "stats-card-dark.svg", ASSETS_DIR / "stats-card.svg")
 shutil.copyfile(ASSETS_DIR / "telemetry-card-dark.svg", ASSETS_DIR / "telemetry-card.svg")
 shutil.copyfile(ASSETS_DIR / "statement-craft-dark.svg", ASSETS_DIR / "statement-craft.svg")
 shutil.copyfile(ASSETS_DIR / "connect-header-dark.svg", ASSETS_DIR / "connect-header.svg")
@@ -1032,8 +917,5 @@ shutil.copyfile(ASSETS_DIR / "connect-email-dark.svg", ASSETS_DIR / "connect-ema
 
 for stat in ["repos", "commits", "followers", "years"]:
     shutil.copyfile(ASSETS_DIR / f"stat-{stat}-dark.svg", ASSETS_DIR / f"stat-{stat}.svg")
-
-shutil.copyfile(ASSETS_DIR / "core-tech-dark.svg", ASSETS_DIR / "core-tech.svg")
-shutil.copyfile(ASSETS_DIR / "languages-donut-dark.svg", ASSETS_DIR / "languages-donut.svg")
 
 print("All active dashboard assets updated successfully!")

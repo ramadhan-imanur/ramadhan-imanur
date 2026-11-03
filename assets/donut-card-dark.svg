@@ -1,0 +1,90 @@
+<svg width="800" height="350" viewBox="0 0 800 350" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <defs>
+    <style>
+      .card-bg { fill: #161B22; stroke: #30363D; stroke-width: 1; rx: 12px; }
+      @keyframes subtle-dot-pulse {
+        0%, 100% { transform: scale(1); opacity: 0.85; }
+        50% { transform: scale(1.3); opacity: 1; }
+      }
+      @keyframes github-neon-glow {
+        0%, 100% { filter: drop-shadow(0 0 4px #39D35388); opacity: 0.92; transform: scale(1); }
+        50% { filter: drop-shadow(0 0 10px #39D353ff); opacity: 1; transform: scale(1.04); }
+      }
+      .status-dot-pulse { animation: subtle-dot-pulse 2.2s cubic-bezier(0.4, 0, 0.6, 1) infinite; transform-origin: center; }
+      .github-logo-pulse { animation: github-neon-glow 3s ease-in-out infinite; transform-origin: 400px 190px; }
+
+      .sec-title { font-family: 'JetBrains Mono', 'SF Mono', Consolas, monospace; font-size: 11px; font-weight: 700; letter-spacing: 0.12em; fill: #39D353; }
+      .sec-meta { font-family: 'JetBrains Mono', 'SF Mono', Consolas, monospace; font-size: 10px; font-weight: 500; fill: #8B949E; }
+      .callout-val { font-family: 'JetBrains Mono', 'SF Mono', Consolas, monospace; font-size: 9px; font-weight: 600; letter-spacing: 0.05em; }
+      .callout-name { font-family: 'JetBrains Mono', 'SF Mono', Consolas, monospace; font-size: 12px; font-weight: 600; fill: #F0F6FC; }
+      .watermark { font-family: 'JetBrains Mono', monospace; font-size: 9px; fill: #8B949E; opacity: 0.25; letter-spacing: 0.08em; user-select: none; pointer-events: none; }
+
+      @media (prefers-reduced-motion: reduce) {
+        .status-dot-pulse, .github-logo-pulse { animation: none !important; }
+      }
+    </style>
+
+    <radialGradient id="donut-phosphor-glow" cx="80%" cy="15%" r="50%">
+      <stop offset="0%" stop-color="#39D353" stop-opacity="0.12" />
+      <stop offset="100%" stop-color="#39D353" stop-opacity="0" />
+    </radialGradient>
+  </defs>
+
+  <rect x="1" y="1" width="798" height="348" rx="12" class="card-bg" />
+  <circle cx="720" cy="50" r="140" fill="url(#donut-phosphor-glow)" />
+
+  <!-- Top Header Bar -->
+  <g transform="translate(24, 26)">
+    <circle cx="6" cy="6" r="3.5" fill="#39D353" class="status-dot-pulse" style="transform-origin: 6px 6px;" />
+    <text x="18" y="9" class="sec-title">PROGRAMMING LANGUAGES // DISTRIBUTION</text>
+    <text x="360" y="9" class="sec-meta">ASCII · GEN_03</text>
+    <text x="748" y="9" class="sec-meta" text-anchor="end" opacity="0.4">[∀x ∈ ℝⁿ]</text>
+  </g>
+  <line x1="24" y1="46" x2="776" y2="46" stroke="#30363D" stroke-width="0.8" />
+
+  <!-- Donut Visualizer -->
+  <g>
+    <circle cx="400" cy="190" r="82" fill="none" stroke="#21262D" stroke-width="1" />
+    <circle cx="400" cy="190" r="74" fill="none" stroke="#30363D" stroke-dasharray="2 4" stroke-width="0.8" />
+    <circle cx="400" cy="190" r="44" fill="none" stroke="#30363D" stroke-dasharray="2 6" stroke-width="0.8" />
+
+    <g transform="rotate(-90 400 190)">
+      <circle cx="400" cy="190" r="58" fill="none" stroke="#39D353" stroke-width="13" stroke-dasharray="179.71 184.71" stroke-dashoffset="-0.00" /><circle cx="400" cy="190" r="58" fill="none" stroke="#238636" stroke-width="13" stroke-dasharray="88.61 275.82" stroke-dashoffset="-182.21" /><circle cx="400" cy="190" r="58" fill="none" stroke="#58A6FF" stroke-width="13" stroke-dasharray="52.16 312.26" stroke-dashoffset="-273.32" /><circle cx="400" cy="190" r="58" fill="none" stroke="#BC8CFF" stroke-width="13" stroke-dasharray="33.94 330.48" stroke-dashoffset="-327.98" />
+    </g>
+
+    <!-- Center Pulsing GitHub Logo -->
+    <g class="github-logo-pulse" transform="translate(388, 178)">
+      <svg width="24" height="24" viewBox="0 0 24 24" fill="#39D353">
+        <path fill-rule="evenodd" clip-rule="evenodd" d="M12 2C6.477 2 2 6.484 2 12.017c0 4.425 2.865 8.18 6.839 9.504.5.092.682-.217.682-.483 0-.237-.008-.868-.013-1.703-2.782.605-3.369-1.343-3.369-1.343-.454-1.158-1.11-1.466-1.11-1.466-.908-.62.069-.608.069-.608 1.003.07 1.53 1.032 1.53 1.032.892 1.53 2.341 1.088 2.91.832.092-.647.35-1.088.636-1.338-2.22-.253-4.555-1.113-4.555-4.951 0-1.093.39-1.988 1.029-2.688-.103-.253-.446-1.272.098-2.65 0 0 .84-.27 2.75 1.026A9.564 9.564 0 0112 6.844c.85.004 1.705.115 2.504.337 1.909-1.296 2.747-1.027 2.747-1.027.546 1.379.202 2.398.1 2.651.64.7 1.028 1.595 1.028 2.688 0 3.848-2.339 4.695-4.566 4.943.359.309.678.92.678 1.855 0 1.338-.012 2.419-.012 2.747 0 .268.18.58.688.482A10.019 10.019 0 0022 12.017C22 6.484 17.522 2 12 2z" />
+      </svg>
+    </g>
+
+    <!-- Callout 1 (Top Right) -->
+    <polyline points="445,149 472,106 580,106" fill="none" stroke="#39D353" stroke-width="1" opacity="0.85" />
+    <circle cx="445" cy="149" r="2.5" fill="#39D353" />
+    <text x="580" y="90" text-anchor="end" class="callout-val" fill="#39D353">50% // CORE</text>
+    <text x="580" y="103" text-anchor="end" class="callout-name">Python</text>
+
+    <!-- Callout 2 (Bottom Right) -->
+    <polyline points="438,231 468,274 580,274" fill="none" stroke="#238636" stroke-width="1" opacity="0.85" />
+    <circle cx="438" cy="231" r="2.5" fill="#238636" />
+    <text x="580" y="288" text-anchor="end" class="callout-name">Mathematica</text>
+    <text x="580" y="300" text-anchor="end" class="callout-val" fill="#238636">25% // SYMBOLIC</text>
+
+    <!-- Callout 3 (Bottom Left) -->
+    <polyline points="360,231 332,274 220,274" fill="none" stroke="#58A6FF" stroke-width="1" opacity="0.85" />
+    <circle cx="360" cy="231" r="2.5" fill="#58A6FF" />
+    <text x="220" y="288" text-anchor="start" class="callout-name">SQL</text>
+    <text x="220" y="300" text-anchor="start" class="callout-val" fill="#58A6FF">15% // QUERY</text>
+
+    <!-- Callout 4 (Top Left) -->
+    <polyline points="355,149 328,106 220,106" fill="none" stroke="#BC8CFF" stroke-width="1" opacity="0.85" />
+    <circle cx="355" cy="149" r="2.5" fill="#BC8CFF" />
+    <text x="220" y="90" text-anchor="start" class="callout-val" fill="#BC8CFF">10% // SCRIPT</text>
+    <text x="220" y="103" text-anchor="start" class="callout-name">Shell / Bash</text>
+  </g>
+
+  <!-- Watermarks -->
+  <text x="24" y="335" text-anchor="start" class="watermark">⟨ψ|Ĥ|ψ⟩ · dim(V)=4</text>
+  <text x="774" y="335" text-anchor="end" class="watermark">[∀x ∈ ℝⁿ]</text>
+</svg>

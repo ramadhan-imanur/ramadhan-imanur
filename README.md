@@ -7,12 +7,12 @@
   </picture>
 </p>
 
-<!-- Flagship Telemetry Dashboard & Donut Visualizer Card (Adaptive Light/Dark Theme) -->
+<!-- Programming Languages Donut Visualizer Card (Adaptive Light/Dark Theme) -->
 <p align="center">
   <picture>
-    <source media="(prefers-color-scheme: dark)" srcset="assets/telemetry-card-dark.svg">
-    <source media="(prefers-color-scheme: light)" srcset="assets/telemetry-card-light.svg">
-    <img src="assets/telemetry-card-dark.svg" alt="Programming Languages Distribution & Telemetry Stats" width="800" />
+    <source media="(prefers-color-scheme: dark)" srcset="assets/donut-card-dark.svg">
+    <source media="(prefers-color-scheme: light)" srcset="assets/donut-card-light.svg">
+    <img src="assets/donut-card-dark.svg" alt="Programming Languages Distribution // ASCII GEN_03" width="800" />
   </picture>
 </p>
 
@@ -50,4 +50,13 @@
       <img src="assets/connect-email-dark.svg" alt="Gmail Endpoint" width="395" />
     </picture>
   </a>
+</p>
+
+<!-- GitHub Telemetry Stats Overview Card (Adaptive Light/Dark Theme) -->
+<p align="center">
+  <picture>
+    <source media="(prefers-color-scheme: dark)" srcset="assets/stats-card-dark.svg">
+    <source media="(prefers-color-scheme: light)" srcset="assets/stats-card-light.svg">
+    <img src="assets/stats-card-dark.svg" alt="GitHub Telemetry Stats Overview" width="800" />
+  </picture>
 </p>
