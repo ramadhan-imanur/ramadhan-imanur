@@ -225,10 +225,11 @@ if not lang_totals and SLOC_CACHE_FILE.exists():
 
 if not lang_totals:
     lang_totals = {
-        "Python": 10636,
-        "Mathematica": 5318,
-        "SQL": 3190,
-        "Shell": 2127,
+        "Python": 10991,
+        "JavaScript": 3003,
+        "LaTeX": 757,
+        "SQL": 687,
+        "Shell": 63,
     }
 
 total_lines = sum(lang_totals.values())
@@ -237,14 +238,13 @@ top_5 = sorted_langs[:5]
 
 LANGUAGE_COLORS = {
     "Python": "#39D353",       # GitHub neon green
-    "Mathematica": "#238636",  # Dark green
+    "JavaScript": "#F1E05A",   # GitHub yellow
     "SQL": "#58A6FF",          # Syntax blue
+    "LaTeX": "#BC8CFF",        # Syntax purple
     "Shell": "#BC8CFF",        # Syntax purple
-    "JavaScript": "#F1E05A",
     "TypeScript": "#3178C6",
     "CSS": "#563D7C",
     "HTML": "#E34C26",
-    "LaTeX": "#3D6117",
 }
 
 formatted_langs = []
@@ -258,6 +258,66 @@ print("  -> Top Languages (by Source Lines of Code):")
 for name, pct, _ in formatted_langs:
     cnt = lang_totals.get(name, 0)
     print(f"     - {name:12}: {pct:5.2f}% ({cnt:,} lines)")
+
+# Compute Dynamic Programming Language Distribution for the Donut Chart
+# Filter out web markup/styles (HTML/CSS) so core programming, query & formal computation languages are accurately represented
+EXCLUDE_LANGS = {"HTML", "CSS"}
+code_langs = {k: v for k, v in lang_totals.items() if k not in EXCLUDE_LANGS and v > 0}
+if not code_langs:
+    code_langs = lang_totals
+
+# Sort descending by lines of code
+sorted_code = sorted(code_langs.items(), key=lambda x: x[1], reverse=True)
+top_4_langs = sorted_code[:4]
+
+# Ensure we have 4 entries for the 4-quadrant HUD donut
+KNOWN_FALLBACKS = [("Python", 10991), ("JavaScript", 3003), ("LaTeX", 757), ("SQL", 687), ("Shell", 63)]
+while len(top_4_langs) < 4:
+    for f_name, f_lines in KNOWN_FALLBACKS:
+        if f_name not in [x[0] for x in top_4_langs]:
+            top_4_langs.append((f_name, f_lines))
+            break
+
+tot_code = sum(v for _, v in top_4_langs)
+
+# Compute exact percentage and balanced integer percentages summing to 100 (Hamilton-Hare)
+raw_pcts = [(k, (v / tot_code) * 100.0) for k, v in top_4_langs]
+rounded_pcts = {}
+remainders = {}
+for k, p in raw_pcts:
+    r = math.floor(p)
+    if r < 1 and p > 0:
+        r = 1
+    rounded_pcts[k] = r
+    remainders[k] = p - r
+
+diff = 100 - sum(rounded_pcts.values())
+sorted_rem = sorted(remainders.items(), key=lambda x: x[1], reverse=True)
+for i in range(diff):
+    k = sorted_rem[i % len(sorted_rem)][0]
+    rounded_pcts[k] += 1
+
+CATEGORY_MAP = {
+    "Python": "CORE",
+    "JavaScript": "ALGORITHMS",
+    "TypeScript": "TYPED LOGIC",
+    "SQL": "QUERY",
+    "LaTeX": "FORMAL",
+    "Shell": "SCRIPT",
+    "Bash": "SCRIPT",
+    "C++": "SYSTEMS",
+    "Rust": "SYSTEMS",
+}
+
+donut_languages = []
+for k, _ in top_4_langs:
+    pct = rounded_pcts[k]
+    cat = CATEGORY_MAP.get(k, "COMPUTE")
+    donut_languages.append({"name": k, "pct": pct, "category": cat, "lines": code_langs.get(k, 0)})
+
+print("  -> Dynamic Donut Chart Languages (Native GitHub Usage):")
+for d in donut_languages:
+    print(f"     - {d['name']:12}: {d['pct']:2d}% // {d['category']} ({d['lines']:,} lines)")
 
 
 user_stats = {
@@ -464,31 +524,48 @@ def build_welcome_banner_svg(theme="dark"):
 # ==========================================
 # 2. Standalone Donut Card (Stitch Design Update)
 # ==========================================
-def build_donut_card_svg(theme="dark"):
+def build_donut_card_svg(donut_langs, theme="dark"):
     is_dark = theme == "dark"
     bg_card = "#161B22" if is_dark else "#FFFFFF"
     border_card = "#30363D" if is_dark else "#D0D7DE"
     title_color = "#F0F6FC" if is_dark else "#1F2328"
     accent_green = "#39D353" if is_dark else "#1A7F37"
-    accent_green_dark = "#238636" if is_dark else "#2EA043"
-    accent_blue = "#58A6FF" if is_dark else "#0969DA"
-    accent_purple = "#BC8CFF" if is_dark else "#8250DF"
     subtext_color = "#8B949E" if is_dark else "#656D76"
     ring_bg = "#21262D" if is_dark else "#E1E4E8"
 
+    if is_dark:
+        lang_colors = {
+            "Python": "#39D353",
+            "JavaScript": "#F1E05A",
+            "LaTeX": "#BC8CFF",
+            "SQL": "#58A6FF",
+            "Shell": "#BC8CFF",
+            "TypeScript": "#3178C6",
+        }
+    else:
+        lang_colors = {
+            "Python": "#1A7F37",
+            "JavaScript": "#9A6700",
+            "LaTeX": "#8250DF",
+            "SQL": "#0969DA",
+            "Shell": "#8250DF",
+            "TypeScript": "#0969DA",
+        }
+
     circ = 2 * math.pi * 58  # ~364.424
 
-    display_langs = [
-        ("Python", 50.0, accent_green, "CORE"),
-        ("Mathematica", 25.0, accent_green_dark, "SYMBOLIC"),
-        ("SQL", 15.0, accent_blue, "QUERY"),
-        ("Shell / Bash", 10.0, accent_purple, "SCRIPT"),
-    ]
+    items = []
+    for d in donut_langs:
+        name = d["name"]
+        pct = d["pct"]
+        cat = d["category"]
+        col = lang_colors.get(name, accent_green)
+        items.append((name, pct, col, cat))
 
     accum = 0.0
     donut_segments = []
-    for name, pct, col, cat in display_langs:
-        dash_len = max(1.0, (pct / 100.0) * circ - 2.5)
+    for name, pct, col, cat in items:
+        dash_len = max(3.0, (pct / 100.0) * circ - 2.5)
         dash_gap = circ - dash_len
         offset = -(accum / 100.0) * circ
         donut_segments.append(
@@ -498,7 +575,15 @@ def build_donut_card_svg(theme="dark"):
         )
         accum += pct
 
-    l1, l2, l3, l4 = display_langs[0], display_langs[1], display_langs[2], display_langs[3]
+    # Assign 4 quadrants: Top-Right (l1), Bottom-Right (l2), Bottom-Left (l3), Top-Left (l4)
+    l1 = items[0]
+    l2 = items[1]
+    if len(items) > 3 and items[2][0] == "LaTeX" and items[3][0] == "SQL":
+        l3 = items[3]  # SQL at bottom-left
+        l4 = items[2]  # LaTeX at top-left
+    else:
+        l3 = items[2]
+        l4 = items[3]
 
     return f"""<svg width="800" height="350" viewBox="0 0 800 350" fill="none" xmlns="http://www.w3.org/2000/svg">
   <defs>
@@ -718,7 +803,7 @@ def build_statement_craft_svg(theme="dark"):
   <!-- Body -->
   <text x="24" y="66" class="craft-text">
     <tspan x="24" dy="0">Undergraduate Mathematics student focused on applied computation, mathematical modeling, and data science.</tspan>
-    <tspan x="24" dy="24">Grounded in pure and applied mathematics, Python, Wolfram Mathematica, and relational database systems.</tspan>
+    <tspan x="24" dy="24">Grounded in pure and applied mathematics, Python, scientific computation, and relational database systems.</tspan>
   </text>
 </svg>"""
 
@@ -878,7 +963,7 @@ def write_svg_asset(filename, content):
 
 print("Writing Dark Theme assets (Updated Stitch Design)...")
 write_svg_asset("welcome-banner-dark.svg", build_welcome_banner_svg("dark"))
-write_svg_asset("donut-card-dark.svg", build_donut_card_svg("dark"))
+write_svg_asset("donut-card-dark.svg", build_donut_card_svg(donut_languages, "dark"))
 write_svg_asset("stats-card-dark.svg", build_stats_card_svg(user_stats, "dark"))
 write_svg_asset("statement-craft-dark.svg", build_statement_craft_svg("dark"))
 write_svg_asset("connect-header-dark.svg", build_connect_header_svg("dark"))
@@ -893,7 +978,7 @@ for stat in ["repos", "commits", "followers", "years"]:
 
 print("Writing Light Theme assets (Updated Stitch Design)...")
 write_svg_asset("welcome-banner-light.svg", build_welcome_banner_svg("light"))
-write_svg_asset("donut-card-light.svg", build_donut_card_svg("light"))
+write_svg_asset("donut-card-light.svg", build_donut_card_svg(donut_languages, "light"))
 write_svg_asset("stats-card-light.svg", build_stats_card_svg(user_stats, "light"))
 write_svg_asset("statement-craft-light.svg", build_statement_craft_svg("light"))
 write_svg_asset("connect-header-light.svg", build_connect_header_svg("light"))

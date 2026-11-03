@@ -49,7 +49,7 @@
     <circle cx="400" cy="190" r="44" fill="none" stroke="#30363D" stroke-dasharray="2 6" stroke-width="0.8" />
 
     <g transform="rotate(-90 400 190)">
-      <circle cx="400" cy="190" r="58" fill="none" stroke="#39D353" stroke-width="13" stroke-dasharray="179.71 184.71" stroke-dashoffset="-0.00" /><circle cx="400" cy="190" r="58" fill="none" stroke="#238636" stroke-width="13" stroke-dasharray="88.61 275.82" stroke-dashoffset="-182.21" /><circle cx="400" cy="190" r="58" fill="none" stroke="#58A6FF" stroke-width="13" stroke-dasharray="52.16 312.26" stroke-dashoffset="-273.32" /><circle cx="400" cy="190" r="58" fill="none" stroke="#BC8CFF" stroke-width="13" stroke-dasharray="33.94 330.48" stroke-dashoffset="-327.98" />
+      <circle cx="400" cy="190" r="58" fill="none" stroke="#39D353" stroke-width="13" stroke-dasharray="256.24 108.18" stroke-dashoffset="-0.00" /><circle cx="400" cy="190" r="58" fill="none" stroke="#F1E05A" stroke-width="13" stroke-dasharray="70.38 294.04" stroke-dashoffset="-258.74" /><circle cx="400" cy="190" r="58" fill="none" stroke="#BC8CFF" stroke-width="13" stroke-dasharray="15.72 348.70" stroke-dashoffset="-331.63" /><circle cx="400" cy="190" r="58" fill="none" stroke="#58A6FF" stroke-width="13" stroke-dasharray="12.08 352.35" stroke-dashoffset="-349.85" />
     </g>
 
     <!-- Center Pulsing GitHub Logo -->
@@ -62,26 +62,26 @@
     <!-- Callout 1 (Top Right) -->
     <polyline points="445,149 472,106 580,106" fill="none" stroke="#39D353" stroke-width="1" opacity="0.85" />
     <circle cx="445" cy="149" r="2.5" fill="#39D353" />
-    <text x="580" y="90" text-anchor="end" class="callout-val" fill="#39D353">50% // CORE</text>
+    <text x="580" y="90" text-anchor="end" class="callout-val" fill="#39D353">71% // CORE</text>
     <text x="580" y="103" text-anchor="end" class="callout-name">Python</text>
 
     <!-- Callout 2 (Bottom Right) -->
-    <polyline points="438,231 468,274 580,274" fill="none" stroke="#238636" stroke-width="1" opacity="0.85" />
-    <circle cx="438" cy="231" r="2.5" fill="#238636" />
-    <text x="580" y="288" text-anchor="end" class="callout-name">Mathematica</text>
-    <text x="580" y="300" text-anchor="end" class="callout-val" fill="#238636">25% // SYMBOLIC</text>
+    <polyline points="438,231 468,274 580,274" fill="none" stroke="#F1E05A" stroke-width="1" opacity="0.85" />
+    <circle cx="438" cy="231" r="2.5" fill="#F1E05A" />
+    <text x="580" y="288" text-anchor="end" class="callout-name">JavaScript</text>
+    <text x="580" y="300" text-anchor="end" class="callout-val" fill="#F1E05A">20% // ALGORITHMS</text>
 
     <!-- Callout 3 (Bottom Left) -->
     <polyline points="360,231 332,274 220,274" fill="none" stroke="#58A6FF" stroke-width="1" opacity="0.85" />
     <circle cx="360" cy="231" r="2.5" fill="#58A6FF" />
     <text x="220" y="288" text-anchor="start" class="callout-name">SQL</text>
-    <text x="220" y="300" text-anchor="start" class="callout-val" fill="#58A6FF">15% // QUERY</text>
+    <text x="220" y="300" text-anchor="start" class="callout-val" fill="#58A6FF">4% // QUERY</text>
 
     <!-- Callout 4 (Top Left) -->
     <polyline points="355,149 328,106 220,106" fill="none" stroke="#BC8CFF" stroke-width="1" opacity="0.85" />
     <circle cx="355" cy="149" r="2.5" fill="#BC8CFF" />
-    <text x="220" y="90" text-anchor="start" class="callout-val" fill="#BC8CFF">10% // SCRIPT</text>
-    <text x="220" y="103" text-anchor="start" class="callout-name">Shell / Bash</text>
+    <text x="220" y="90" text-anchor="start" class="callout-val" fill="#BC8CFF">5% // FORMAL</text>
+    <text x="220" y="103" text-anchor="start" class="callout-name">LaTeX</text>
   </g>
 
   <!-- Watermarks -->

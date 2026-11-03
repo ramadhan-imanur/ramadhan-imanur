@@ -21,6 +21,6 @@
   <!-- Body -->
   <text x="24" y="66" class="craft-text">
     <tspan x="24" dy="0">Undergraduate Mathematics student focused on applied computation, mathematical modeling, and data science.</tspan>
-    <tspan x="24" dy="24">Grounded in pure and applied mathematics, Python, Wolfram Mathematica, and relational database systems.</tspan>
+    <tspan x="24" dy="24">Grounded in pure and applied mathematics, Python, scientific computation, and relational database systems.</tspan>
   </text>
 </svg>
