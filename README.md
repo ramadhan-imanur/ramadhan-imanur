@@ -25,7 +25,16 @@
   </picture>
 </p>
 
-<!-- Channels // Connect Section Header -->
+<!-- GitHub Telemetry Stats Overview Card (Adaptive Light/Dark Theme) -->
+<p align="center">
+  <picture>
+    <source media="(prefers-color-scheme: dark)" srcset="assets/stats-card-dark.svg">
+    <source media="(prefers-color-scheme: light)" srcset="assets/stats-card-light.svg">
+    <img src="assets/stats-card-dark.svg" alt="GitHub Telemetry Stats Overview" width="800" />
+  </picture>
+</p>
+
+<!-- Channels // Connect Section Header (Placed at the bottom) -->
 <p align="center">
   <picture>
     <source media="(prefers-color-scheme: dark)" srcset="assets/connect-header-dark.svg">
@@ -50,13 +59,4 @@
       <img src="assets/connect-email-dark.svg" alt="Gmail Endpoint" width="395" />
     </picture>
   </a>
-</p>
-
-<!-- GitHub Telemetry Stats Overview Card (Adaptive Light/Dark Theme) -->
-<p align="center">
-  <picture>
-    <source media="(prefers-color-scheme: dark)" srcset="assets/stats-card-dark.svg">
-    <source media="(prefers-color-scheme: light)" srcset="assets/stats-card-light.svg">
-    <img src="assets/stats-card-dark.svg" alt="GitHub Telemetry Stats Overview" width="800" />
-  </picture>
 </p>
