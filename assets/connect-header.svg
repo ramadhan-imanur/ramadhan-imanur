@@ -1,0 +1,22 @@
+<svg width="800" height="32" viewBox="0 0 800 32" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <defs>
+    <style>
+      @keyframes subtle-dot-pulse {
+        0%, 100% { transform: scale(1); opacity: 0.85; }
+        50% { transform: scale(1.3); opacity: 1; }
+      }
+      .status-dot-pulse { animation: subtle-dot-pulse 2.2s cubic-bezier(0.4, 0, 0.6, 1) infinite; transform-origin: center; }
+      .lbl { font-family: 'JetBrains Mono', 'SF Mono', Consolas, monospace; font-size: 11px; font-weight: 700; letter-spacing: 0.12em; fill: #39D353; }
+      .sub { font-family: 'JetBrains Mono', 'SF Mono', Consolas, monospace; font-size: 10px; font-weight: 500; fill: #8B949E; }
+      @media (prefers-reduced-motion: reduce) {
+        .status-dot-pulse { animation: none !important; }
+      }
+    </style>
+  </defs>
+
+  <g transform="translate(6, 16)">
+    <circle cx="6" cy="0" r="3.5" fill="#39D353" class="status-dot-pulse" style="transform-origin: 6px 0px;" />
+    <text x="18" y="4" class="lbl">CHANNELS // CONNECT</text>
+    <text x="788" y="4" text-anchor="end" class="sub">EXTERNAL · ENDPOINT</text>
+  </g>
+</svg>

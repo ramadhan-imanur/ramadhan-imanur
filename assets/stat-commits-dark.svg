@@ -2,13 +2,18 @@
   <defs>
     <style>
       .card { fill: #161B22; stroke: #30363D; stroke-width: 1; rx: 8px; }
-      .num { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Ubuntu, sans-serif; font-size: 24px; font-weight: 700; fill: #F0F6FC; text-anchor: middle; }
-      .lbl { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Ubuntu, sans-serif; font-size: 11px; font-weight: 600; fill: #8B949E; text-anchor: middle; letter-spacing: 0.8px; }
+      .num { font-family: 'JetBrains Mono', monospace; font-size: 22px; font-weight: 700; fill: #F0F6FC; text-anchor: middle; }
+      .lbl { font-family: 'JetBrains Mono', monospace; font-size: 9.5px; font-weight: 600; fill: #8B949E; text-anchor: middle; letter-spacing: 0.8px; text-transform: uppercase; }
+      @keyframes subtle-dot-pulse {
+        0%, 100% { transform: scale(1); opacity: 0.85; }
+        50% { transform: scale(1.3); opacity: 1; }
+      }
+      .status-dot-pulse { animation: subtle-dot-pulse 2.2s cubic-bezier(0.4, 0, 0.6, 1) infinite; transform-origin: center; }
     </style>
   </defs>
 
   <rect x="1" y="1" width="186" height="102" rx="8" class="card" />
-  <path d="M94 22l2.5 5 5.5.8-4 3.9.9 5.5-4.9-2.6-4.9 2.6.9-5.5-4-3.9 5.5-.8 2.5-5z" fill="#8B949E" />
-  <text x="94" y="64" class="num">133+</text>
-  <text x="94" y="84" class="lbl">ANNUAL COMMITS</text>
+  <circle cx="168" cy="20" r="3" fill="#39D353" class="status-dot-pulse" style="transform-origin: 168px 20px;" />
+  <text x="94" y="56" class="num">134+</text>
+  <text x="94" y="80" class="lbl">ANNUAL COMMITS</text>
 </svg>

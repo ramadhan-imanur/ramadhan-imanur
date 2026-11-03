@@ -1,62 +1,53 @@
-<!-- Welcome Banner Card (Adaptive Light/Dark Theme & Mobile Responsive) -->
+<!-- Welcome Cosmic Math Hero Banner (Adaptive Light/Dark Theme & Mobile Responsive) -->
 <p align="center">
   <picture>
     <source media="(prefers-color-scheme: dark)" srcset="assets/welcome-banner-dark.svg">
     <source media="(prefers-color-scheme: light)" srcset="assets/welcome-banner-light.svg">
-    <img src="assets/welcome-banner-light.svg" alt="Welcome to Ramadhan Imanur's Hub" width="100%" />
+    <img src="assets/welcome-banner-dark.svg" alt="Where applied mathematics meets predictive computation" width="800" />
   </picture>
 </p>
 
-<!-- 4 Quick Stats Cards (Adaptive 4-in-a-row on Desktop, 2x2 on Mobile/Tablet) -->
+<!-- Flagship Telemetry Dashboard & Donut Visualizer Card (Adaptive Light/Dark Theme) -->
 <p align="center">
   <picture>
-    <source media="(prefers-color-scheme: dark)" srcset="assets/stat-repos-dark.svg">
-    <source media="(prefers-color-scheme: light)" srcset="assets/stat-repos-light.svg">
-    <img src="assets/stat-repos-light.svg" alt="Total Repositories" width="185" />
-  </picture>
-  <picture>
-    <source media="(prefers-color-scheme: dark)" srcset="assets/stat-commits-dark.svg">
-    <source media="(prefers-color-scheme: light)" srcset="assets/stat-commits-light.svg">
-    <img src="assets/stat-commits-light.svg" alt="Annual Commits" width="185" />
-  </picture>
-  <picture>
-    <source media="(prefers-color-scheme: dark)" srcset="assets/stat-followers-dark.svg">
-    <source media="(prefers-color-scheme: light)" srcset="assets/stat-followers-light.svg">
-    <img src="assets/stat-followers-light.svg" alt="Followers" width="185" />
-  </picture>
-  <picture>
-    <source media="(prefers-color-scheme: dark)" srcset="assets/stat-years-dark.svg">
-    <source media="(prefers-color-scheme: light)" srcset="assets/stat-years-light.svg">
-    <img src="assets/stat-years-light.svg" alt="Years Active" width="185" />
+    <source media="(prefers-color-scheme: dark)" srcset="assets/telemetry-card-dark.svg">
+    <source media="(prefers-color-scheme: light)" srcset="assets/telemetry-card-light.svg">
+    <img src="assets/telemetry-card-dark.svg" alt="Programming Languages Distribution & Telemetry Stats" width="800" />
   </picture>
 </p>
 
-<!-- Tech Stack & Languages Section (Auto-Wrapping Responsively) -->
+<!-- Statement of Craft (Adaptive Light/Dark Theme) -->
 <p align="center">
   <picture>
-    <source media="(prefers-color-scheme: dark)" srcset="assets/core-tech-dark.svg">
-    <source media="(prefers-color-scheme: light)" srcset="assets/core-tech-light.svg">
-    <img src="assets/core-tech-light.svg" alt="Core Technologies" width="380" />
-  </picture>
-  <picture>
-    <source media="(prefers-color-scheme: dark)" srcset="assets/languages-donut-dark.svg">
-    <source media="(prefers-color-scheme: light)" srcset="assets/languages-donut-light.svg">
-    <img src="assets/languages-donut-light.svg" alt="Top Languages Donut Breakdown" width="380" />
+    <source media="(prefers-color-scheme: dark)" srcset="assets/statement-craft-dark.svg">
+    <source media="(prefers-color-scheme: light)" srcset="assets/statement-craft-light.svg">
+    <img src="assets/statement-craft-dark.svg" alt="Statement of Craft" width="800" />
   </picture>
 </p>
 
----
-
-### About Me
-<p align="justify">
-Undergraduate Mathematics student focused on applied computation, mathematical modeling, and data science. Strong foundation in pure and applied mathematics, using Python for data science & statistical modeling, Wolfram Mathematica for symbolic and numerical computation, and SQL for relational database architecture.
-</p>
-
+<!-- Channels // Connect Section Header -->
 <p align="center">
-  <a href="https://github.com/ramadhan-imanur">
-    <img src="https://img.shields.io/badge/GitHub-ramadhan--imanur-181717?style=for-the-badge&logo=github&logoColor=white" />
+  <picture>
+    <source media="(prefers-color-scheme: dark)" srcset="assets/connect-header-dark.svg">
+    <source media="(prefers-color-scheme: light)" srcset="assets/connect-header-light.svg">
+    <img src="assets/connect-header-dark.svg" alt="Channels Connect" width="800" />
+  </picture>
+</p>
+
+<!-- Interactive Connect Endpoint Cards (Native Clickable Links) -->
+<p align="center">
+  <a href="https://github.com/ramadhan-imanur" target="_blank" rel="noopener noreferrer">
+    <picture>
+      <source media="(prefers-color-scheme: dark)" srcset="assets/connect-github-dark.svg">
+      <source media="(prefers-color-scheme: light)" srcset="assets/connect-github-light.svg">
+      <img src="assets/connect-github-dark.svg" alt="GitHub Profile @ramadhan-imanur" width="395" />
+    </picture>
   </a>
   <a href="mailto:ramadhan.imanur.rochim@gmail.com">
-    <img src="https://img.shields.io/badge/Email-ramadhan.imanur.rochim@gmail.com-D14836?style=for-the-badge&logo=gmail&logoColor=white" />
+    <picture>
+      <source media="(prefers-color-scheme: dark)" srcset="assets/connect-email-dark.svg">
+      <source media="(prefers-color-scheme: light)" srcset="assets/connect-email-light.svg">
+      <img src="assets/connect-email-dark.svg" alt="Gmail Endpoint" width="395" />
+    </picture>
   </a>
 </p>
