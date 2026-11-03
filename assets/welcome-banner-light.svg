@@ -18,7 +18,7 @@
       .star-twinkle-slow { animation: subtle-twinkle 4s ease-in-out infinite; transform-origin: center; }
       .star-twinkle-mid { animation: subtle-twinkle 2.8s ease-in-out infinite; transform-origin: center; }
       .star-twinkle-fast { animation: subtle-twinkle 2s ease-in-out infinite; transform-origin: center; }
-      .star-sparkle { animation: soft-pulse-star 5s ease-in-out infinite; }
+      .star-sparkle { animation: soft-pulse-star 5s ease-in-out infinite; transform-origin: 0 0; }
 
       .headline { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Newsreader', Georgia, serif; font-size: 26px; font-weight: 600; letter-spacing: -0.02em; fill: #1F2328; }
       .headline-italic { font-family: 'Newsreader', Georgia, serif; font-style: italic; fill: #1A7F37; font-weight: 500; }
@@ -82,16 +82,22 @@
   <circle cx="410" cy="180" r="1.2" fill="#1F2328" class="star-twinkle-fast" />
 
   <!-- 4-Point Diamond Sparkles -->
-  <g transform="translate(710, 52)" class="star-sparkle" style="transform-origin: 710px 52px;">
-    <path d="M0 -4.5 Q0 0 4.5 0 Q0 0 0 4.5 Q0 0 -4.5 0 Q0 0 0 -4.5 Z" fill="#1A7F37" />
-    <circle cx="0" cy="0" r="5" fill="url(#star-green-glow)" />
+  <g transform="translate(710, 52)">
+    <g class="star-sparkle" style="transform-origin: 0 0;">
+      <path d="M0 -4.5 Q0 0 4.5 0 Q0 0 0 4.5 Q0 0 -4.5 0 Q0 0 0 -4.5 Z" fill="#1A7F37" />
+      <circle cx="0" cy="0" r="5" fill="url(#star-green-glow)" />
+    </g>
   </g>
-  <g transform="translate(640, 145)" class="star-sparkle" style="transform-origin: 640px 145px; animation-delay: 1.5s;">
-    <path d="M0 -4 Q0 0 4 0 Q0 0 0 4 Q0 0 -4 0 Q0 0 0 -4 Z" fill="#0969DA" />
-    <circle cx="0" cy="0" r="4.5" fill="url(#star-cyan-glow)" />
+  <g transform="translate(640, 145)">
+    <g class="star-sparkle" style="transform-origin: 0 0; animation-delay: 1.5s;">
+      <path d="M0 -4 Q0 0 4 0 Q0 0 0 4 Q0 0 -4 0 Q0 0 0 -4 Z" fill="#0969DA" />
+      <circle cx="0" cy="0" r="4.5" fill="url(#star-cyan-glow)" />
+    </g>
   </g>
-  <g transform="translate(36, 125)" class="star-sparkle" style="transform-origin: 36px 125px; animation-delay: 2.2s;">
-    <path d="M0 -3.5 Q0 0 3.5 0 Q0 0 0 3.5 Q0 0 -3.5 0 Q0 0 0 -3.5 Z" fill="#1F2328" opacity="0.8" />
+  <g transform="translate(36, 125)">
+    <g class="star-sparkle" style="transform-origin: 0 0; animation-delay: 2.2s;">
+      <path d="M0 -3.5 Q0 0 3.5 0 Q0 0 0 3.5 Q0 0 -3.5 0 Q0 0 0 -3.5 Z" fill="#1F2328" opacity="0.8" />
+    </g>
   </g>
 
   <!-- Mathematical Geometry & Parametric Curves -->

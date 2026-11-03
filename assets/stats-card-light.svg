@@ -49,7 +49,7 @@
     <rect x="0" y="0" width="174" height="102" class="sub-card" />
     <text x="14" y="24" class="metric-lbl">ANNUAL COMMITS</text>
     <circle cx="158" cy="20" r="3" fill="#1A7F37" class="status-dot-pulse" style="transform-origin: 158px 20px;" />
-    <text x="14" y="62" class="metric-num">137+</text>
+    <text x="14" y="62" class="metric-num">138+</text>
     <text x="14" y="86" class="metric-desc">Contributions Past Year</text>
   </g>
 
