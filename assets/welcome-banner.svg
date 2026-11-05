@@ -12,7 +12,7 @@
       }
       @keyframes soft-pulse-star {
         0%, 100% { opacity: 0.3; transform: rotate(0deg) scale(0.9); }
-        50% { opacity: 1; transform: rotate(45deg) scale(1.15); }
+        50% { transform: scale(1.15); opacity: 1; }
       }
       .status-dot-pulse { animation: subtle-dot-pulse 2.2s cubic-bezier(0.4, 0, 0.6, 1) infinite; transform-origin: center; }
       .star-twinkle-slow { animation: subtle-twinkle 4s ease-in-out infinite; transform-origin: center; }
@@ -96,7 +96,7 @@
   </g>
   <g transform="translate(36, 125)">
     <g class="star-sparkle" style="transform-origin: 0 0; animation-delay: 2.2s;">
-      <path d="M0 -3.5 Q0 0 3.5 0 Q0 0 0 3.5 Q0 0 -3.5 0 Q0 0 0 -3.5 Z" fill="#F0F6FC" opacity="0.8" />
+      <path d="M0 -3.5 Q0 0 3.5 0 Q0 0 0 3.5 Q0 0 -3.5 Z" fill="#F0F6FC" opacity="0.8" />
     </g>
   </g>
 
@@ -174,7 +174,7 @@
     <g transform="translate(20, 75)">
       <text x="0" y="0" class="headline" font-size="20">Where applied mathematics meets</text>
       <text x="0" y="26" class="headline-italic" font-size="20">predictive computation.</text>
-      <text x="0" y="56" class="mono-sub" font-size="11">@ramadhan-imanur / Imanur.dev</text>
+      <text x="0" y="56" class="mono-sub" font-size="11">@ramadhan-imanur <tspan fill="#30363D">/</tspan> <tspan fill="#C9D1D9">Imanur.dev</tspan></text>
       <text x="0" y="80" font-family="-apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif" font-size="11" fill="#8B949E">Applied Computation · Modeling · Data Science</text>
     </g>
   </g>

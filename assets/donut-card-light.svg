@@ -1,23 +1,23 @@
 <svg width="800" height="350" viewBox="0 0 800 350" fill="none" xmlns="http://www.w3.org/2000/svg">
   <defs>
     <style>
-      .card-bg { fill: #FFFFFF; stroke: #D0D7DE; stroke-width: 1; rx: 12px; }
+      .card-bg { fill: #FFFFFF; stroke: #E7DDFA; stroke-width: 1; rx: 12px; }
       @keyframes subtle-dot-pulse {
         0%, 100% { transform: scale(1); opacity: 0.85; }
         50% { transform: scale(1.3); opacity: 1; }
       }
       @keyframes github-neon-glow {
-        0%, 100% { filter: drop-shadow(0 0 3px #1A7F3788); opacity: 0.90; transform: scale(1); }
-        50% { filter: drop-shadow(0 0 8px #1A7F37ff); opacity: 1; transform: scale(1.08); }
+        0%, 100% { filter: drop-shadow(0 0 6px rgba(124, 58, 237, 0.35)); opacity: 0.92; transform: scale(1); }
+        50% { filter: drop-shadow(0 0 14px rgba(124, 58, 237, 0.65)); opacity: 1; transform: scale(1.04); }
       }
       .status-dot-pulse { animation: subtle-dot-pulse 2.2s cubic-bezier(0.4, 0, 0.6, 1) infinite; transform-origin: center; }
       .github-logo-pulse { animation: github-neon-glow 3s ease-in-out infinite; transform-origin: 0px 0px; }
 
-      .sec-title { font-family: 'JetBrains Mono', 'SF Mono', Consolas, monospace; font-size: 11px; font-weight: 700; letter-spacing: 0.12em; fill: #1A7F37; }
-      .sec-meta { font-family: 'JetBrains Mono', 'SF Mono', Consolas, monospace; font-size: 10px; font-weight: 500; fill: #656D76; }
+      .sec-title { font-family: 'JetBrains Mono', 'SF Mono', Consolas, monospace; font-size: 11px; font-weight: 700; letter-spacing: 0.12em; fill: #7C3AED; }
+      .sec-meta { font-family: 'JetBrains Mono', 'SF Mono', Consolas, monospace; font-size: 10px; font-weight: 500; fill: #65558F; }
       .callout-val { font-family: 'JetBrains Mono', 'SF Mono', Consolas, monospace; font-size: 9px; font-weight: 600; letter-spacing: 0.05em; }
-      .callout-name { font-family: 'JetBrains Mono', 'SF Mono', Consolas, monospace; font-size: 12px; font-weight: 600; fill: #1F2328; }
-      .watermark { font-family: 'JetBrains Mono', monospace; font-size: 9px; fill: #656D76; opacity: 0.25; letter-spacing: 0.08em; user-select: none; pointer-events: none; }
+      .callout-name { font-family: 'JetBrains Mono', 'SF Mono', Consolas, monospace; font-size: 12px; font-weight: 600; fill: #1E0E45; }
+      .watermark { font-family: 'JetBrains Mono', monospace; font-size: 9px; fill: #8473A8; opacity: 0.55; letter-spacing: 0.08em; user-select: none; pointer-events: none; }
 
       @media (prefers-reduced-motion: reduce) {
         .status-dot-pulse, .github-logo-pulse { animation: none !important; }
@@ -25,8 +25,8 @@
     </style>
 
     <radialGradient id="donut-phosphor-glow" cx="80%" cy="15%" r="50%">
-      <stop offset="0%" stop-color="#1A7F37" stop-opacity="0.06" />
-      <stop offset="100%" stop-color="#1A7F37" stop-opacity="0" />
+      <stop offset="0%" stop-color="#A855F7" stop-opacity="0.12" />
+      <stop offset="100%" stop-color="#A855F7" stop-opacity="0" />
     </radialGradient>
   </defs>
 
@@ -35,52 +35,52 @@
 
   <!-- Top Header Bar -->
   <g transform="translate(24, 26)">
-    <circle cx="6" cy="6" r="3.5" fill="#1A7F37" class="status-dot-pulse" style="transform-origin: 6px 6px;" />
+    <circle cx="6" cy="6" r="3.5" fill="#7C3AED" class="status-dot-pulse" style="transform-origin: 6px 6px;" />
     <text x="18" y="9" class="sec-title">PROGRAMMING LANGUAGES // DISTRIBUTION</text>
     <text x="360" y="9" class="sec-meta">ASCII · GEN_03</text>
-    <text x="748" y="9" class="sec-meta" text-anchor="end" opacity="0.4">[∀x ∈ ℝⁿ]</text>
+    <text x="748" y="9" class="sec-meta" text-anchor="end" opacity="0.7">[∀x ∈ ℝⁿ]</text>
   </g>
-  <line x1="24" y1="46" x2="776" y2="46" stroke="#D0D7DE" stroke-width="0.8" />
+  <line x1="24" y1="46" x2="776" y2="46" stroke="#E7DDFA" stroke-width="0.8" />
 
   <!-- Donut Visualizer -->
   <g>
-    <circle cx="400" cy="190" r="82" fill="none" stroke="#E1E4E8" stroke-width="1" />
-    <circle cx="400" cy="190" r="74" fill="none" stroke="#D0D7DE" stroke-dasharray="2 4" stroke-width="0.8" />
-    <circle cx="400" cy="190" r="44" fill="none" stroke="#D0D7DE" stroke-dasharray="2 6" stroke-width="0.8" />
+    <circle cx="400" cy="190" r="82" fill="none" stroke="#F0E9FD" stroke-width="1.2" />
+    <circle cx="400" cy="190" r="74" fill="none" stroke="#DFD2F8" stroke-dasharray="2 4" stroke-width="0.9" />
+    <circle cx="400" cy="190" r="44" fill="none" stroke="#DFD2F8" stroke-dasharray="2 6" stroke-width="0.9" />
 
     <g transform="rotate(-90 400 190)">
-      <circle cx="400" cy="190" r="58" fill="none" stroke="#1A7F37" stroke-width="13" stroke-dasharray="256.24 108.18" stroke-dashoffset="-0.00" /><circle cx="400" cy="190" r="58" fill="none" stroke="#9A6700" stroke-width="13" stroke-dasharray="70.38 294.04" stroke-dashoffset="-258.74" /><circle cx="400" cy="190" r="58" fill="none" stroke="#8250DF" stroke-width="13" stroke-dasharray="15.72 348.70" stroke-dashoffset="-331.63" /><circle cx="400" cy="190" r="58" fill="none" stroke="#0969DA" stroke-width="13" stroke-dasharray="12.08 352.35" stroke-dashoffset="-349.85" />
+      <circle cx="400" cy="190" r="58" fill="none" stroke="#7C3AED" stroke-width="13" stroke-dasharray="263.53 100.89" stroke-dashoffset="-0.00" stroke-linecap="round" /><circle cx="400" cy="190" r="58" fill="none" stroke="#4338CA" stroke-width="13" stroke-dasharray="63.10 301.33" stroke-dashoffset="-266.03" stroke-linecap="round" /><circle cx="400" cy="190" r="58" fill="none" stroke="#C084FC" stroke-width="13" stroke-dasharray="15.72 348.70" stroke-dashoffset="-331.63" stroke-linecap="round" /><circle cx="400" cy="190" r="58" fill="none" stroke="#6366F1" stroke-width="13" stroke-dasharray="12.08 352.35" stroke-dashoffset="-349.85" stroke-linecap="round" />
     </g>
 
     <!-- Center Pulsing GitHub Logo -->
     <g transform="translate(400, 190)">
       <g class="github-logo-pulse">
-        <path transform="translate(-12, -12)" fill="#1A7F37" fill-rule="evenodd" clip-rule="evenodd" d="M12 2C6.477 2 2 6.484 2 12.017c0 4.425 2.865 8.18 6.839 9.504.5.092.682-.217.682-.483 0-.237-.008-.868-.013-1.703-2.782.605-3.369-1.343-3.369-1.343-.454-1.158-1.11-1.466-1.11-1.466-.908-.62.069-.608.069-.608 1.003.07 1.53 1.032 1.53 1.032.892 1.53 2.341 1.088 2.91.832.092-.647.35-1.088.636-1.338-2.22-.253-4.555-1.113-4.555-4.951 0-1.093.39-1.988 1.029-2.688-.103-.253-.446-1.272.098-2.65 0 0 .84-.27 2.75 1.026A9.564 9.564 0 0112 6.844c.85.004 1.705.115 2.504.337 1.909-1.296 2.747-1.027 2.747-1.027.546 1.379.202 2.398.1 2.651.64.7 1.028 1.595 1.028 2.688 0 3.848-2.339 4.695-4.566 4.943.359.309.678.92.678 1.855 0 1.338-.012 2.419-.012 2.747 0 .268.18.58.688.482A10.019 10.019 0 0022 12.017C22 6.484 17.522 2 12 2z" />
+        <path transform="translate(-12, -12)" fill="#2E1065" fill-rule="evenodd" clip-rule="evenodd" d="M12 2C6.477 2 2 6.484 2 12.017c0 4.425 2.865 8.18 6.839 9.504.5.092.682-.217.682-.483 0-.237-.008-.868-.013-1.703-2.782.605-3.369-1.343-3.369-1.343-.454-1.158-1.11-1.466-1.11-1.466-.908-.62.069-.608.069-.608 1.003.07 1.53 1.032 1.53 1.032.892 1.53 2.341 1.088 2.91.832.092-.647.35-1.088.636-1.338-2.22-.253-4.555-1.113-4.555-4.951 0-1.093.39-1.988 1.029-2.688-.103-.253-.446-1.272.098-2.65 0 0 .84-.27 2.75 1.026A9.564 9.564 0 0112 6.844c.85.004 1.705.115 2.504.337 1.909-1.296 2.747-1.027 2.747-1.027.546 1.379.202 2.398.1 2.651.64.7 1.028 1.595 1.028 2.688 0 3.848-2.339 4.695-4.566 4.943.359.309.678.92.678 1.855 0 1.338-.012 2.419-.012 2.747 0 .268.18.58.688.482A10.019 10.019 0 0022 12.017C22 6.484 17.522 2 12 2z" />
       </g>
     </g>
 
     <!-- Callout 1 (Top Right) -->
-    <polyline points="445,149 472,106 580,106" fill="none" stroke="#1A7F37" stroke-width="1" opacity="0.85" />
-    <circle cx="445" cy="149" r="2.5" fill="#1A7F37" />
-    <text x="580" y="90" text-anchor="end" class="callout-val" fill="#1A7F37">71% // CORE</text>
+    <polyline points="445,149 472,106 580,106" fill="none" stroke="#7C3AED" stroke-width="1.2" opacity="0.9" />
+    <circle cx="445" cy="149" r="2.8" fill="#7C3AED" />
+    <text x="580" y="90" text-anchor="end" class="callout-val" fill="#7C3AED">73% // CORE</text>
     <text x="580" y="103" text-anchor="end" class="callout-name">Python</text>
 
     <!-- Callout 2 (Bottom Right) -->
-    <polyline points="438,231 468,274 580,274" fill="none" stroke="#9A6700" stroke-width="1" opacity="0.85" />
-    <circle cx="438" cy="231" r="2.5" fill="#9A6700" />
+    <polyline points="438,231 468,274 580,274" fill="none" stroke="#4338CA" stroke-width="1.2" opacity="0.9" />
+    <circle cx="438" cy="231" r="2.8" fill="#4338CA" />
     <text x="580" y="288" text-anchor="end" class="callout-name">JavaScript</text>
-    <text x="580" y="300" text-anchor="end" class="callout-val" fill="#9A6700">20% // ALGORITHMS</text>
+    <text x="580" y="300" text-anchor="end" class="callout-val" fill="#4338CA">18% // ALGORITHMS</text>
 
     <!-- Callout 3 (Bottom Left) -->
-    <polyline points="360,231 332,274 220,274" fill="none" stroke="#0969DA" stroke-width="1" opacity="0.85" />
-    <circle cx="360" cy="231" r="2.5" fill="#0969DA" />
+    <polyline points="360,231 332,274 220,274" fill="none" stroke="#6366F1" stroke-width="1.2" opacity="0.9" />
+    <circle cx="360" cy="231" r="2.8" fill="#6366F1" />
     <text x="220" y="288" text-anchor="start" class="callout-name">SQL</text>
-    <text x="220" y="300" text-anchor="start" class="callout-val" fill="#0969DA">4% // QUERY</text>
+    <text x="220" y="300" text-anchor="start" class="callout-val" fill="#6366F1">4% // QUERY</text>
 
     <!-- Callout 4 (Top Left) -->
-    <polyline points="355,149 328,106 220,106" fill="none" stroke="#8250DF" stroke-width="1" opacity="0.85" />
-    <circle cx="355" cy="149" r="2.5" fill="#8250DF" />
-    <text x="220" y="90" text-anchor="start" class="callout-val" fill="#8250DF">5% // FORMAL</text>
+    <polyline points="355,149 328,106 220,106" fill="none" stroke="#C084FC" stroke-width="1.2" opacity="0.9" />
+    <circle cx="355" cy="149" r="2.8" fill="#C084FC" />
+    <text x="220" y="90" text-anchor="start" class="callout-val" fill="#9333EA">5% // FORMAL</text>
     <text x="220" y="103" text-anchor="start" class="callout-name">LaTeX</text>
   </g>
 

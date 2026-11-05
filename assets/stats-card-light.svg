@@ -1,8 +1,8 @@
 <svg width="800" height="195" viewBox="0 0 800 195" fill="none" xmlns="http://www.w3.org/2000/svg">
   <defs>
     <style>
-      .card-bg { fill: #FFFFFF; stroke: #D0D7DE; stroke-width: 1; rx: 12px; }
-      .sub-card { fill: #F6F8FA; stroke: #D0D7DE; stroke-width: 1; rx: 8px; }
+      .card-bg { fill: #FFFFFF; stroke: #E7DDFA; stroke-width: 1; rx: 12px; }
+      .sub-card { fill: #FCFAFF; stroke: #E8E0F8; stroke-width: 1; rx: 8px; }
 
       @keyframes subtle-dot-pulse {
         0%, 100% { transform: scale(1); opacity: 0.85; }
@@ -10,13 +10,13 @@
       }
       .status-dot-pulse { animation: subtle-dot-pulse 2.2s cubic-bezier(0.4, 0, 0.6, 1) infinite; transform-origin: center; }
 
-      .telemetry-name { font-family: 'JetBrains Mono', 'SF Mono', Consolas, monospace; font-size: 15px; font-weight: 700; fill: #1F2328; letter-spacing: -0.01em; }
-      .telemetry-sub { font-family: 'JetBrains Mono', 'SF Mono', Consolas, monospace; font-size: 10px; font-weight: 600; fill: #1A7F37; letter-spacing: 0.12em; }
+      .telemetry-name { font-family: 'JetBrains Mono', 'SF Mono', Consolas, monospace; font-size: 15px; font-weight: 700; fill: #1E0E45; letter-spacing: -0.01em; }
+      .telemetry-sub { font-family: 'JetBrains Mono', 'SF Mono', Consolas, monospace; font-size: 10px; font-weight: 600; fill: #7C3AED; letter-spacing: 0.12em; }
 
-      .metric-num { font-family: 'JetBrains Mono', 'SF Mono', Consolas, monospace; font-size: 22px; font-weight: 700; fill: #1F2328; letter-spacing: -0.02em; }
-      .metric-lbl { font-family: 'JetBrains Mono', 'SF Mono', Consolas, monospace; font-size: 9px; font-weight: 600; fill: #656D76; letter-spacing: 0.08em; text-transform: uppercase; }
-      .metric-desc { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif; font-size: 10px; fill: #656D76; }
-      .watermark { font-family: 'JetBrains Mono', monospace; font-size: 10px; fill: #656D76; opacity: 0.4; letter-spacing: 0.08em; }
+      .metric-num { font-family: 'JetBrains Mono', 'SF Mono', Consolas, monospace; font-size: 22px; font-weight: 700; fill: #1E0E45; letter-spacing: -0.02em; }
+      .metric-lbl { font-family: 'JetBrains Mono', 'SF Mono', Consolas, monospace; font-size: 9px; font-weight: 600; fill: #65558F; letter-spacing: 0.08em; text-transform: uppercase; }
+      .metric-desc { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif; font-size: 10px; fill: #65558F; }
+      .watermark { font-family: 'JetBrains Mono', monospace; font-size: 10px; fill: #8473A8; opacity: 0.7; letter-spacing: 0.08em; }
 
       @media (prefers-reduced-motion: reduce) {
         .status-dot-pulse { animation: none !important; }
@@ -32,14 +32,14 @@
     <text x="0" y="30" class="telemetry-sub">GITHUB TELEMETRY // STATS OVERVIEW</text>
     <text x="752" y="18" text-anchor="end" class="watermark">[∀x ∈ ℝⁿ]</text>
   </g>
-  <line x1="24" y1="62" x2="776" y2="62" stroke="#D0D7DE" stroke-width="0.8" />
+  <line x1="24" y1="62" x2="776" y2="62" stroke="#EDE5FA" stroke-width="0.8" />
 
   <!-- 4 Metrics Horizontal Grid across 800px -->
   <!-- Card 1: Repos -->
   <g transform="translate(24, 76)">
     <rect x="0" y="0" width="174" height="102" class="sub-card" />
     <text x="14" y="24" class="metric-lbl">TOTAL REPOS</text>
-    <circle cx="158" cy="20" r="3" fill="#1A7F37" class="status-dot-pulse" style="transform-origin: 158px 20px;" />
+    <circle cx="158" cy="20" r="3" fill="#7C3AED" class="status-dot-pulse" style="transform-origin: 158px 20px;" />
     <text x="14" y="62" class="metric-num">13+</text>
     <text x="14" y="86" class="metric-desc">Curated Repositories</text>
   </g>
@@ -48,8 +48,8 @@
   <g transform="translate(216, 76)">
     <rect x="0" y="0" width="174" height="102" class="sub-card" />
     <text x="14" y="24" class="metric-lbl">ANNUAL COMMITS</text>
-    <circle cx="158" cy="20" r="3" fill="#1A7F37" class="status-dot-pulse" style="transform-origin: 158px 20px;" />
-    <text x="14" y="62" class="metric-num">138+</text>
+    <circle cx="158" cy="20" r="3" fill="#7C3AED" class="status-dot-pulse" style="transform-origin: 158px 20px;" />
+    <text x="14" y="62" class="metric-num">141+</text>
     <text x="14" y="86" class="metric-desc">Contributions Past Year</text>
   </g>
 
@@ -57,7 +57,7 @@
   <g transform="translate(408, 76)">
     <rect x="0" y="0" width="174" height="102" class="sub-card" />
     <text x="14" y="24" class="metric-lbl">FOLLOWERS</text>
-    <circle cx="158" cy="20" r="3" fill="#1A7F37" class="status-dot-pulse" style="transform-origin: 158px 20px;" />
+    <circle cx="158" cy="20" r="3" fill="#7C3AED" class="status-dot-pulse" style="transform-origin: 158px 20px;" />
     <text x="14" y="62" class="metric-num">3+</text>
     <text x="14" y="86" class="metric-desc">Developer Network</text>
   </g>
@@ -66,7 +66,7 @@
   <g transform="translate(600, 76)">
     <rect x="0" y="0" width="174" height="102" class="sub-card" />
     <text x="14" y="24" class="metric-lbl">YEARS ACTIVE</text>
-    <circle cx="158" cy="20" r="3" fill="#1A7F37" class="status-dot-pulse" style="transform-origin: 158px 20px;" />
+    <circle cx="158" cy="20" r="3" fill="#7C3AED" class="status-dot-pulse" style="transform-origin: 158px 20px;" />
     <text x="14" y="62" class="metric-num">5+</text>
     <text x="14" y="86" class="metric-desc">Since 2021 Joined</text>
   </g>

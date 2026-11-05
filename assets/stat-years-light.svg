@@ -1,9 +1,9 @@
 <svg width="188" height="104" viewBox="0 0 188 104" fill="none" xmlns="http://www.w3.org/2000/svg">
   <defs>
     <style>
-      .card { fill: #F6F8FA; stroke: #D0D7DE; stroke-width: 1; rx: 8px; }
-      .num { font-family: 'JetBrains Mono', monospace; font-size: 22px; font-weight: 700; fill: #1F2328; text-anchor: middle; }
-      .lbl { font-family: 'JetBrains Mono', monospace; font-size: 9.5px; font-weight: 600; fill: #656D76; text-anchor: middle; letter-spacing: 0.8px; text-transform: uppercase; }
+      .card { fill: #FCFAFF; stroke: #E8E0F8; stroke-width: 1; rx: 8px; }
+      .num { font-family: 'JetBrains Mono', monospace; font-size: 22px; font-weight: 700; fill: #1E0E45; text-anchor: middle; }
+      .lbl { font-family: 'JetBrains Mono', monospace; font-size: 9.5px; font-weight: 600; fill: #65558F; text-anchor: middle; letter-spacing: 0.8px; text-transform: uppercase; }
       @keyframes subtle-dot-pulse {
         0%, 100% { transform: scale(1); opacity: 0.85; }
         50% { transform: scale(1.3); opacity: 1; }
@@ -13,7 +13,7 @@
   </defs>
 
   <rect x="1" y="1" width="186" height="102" rx="8" class="card" />
-  <circle cx="168" cy="20" r="3" fill="#1A7F37" class="status-dot-pulse" style="transform-origin: 168px 20px;" />
+  <circle cx="168" cy="20" r="3" fill="#7C3AED" class="status-dot-pulse" style="transform-origin: 168px 20px;" />
   <text x="94" y="56" class="num">5+</text>
   <text x="94" y="80" class="lbl">YEARS ACTIVE</text>
 </svg>
