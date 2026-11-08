@@ -1,9 +1,9 @@
 {
+  "Python": 13974,
   "JavaScript": 3003,
+  "HTML": 4275,
   "CSS": 3010,
-  "HTML": 1889,
-  "Python": 12050,
   "LaTeX": 757,
-  "Shell": 63,
-  "SQL": 687
+  "SQL": 687,
+  "Shell": 63
 }
